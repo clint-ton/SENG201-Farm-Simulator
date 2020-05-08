@@ -9,4 +9,18 @@ public class Farmer {
 		age = farmerAge;
 		skill = farmerSkill;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
+	public String getSkill() {
+		return skill;
+	}
 }
+
+	
