@@ -48,5 +48,21 @@ public class Animal {
 			happiness = 100;
 		}
 	}
+	
+	public void loseHappiness() {
+		// Daily loss of happiness - implement at start of day 
+		happiness -= 5;
+		if (happiness < 0) {
+			happiness = 0;
+		}
+	}
+	
+	public void loseHealth() {
+		// Daily loss of health
+		health -= 5;
+		if (health < 0) {
+			health = 0;
+		}
+	}
 
 }
