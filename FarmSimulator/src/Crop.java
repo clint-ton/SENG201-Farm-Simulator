@@ -51,23 +51,23 @@ public class Crop {
 		ageDays += 1;
 	}
 	
-	public static void main(String[] args) {
-		Crop wheat = new Crop("Wheat", 100.00, 1000.00, 8);
-		wheat.water();
-		wheat.grow();
-		Fertiliser item1 = new Fertiliser();
-		wheat.tendCrop(item1);
-		
-		while (wheat.getAgeDays() < wheat.getHarvestPeriod()) {
-			wheat.grow();	
-		}
-
-		System.out.println("Number of days to harvest: " + wheat.getAgeDays());
-		double money = 0;
-		money += wheat.harvest();
-		System.out.println("Money returned from harvest: " + money);
-
-		
-	}
+//	public static void main(String[] args) {
+//		Crop wheat = new Crop("Wheat", 100.00, 1000.00, 8);
+//		wheat.water();
+//		wheat.grow();
+//		Fertiliser item1 = new Fertiliser();
+//		wheat.tendCrop(item1);
+//		
+//		while (wheat.getAgeDays() < wheat.getHarvestPeriod()) {
+//			wheat.grow();	
+//		}
+//
+//		System.out.println("Number of days to harvest: " + wheat.getAgeDays());
+//		double money = 0;
+//		money += wheat.harvest();
+//		System.out.println("Money returned from harvest: " + money);
+//
+//		
+//	}
 
 }
