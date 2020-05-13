@@ -19,7 +19,11 @@ public class Store {
 	}
 	
 	
+	
 	public static void main(String[] args) {
-		
+		Farmer farmer = new Farmer("Name", 30, "Skill");
+		Farm farm = new Farm("Name", "Type", farmer);
+	
+				
 	}
 }

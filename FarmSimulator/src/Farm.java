@@ -32,6 +32,18 @@ public class Farm {
 		return farmer;
 	}
 	
+	public List<Crop> getCrops() {
+		return crops;
+	}
+	
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+	
+	public List<Item> getItems() {
+		return items;
+	}
+	
 	public float getMoney() {
 		return money;
 	}
