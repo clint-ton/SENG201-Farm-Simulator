@@ -45,6 +45,7 @@ public class Farm {
 		return items;
 	}
 	
+
 	public List<AnimalItem> getAnimalItems() {
 		List<AnimalItem> animalItems = new ArrayList<AnimalItem>();
 		for (Item item : items) {
@@ -63,6 +64,20 @@ public class Farm {
 			}
 		}
 		return cropItems;
+	}
+	
+	
+	public String viewInventory() {
+//		TODO group similar items together
+		String result = "";
+		for (int i = 0; i < items.size(); i++) {
+			result += items.get(i).getName() + ": Used on = " + items.get(i).getType() + "s, Price = " + items.get(i).getPrice() + "\n";
+		}
+		
+		if (result == "") {
+			result = "You have no items at the moment.";
+		}
+		return result;
 	}
 	
 	public float getMoney() {
@@ -120,6 +135,21 @@ public class Farm {
 	public void useItem(Item item) {
 		items.remove(item);
 	}
+	
+	public String checkFarmStatus() {
+		String result = "";
+		for (int i = 0; i < crops.size(); i++) {
+			result += crops.get(i).getType() + ": Time Growing = " + crops.get(i).getAgeDays() + ", Time to Harvest = " + (crops.get(i).getHarvestPeriod() - crops.get(i).getAgeDays()) + "\n";
+		}
+		for (int i = 0; i < animals.size(); i++) {
+			result += animals.get(i).getType() + ": Happiness = " + animals.get(i).getHappiness() + ", Health = " + animals.get(i).getHealth() + "\n";
+		}
+		if (result == "") {
+			result = "You have no crops or animals";
+		}
+		return result;
+	}
+	
 	
 //	public static void main (String[] args) {
 //		Farmer player = new Farmer("Name", 30, "None");
