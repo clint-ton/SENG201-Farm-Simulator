@@ -45,6 +45,26 @@ public class Farm {
 		return items;
 	}
 	
+	public List<AnimalItem> getAnimalItems() {
+		List<AnimalItem> animalItems = new ArrayList<AnimalItem>();
+		for (Item item : items) {
+			if (item.getType() == "Animal") {
+				animalItems.add((AnimalItem) item);
+			}
+		}
+		return animalItems;		
+	}
+	
+	public List<CropItem> getCropItems() {
+		List<CropItem> cropItems = new ArrayList<CropItem>();
+		for (Item item : items) {
+			if (item.getType() == "Crop") {
+				cropItems.add((CropItem) item);
+			}
+		}
+		return cropItems;
+	}
+	
 	public float getMoney() {
 		return money;
 	}
@@ -98,7 +118,7 @@ public class Farm {
 	}
 	
 	public void useItem(Item item) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		items.remove(item);
 	}
 	
 //	public static void main (String[] args) {
