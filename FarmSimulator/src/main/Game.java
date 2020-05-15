@@ -1,4 +1,5 @@
 package main;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -11,6 +12,44 @@ public class Game {
 	public Game(Farmer farmer, Farm farm) {
 		player = farmer;
 		playerFarm = farm;
+	}
+	
+	public static void tendToCrop() {
+		Scanner in = new Scanner(System.in);
+		List<Crop> crops = playerFarm.getCrops();
+		List<CropItem> cropItems = playerFarm.getCropItems();
+		if (crops.size() == 0) {
+			System.out.println("You have no crops to tend to.");
+		}
+		else {
+			System.out.println("Enter the crop number you would you like to tend to:");
+			for (int i = 0; i < crops.size(); i++) {
+				System.out.println(i+1 + " : " + crops.get(i).getType());
+			}
+			int indexCrop = in.nextInt() - 1;
+			Crop selectedCrop = crops.get(indexCrop);
+			
+			System.out.println("Enter 0 to water crop or select item to use from your inventory: ");
+			System.out.println("0 : Water");
+			if (cropItems.size() == 0) {
+				System.out.println("You don't own any crop items.");
+			}
+			else {
+				for (int i = 0; i < cropItems.size(); i++) {
+					System.out.println(i+1 + " : " + cropItems.get(i).getName());
+				}
+				int indexItem = in.nextInt() - 1;
+				if (indexItem == -1) {
+					selectedCrop.water();
+				}
+				else {
+					CropItem selectedItem = cropItems.get(indexItem);
+					selectedCrop.tendCrop(selectedItem);
+					playerFarm.useItem(selectedItem);
+				}
+			}
+		}
+		in.close();
 	}
 	
 
