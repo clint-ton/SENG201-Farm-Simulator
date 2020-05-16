@@ -11,7 +11,7 @@ public class Farm {
 	private List<Animal> animals = new ArrayList<>();
 	private List<Item> items = new ArrayList<>();
 
-	private float money;
+	private double money;
 	
 	public Farm(String farmName, String farmType, Farmer tmpFarmer) {
 		name = farmName;
@@ -80,11 +80,11 @@ public class Farm {
 		return result;
 	}
 	
-	public float getMoney() {
+	public double getMoney() {
 		return money;
 	}
 	
-	public void addMoney(int amount) {
+	public void addMoney(double amount) {
 		money += amount;
 	}
 	

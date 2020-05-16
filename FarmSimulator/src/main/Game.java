@@ -1,6 +1,7 @@
 package main;
 import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Game {
 	static Farmer player;
@@ -14,6 +15,18 @@ public class Game {
 		playerFarm = farm;
 	}
 	
+	public static Crop selectCrop(List<Crop> crops) {
+		Scanner in = new Scanner(System.in);
+		for (int i = 0; i < crops.size(); i++) {
+			System.out.println(i+1 + " : " + crops.get(i).getType());
+		}
+		int indexCrop = in.nextInt() - 1;
+		in.nextLine();
+		Crop selectedCrop = crops.get(indexCrop);
+		in.close();
+		return selectedCrop;
+	}
+	
 	public static void tendToCrop() {
 		Scanner in = new Scanner(System.in);
 		List<Crop> crops = playerFarm.getCrops();
@@ -22,13 +35,9 @@ public class Game {
 			System.out.println("You have no crops to tend to.");
 		}
 		else {
+			actions--; // reduce action count only if crop is tended to
 			System.out.println("Enter the crop number you would you like to tend to:");
-			for (int i = 0; i < crops.size(); i++) {
-				System.out.println(i+1 + " : " + crops.get(i).getType());
-			}
-			int indexCrop = in.nextInt() - 1;
-			Crop selectedCrop = crops.get(indexCrop);
-			
+			Crop selectedCrop = selectCrop(crops);			
 			System.out.println("Enter 0 to water crop or select item to use from your inventory: ");
 			System.out.println("0 : Water");
 			if (cropItems.size() == 0) {
@@ -38,18 +47,48 @@ public class Game {
 				for (int i = 0; i < cropItems.size(); i++) {
 					System.out.println(i+1 + " : " + cropItems.get(i).getName());
 				}
-				int indexItem = in.nextInt() - 1;
-				if (indexItem == -1) {
-					selectedCrop.water();
-				}
-				else {
-					CropItem selectedItem = cropItems.get(indexItem);
-					selectedCrop.tendCrop(selectedItem);
-					playerFarm.useItem(selectedItem);
-				}
 			}
+			int indexItem = in.nextInt() - 1;
+			in.nextLine();
+			if (indexItem == -1) {
+				selectedCrop.water();
+			}
+			else {
+				CropItem selectedItem = cropItems.get(indexItem);
+				selectedCrop.tendCrop(selectedItem);
+				playerFarm.useItem(selectedItem);
+			}
+			
 		}
 		in.close();
+	}
+	
+	public static void harvestCrop() {
+		List<Crop> harvestCrops = new ArrayList<Crop>();
+		for (Crop crop : playerFarm.getCrops()) {
+			if (crop.readyToHarvest()) {
+				harvestCrops.add(crop);
+			}
+		}
+		if (harvestCrops.size() == 0) {
+			System.out.println("You own no crops that are ready for harvest.");
+		}
+		else {
+			actions--; // reduce action count only if crop is harvested
+			System.out.println("Enter the crop number you would you like to harvest:");
+			Crop selectedCrop = selectCrop(harvestCrops);
+			double sellPrice = selectedCrop.harvest();
+			System.out.println(selectedCrop.getType() + " crop harvested and sold for $" + sellPrice + " at the local market.");
+			playerFarm.addMoney(sellPrice);
+			
+		}
+	}
+	
+	public static void playWithAnimals() {
+		actions--;
+		for (Animal animal : playerFarm.getAnimals()) {
+			animal.play();
+		}
 	}
 	
 
@@ -87,6 +126,11 @@ public class Game {
 					System.out.println("1) Check crop/animal status");
 					System.out.println("2) Check farm bank account");
 					System.out.println("3) Visit the store");
+					System.out.println("4) Tend to a crop"); // added all actions here - can reduce action count within appropriate action methods
+					System.out.println("5) Harvest a crop");
+					System.out.println("6) Play with animals");
+					System.out.println("7) Feed animals");
+					System.out.println("8) Tend to farm land");
 					action = in.nextInt();
 					in.hasNextLine();
 				}
@@ -99,6 +143,15 @@ public class Game {
 				}
 				else if (action == 3) {
 					store.visitStore(playerFarm);
+				}
+				else if (action == 4) {
+					tendToCrop();
+				}
+				else if (action == 5) {
+					harvestCrop();
+				}
+				else if (action == 6) {
+					playWithAnimals();
 				}
 			}
 		}

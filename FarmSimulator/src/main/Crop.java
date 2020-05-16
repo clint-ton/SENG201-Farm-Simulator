@@ -37,10 +37,15 @@ public class Crop {
 	
 	public void tendCrop(CropItem item) {
 		ageDays = ageDays + item.getGrowthBoost();
+		
 	}
 	
 	public void water() {
 		ageDays += 1;
+	}
+	
+	public boolean readyToHarvest() {
+		return (ageDays >= harvestPeriod);
 	}
 	
 	public double harvest() {
