@@ -5,7 +5,7 @@ public class Crop {
 	private double purchasePrice;
 	private double sellPrice;
 	private int harvestPeriod;
-	private int ageDays;
+	private double ageDays;
 	
 	public Crop(String type, double purchasePrice, double sellPrice, int harvestPeriod) {
 		this.type = type;
@@ -31,7 +31,7 @@ public class Crop {
 		return harvestPeriod;
 	}
 	
-	public int getAgeDays() {
+	public double getAgeDays() {
 		return ageDays;
 	}
 	
@@ -53,8 +53,8 @@ public class Crop {
 		return sellPrice;
 	}
 	
-	public void grow() {
-		ageDays += 1;
+	public void grow(double bonus) {
+		ageDays += bonus;
 	}
 	
 //	public static void main(String[] args) {

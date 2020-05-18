@@ -10,6 +10,8 @@ public class Farm {
 	private List<Crop> crops = new ArrayList<>();
 	private List<Animal> animals = new ArrayList<>();
 	private List<Item> items = new ArrayList<>();
+	private double cropBonus = 1; // initial bonuses specific to each type of farm
+	private int animalBonus = 0; // change so can be set in constructor by subclass
 
 	private double money;
 	
@@ -44,7 +46,6 @@ public class Farm {
 		return items;
 	}
 	
-
 	public List<AnimalItem> getAnimalItems() {
 		List<AnimalItem> animalItems = new ArrayList<AnimalItem>();
 		for (Item item : items) {
@@ -79,6 +80,14 @@ public class Farm {
 		return result;
 	}
 	
+	public double getCropBonus() {
+		return cropBonus;
+	}
+	
+	public int getAnimalBonus() {
+		return animalBonus;
+	}
+		
 	public double getMoney() {
 		return money;
 	}
@@ -92,6 +101,17 @@ public class Farm {
 			money -= amount;
 		}else {
 			throw new IllegalArgumentException("Not enough money.");
+		}
+	}
+	
+	public void addCropBonus(double amount) {
+		cropBonus += amount;
+	}
+	
+	public void addAnimalBonus(int amount) {
+		animalBonus += amount;
+		if (animalBonus > 9) { // limit so animals lose minimum 1 happiness/health daily
+			animalBonus = 9;
 		}
 	}
 	
@@ -128,7 +148,8 @@ public class Farm {
 	}
 	
 	public void tendLand() {
-		throw new UnsupportedOperationException("Not yet implemented");
+		addAnimalBonus(2);
+		addCropBonus(0.25);
 	}
 	
 	public void useItem(Item item) {
@@ -137,6 +158,10 @@ public class Farm {
 	
 	public void deadAnimal(Animal animal) {
 		animals.remove(animal);
+	}
+	
+	public void removeCrop(Crop crop) {
+		crops.remove(crop);
 	}
 	
 	public String checkFarmStatus() {

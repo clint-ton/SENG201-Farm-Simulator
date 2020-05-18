@@ -18,14 +18,40 @@ public class Game {
 	
 	public static Crop selectCrop(List<Crop> crops) {
 		Scanner in = new Scanner(System.in);
-		for (int i = 0; i < crops.size(); i++) {
+		int i = 0;
+		Crop selectedCrop = null;
+		while(i < crops.size()) {
 			System.out.println(i+1 + " : " + crops.get(i).getType());
+			 i++;
 		}
+		System.out.println(i+1 + " : " + "Exit");
 		int indexCrop = in.nextInt() - 1;
 		in.nextLine();
-		Crop selectedCrop = crops.get(indexCrop);
-		in.close();
+		if (indexCrop != i) {
+			selectedCrop = crops.get(indexCrop);
+		}
 		return selectedCrop;
+	}
+	
+	public static int selectCropItem(List<CropItem> items) {
+		Scanner in = new Scanner(System.in);
+		int i = 0;	
+		if (items.size() == 0) {
+			System.out.println("You don't own any crop items.");
+		}
+		else {
+			while (i < items.size()) {
+				System.out.println(i+1 + " : " + items.get(i).getName());
+				i++;
+			}
+		}
+		System.out.println(i+1 + " : " + "Exit");
+		int index = in.nextInt() - 1;
+		in.nextLine();
+		if (index == i) {
+			index = -2;
+		}
+		return index;
 	}
 	
 	public static void tendToCrop() {
@@ -36,32 +62,28 @@ public class Game {
 			System.out.println("You have no crops to tend to.");
 		}
 		else {
-			actions--; // reduce action count only if crop is tended to
 			System.out.println("Enter the crop number you would you like to tend to:");
-			Crop selectedCrop = selectCrop(crops);			
-			System.out.println("Enter 0 to water crop or select item to use from your inventory: ");
-			System.out.println("0 : Water");
-			if (cropItems.size() == 0) {
-				System.out.println("You don't own any crop items.");
-			}
-			else {
-				for (int i = 0; i < cropItems.size(); i++) {
-					System.out.println(i+1 + " : " + cropItems.get(i).getName());
+			Crop selectedCrop = selectCrop(crops);		
+			if (selectedCrop != null) {
+				System.out.println("Enter 0 to water crop or select item to use from your inventory: ");
+				System.out.println("0 : Water");				
+				int indexItem = selectCropItem(cropItems);				
+				if (indexItem != -2) {
+					if (indexItem == -1) {
+						selectedCrop.water();
+						actions--;
+					}
+					else {
+						CropItem selectedItem = cropItems.get(indexItem);
+						selectedCrop.tendCrop(selectedItem);
+						playerFarm.useItem(selectedItem);
+						actions--; // reduce action count only if crop is tended to
+					}
+					System.out.println("Your " + selectedCrop.getType() + " crop is growing fast and healthy.");
 				}
 			}
-			int indexItem = in.nextInt() - 1;
-			in.nextLine();
-			if (indexItem == -1) {
-				selectedCrop.water();
-			}
-			else {
-				CropItem selectedItem = cropItems.get(indexItem);
-				selectedCrop.tendCrop(selectedItem);
-				playerFarm.useItem(selectedItem);
-			}
-			
 		}
-		in.close();
+		System.out.println("\n");
 	}
 	
 	public static void harvestCrop() {
@@ -75,14 +97,17 @@ public class Game {
 			System.out.println("You own no crops that are ready for harvest.");
 		}
 		else {
-			actions--; // reduce action count only if crop is harvested
 			System.out.println("Enter the crop number you would you like to harvest:");
 			Crop selectedCrop = selectCrop(harvestCrops);
-			double sellPrice = selectedCrop.harvest();
-			System.out.println(selectedCrop.getType() + " crop harvested and sold for $" + sellPrice + " at the local market.");
-			playerFarm.addMoney(sellPrice);
-			
+			if (selectedCrop != null) {
+				double sellPrice = selectedCrop.harvest();
+				System.out.println(selectedCrop.getType() + " crop harvested and sold for $" + sellPrice + " at the local market.");
+				playerFarm.addMoney(sellPrice);
+				playerFarm.removeCrop(selectedCrop);
+				actions--;
+			}
 		}
+		System.out.println("\n");
 	}
 	
 	public static void playWithAnimals() {
@@ -90,6 +115,7 @@ public class Game {
 		for (Animal animal : playerFarm.getAnimals()) {
 			animal.play();
 		}
+		System.out.println("Your animals are filled with joy!\n");
 	}
 	
 	
@@ -104,21 +130,48 @@ public class Game {
 			System.out.println("You have no food items in your inventory.");
 		}
 		else {
-			actions--;
 			System.out.println("Enter the item number for the food you would like to give to your animals:");
-			for (int i = 0; i < foodItems.size(); i++) {
+			int i = 0;
+			while (i < foodItems.size()) {
 				System.out.println(i+1 + " : " + foodItems.get(i).getName());
+				i++;
 			}
+			System.out.println(i+1 + " : " + "Exit");
 			int foodIndex = in.nextInt() - 1;
-			AnimalItem food = foodItems.get(foodIndex);
-			for (int i = 0; i < animals.size(); i++) { // need to decide if food items feed all owned animals or up to a certain amount
-				animals.get(i).feed(food);
+			if (foodIndex != i) {
+				actions--;
+				AnimalItem food = foodItems.get(foodIndex);
+				for (int j = 0; j < animals.size(); j++) { // need to decide if food items feed all owned animals or up to a certain amount
+					animals.get(j).feed(food);
+				}
+				System.out.println("Your animals are well fed and nourished.");
+				playerFarm.useItem(food);
 			}
 	    }
-		in.close();
+		System.out.println("\n");
 	}	
 	
-	public static void dailyAnimalLoss() {
+	public static void tendLand() {
+		actions--;
+		playerFarm.tendLand();
+		System.out.println("Your farm is looking tidy and well maintained after tending to the land.");
+		System.out.println("Your animals are healthier and happier, and your crops will grow faster.\n");		
+	}
+	
+	public static void moneyBonus() {
+		for (Animal animal : playerFarm.getAnimals()) {
+			double bonus = ((animal.getHappiness() + animal.getHealth())* 0.10); // daily bonus for animal happiness/health
+			playerFarm.addMoney(bonus);
+		}
+	}
+	
+	public static void animalFarmBonus() {
+		for (Animal animal : playerFarm.getAnimals()) {
+			animal.dailyBonus(playerFarm.getAnimalBonus());
+		}
+	}
+	
+	public static void animalLoss() {
 		boolean death = false;
 		for (Animal animal : playerFarm.getAnimals()) {
 			String condition = animal.dailyLoss();
@@ -127,11 +180,26 @@ public class Game {
 				System.out.println(condition);
 				playerFarm.deadAnimal(animal);
 				death = true;
-			}
+			}	
 		}
 		if (death) { 
-			System.out.println("Feed and play with your animals regularly to sustain their health and happiness.");
+			System.out.println("Feed and play with your animals regularly to sustain their health and happiness.\n");
+		}		
+	}
+	
+	public static void cropGrowth() {
+		for (Crop crop : playerFarm.getCrops()) {
+			crop.grow(playerFarm.getCropBonus());
 		}
+	}
+	
+	public static void dailyChange() {
+		moneyBonus();
+		animalFarmBonus();
+		if (daysRemaining > 0) {
+			animalLoss();
+		}
+		cropGrowth();		
 	}
 	
 
@@ -161,7 +229,7 @@ public class Game {
 			System.out.println("Good Morning! You have " + daysRemaining + " days remaining.");
 			actions = 2;
 			nextDay = false;
-			dailyAnimalLoss(); // called at start of day so max health/happiness is achievable at the day's end and therefore end of game
+			
 			while(!nextDay) {
 				int action = 0;
 				System.out.println("You have " + actions + " actions avalible. \n\n");
@@ -196,7 +264,6 @@ public class Game {
 				else if (action == 3) {
 					store.visitStore(playerFarm);
 				}
-				
 				else if (action == 4) {
 					if (actions > 0) {
 						System.out.println("Are you sure? You still have " + actions + " remaining actions. (Please enter yes or no)");
@@ -208,7 +275,6 @@ public class Game {
 						nextDay = true;
 					}
 				}
-				
 				else if (action == 5) {
 					tendToCrop();
 				}
@@ -218,6 +284,12 @@ public class Game {
 				else if (action == 7) {
 					playWithAnimals();
 				}
+				else if (action == 8) {
+					feedAnimals();
+				}
+				else if (action == 9) {
+					tendLand();
+				}
 				
 				// more actions
 				
@@ -225,6 +297,7 @@ public class Game {
 			}
 			
 			daysRemaining -= 1; // moved this out by one into "while (daysRemaining > 0)" loop
+			dailyChange(); // daily bonuses, growth
 		}
 		
 	}

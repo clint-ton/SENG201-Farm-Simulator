@@ -41,6 +41,7 @@ public class Store {
 	}
 	
 	public boolean viewInventory(Farm farm) {
+		boolean inStore = true;
 		int input;
 		Object item;
 		Scanner in = new Scanner(System.in);
@@ -68,7 +69,9 @@ public class Store {
 			in.nextLine();
 			
 		} while ((input <= 0) & (input > (crops.size() + animals.size() + items.size() + 1)));
-		if (input < crops.size()) {
+		if (input == crops.size() + animals.size() + items.size() + 1) { // added temporary exit functionality for testing - can refine further
+			inStore = false;
+		} else if (input < crops.size()) {
 			System.out.println("How many would you like to purchase?");
 			int quantity = in.nextInt();
 			in.nextLine();
@@ -98,7 +101,7 @@ public class Store {
 		}
 		
 		
-		return true;
+		return inStore;
 	}
 	
 	public List<Crop> getStoreCrops() {
