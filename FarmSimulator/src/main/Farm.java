@@ -17,8 +17,7 @@ public class Farm {
 		name = farmName;
 		type = farmType;
 		farmer = tmpFarmer;
-//		To set starting money, assuming this will be constant across games, probably wont be zero
-		money = 0;
+		money = 1000;
 	}
 	
 	public String getName() {

@@ -6,9 +6,10 @@ import java.util.ArrayList;
 public class Game {
 	static Farmer player;
 	static Farm playerFarm;
-	static int gameLength;
+	static int daysRemaining;
 	static int actions;
 	static Store store;
+	static boolean nextDay;
 	
 	public Game(Farmer farmer, Farm farm) {
 		player = farmer;
@@ -96,11 +97,11 @@ public class Game {
 		Scanner in = new Scanner(System.in);
 		do {
 			System.out.println("How many days would you like your game to last? Please Select 5-10");
-			gameLength = in.nextInt();
+			daysRemaining = in.nextInt();
 			in.nextLine(); //consumes the \n char leftover from nextInt()
 		}
 
-		while ((gameLength < 5) | (gameLength > 10));		
+		while ((daysRemaining < 5) | (daysRemaining > 10));		
 		// TODO make sure names fit requirements
 		
 		System.out.println("What is your name?");
@@ -114,10 +115,11 @@ public class Game {
 		playerFarm = new Farm(farmName, "Type", player);
 		store = new Store();
 		
-		while(gameLength > 0) {
-			System.out.println("Good Morning! You have " + gameLength + " days remaining.");
+		while(daysRemaining > 0) {
+			System.out.println("Good Morning! You have " + daysRemaining + " days remaining.");
 			actions = 2;
-			while(actions > 0) { // needs to be changed otherwise can't do free actions
+			nextDay = false;
+			while(!nextDay) {
 				int action = 0;
 				System.out.println("You have " + actions + " actions avalible. \n\n");
 				do {
@@ -131,10 +133,11 @@ public class Game {
 					System.out.println("6) Play with animals");
 					System.out.println("7) Feed animals");
 					System.out.println("8) Tend to farm land");
+					System.out.println("9) Go to next day");
 					action = in.nextInt();
-					in.hasNextLine();
+					in.nextLine();
 				}
-				while ((action > 0) & (action > 4)); // needs to be changed with every new action
+				while ((action > 0) & (action > 9));
 				if (action == 1) {
 					System.out.println(playerFarm.checkFarmStatus());
 				}
@@ -153,6 +156,21 @@ public class Game {
 				else if (action == 6) {
 					playWithAnimals();
 				}
+				
+				// more actions
+				
+				else if (action == 9) {
+					if (actions > 0) {
+						System.out.println("Are you sure? You still have " + actions + " remaining actions. (Please enter yes or no)");
+						String answer = in.nextLine();
+						if (answer.startsWith("y")) {
+							nextDay = true;
+						}
+					} else {
+						nextDay = true;
+					}
+				}
+				daysRemaining -= 1;
 			}
 		}
 		
