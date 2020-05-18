@@ -135,6 +135,10 @@ public class Farm {
 		items.remove(item);
 	}
 	
+	public void deadAnimal(Animal animal) {
+		animals.remove(animal);
+	}
+	
 	public String checkFarmStatus() {
 		String result = "";
 		for (int i = 0; i < crops.size(); i++) {

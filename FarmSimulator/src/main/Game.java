@@ -118,6 +118,22 @@ public class Game {
 		in.close();
 	}	
 	
+	public static void dailyAnimalLoss() {
+		boolean death = false;
+		for (Animal animal : playerFarm.getAnimals()) {
+			String condition = animal.dailyLoss();
+			if (condition != "") {
+				System.out.println("A " + animal.getType() + " on your farm died overnight due to the following condition(s):");
+				System.out.println(condition);
+				playerFarm.deadAnimal(animal);
+				death = true;
+			}
+		}
+		if (death) { 
+			System.out.println("Feed and play with your animals regularly to sustain their health and happiness.");
+		}
+	}
+	
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -145,6 +161,7 @@ public class Game {
 			System.out.println("Good Morning! You have " + daysRemaining + " days remaining.");
 			actions = 2;
 			nextDay = false;
+			dailyAnimalLoss(); // called at start of day so max health/happiness is achievable at the day's end and therefore end of game
 			while(!nextDay) {
 				int action = 0;
 				System.out.println("You have " + actions + " actions avalible. \n\n");
@@ -206,6 +223,7 @@ public class Game {
 				
 					
 			}
+			
 			daysRemaining -= 1; // moved this out by one into "while (daysRemaining > 0)" loop
 		}
 		
