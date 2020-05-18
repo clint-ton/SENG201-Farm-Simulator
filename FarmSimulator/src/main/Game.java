@@ -92,6 +92,32 @@ public class Game {
 		}
 	}
 	
+	
+	public static void feedAnimals() {
+		Scanner in = new Scanner(System.in);
+		List<Animal> animals = playerFarm.getAnimals();
+		List<AnimalItem> foodItems = playerFarm.getAnimalItems();
+		if (animals.size() == 0) {
+			System.out.println("You have no animals to feed.");
+		}
+		else if (foodItems.size() == 0) {
+			System.out.println("You have no food items in your inventory.");
+		}
+		else {
+			actions--;
+			System.out.println("Enter the item number for the food you would like to give to your animals:");
+			for (int i = 0; i < foodItems.size(); i++) {
+				System.out.println(i+1 + " : " + foodItems.get(i).getName());
+			}
+			int foodIndex = in.nextInt() - 1;
+			AnimalItem food = foodItems.get(foodIndex);
+			for (int i = 0; i < animals.size(); i++) { // need to decide if food items feed all owned animals or up to a certain amount
+				animals.get(i).feed(food);
+			}
+	    }
+		in.close();
+	}	
+	
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -138,7 +164,7 @@ public class Game {
 					action = in.nextInt();
 					in.nextLine();
 					
-					if ((actions == 0) && ((action > 4) && (action < 10))) { // sets action out of range if a counted action selected but no actions remaining
+					if ((actions == 0) && ((action > 4) && (action < 10))) { // sets action out of range if a counted action is selected but no actions remaining
 						System.out.println("Sorry, you have no daily actions remaining. Please select a free option.");
 						action = 10;
 					}
