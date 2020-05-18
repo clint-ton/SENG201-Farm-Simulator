@@ -124,20 +124,26 @@ public class Game {
 				System.out.println("You have " + actions + " actions avalible. \n\n");
 				do {
 					System.out.println("What would you like to do? (please enter a number)");
-					
+					System.out.println("Free daily activities:");
 					System.out.println("1) Check crop/animal status");
 					System.out.println("2) Check farm bank account");
 					System.out.println("3) Visit the store");
-					System.out.println("4) Tend to a crop"); // added all actions here - can reduce action count within appropriate action methods
-					System.out.println("5) Harvest a crop");
-					System.out.println("6) Play with animals");
-					System.out.println("7) Feed animals");
-					System.out.println("8) Tend to farm land");
-					System.out.println("9) Go to next day");
+					System.out.println("4) Go to next day"); // Grouped free/counted actions together
+					System.out.println("Counted daily actions:");
+					System.out.println("5) Tend to a crop"); // added all actions here - can reduce action count within appropriate action methods
+					System.out.println("6) Harvest a crop");
+					System.out.println("7) Play with animals");
+					System.out.println("8) Feed animals");
+					System.out.println("9) Tend to farm land");
 					action = in.nextInt();
 					in.nextLine();
+					
+					if ((actions == 0) && ((action > 4) && (action < 10))) { // sets action out of range if a counted action selected but no actions remaining
+						System.out.println("Sorry, you have no daily actions remaining. Please select a free option.");
+						action = 10;
+					}
 				}
-				while ((action > 0) & (action > 9));
+				while ((action > 0) & (action > 9)); // is it meant to be (action <= 0) rather than (action > 0)?
 				if (action == 1) {
 					System.out.println(playerFarm.checkFarmStatus());
 				}
@@ -147,19 +153,8 @@ public class Game {
 				else if (action == 3) {
 					store.visitStore(playerFarm);
 				}
+				
 				else if (action == 4) {
-					tendToCrop();
-				}
-				else if (action == 5) {
-					harvestCrop();
-				}
-				else if (action == 6) {
-					playWithAnimals();
-				}
-				
-				// more actions
-				
-				else if (action == 9) {
 					if (actions > 0) {
 						System.out.println("Are you sure? You still have " + actions + " remaining actions. (Please enter yes or no)");
 						String answer = in.nextLine();
@@ -170,8 +165,22 @@ public class Game {
 						nextDay = true;
 					}
 				}
-				daysRemaining -= 1;
+				
+				else if (action == 5) {
+					tendToCrop();
+				}
+				else if (action == 6) {
+					harvestCrop();
+				}
+				else if (action == 7) {
+					playWithAnimals();
+				}
+				
+				// more actions
+				
+					
 			}
+			daysRemaining -= 1; // moved this out by one into "while (daysRemaining > 0)" loop
 		}
 		
 	}
