@@ -10,20 +10,36 @@ public class Farm {
 	private List<Crop> crops = new ArrayList<>();
 	private List<Animal> animals = new ArrayList<>();
 	private List<Item> items = new ArrayList<>();
-	private double cropBonus = 1; // initial bonuses specific to each type of farm
-	private int animalBonus = 0; // change so can be set in constructor by subclass
+	private double cropGrowthBonus; // initial bonuses specific to each type of farm
+	private int animalHealthBonus; // change so can be set in constructor by subclass
+	private double cropMoneyBonus;
+	private double animalMoneyBonus;
 
 	private double money;
 	
-	public Farm(String farmName, String farmType, Farmer tmpFarmer) {
-		name = farmName;
-		type = farmType;
-		farmer = tmpFarmer;
-		money = 1000;
+//	public Farm(String farmName, String farmType, Farmer tmpFarmer, List<Crop> crops, List<Animal> animals) {
+//		name = farmName;
+//		type = farmType;
+//		farmer = tmpFarmer;
+//		money = 1000;
+//	}
+	
+	
+	public Farm(String type, double animalMoneyBonus, double cropMoneyBonus, double money) { // new constructor to account for farm types
+		this.type = type;
+		this.crops.addAll(crops);
+		this.animalMoneyBonus = animalMoneyBonus;
+		this.cropMoneyBonus = cropMoneyBonus;
+		this.money = money;
 	}
+	
 	
 	public String getName() {
 		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getType() {
@@ -32,6 +48,12 @@ public class Farm {
 	
 	public Farmer getFarmer() {
 		return farmer;
+	}
+	
+	public void setFarmer(Farmer farmer) {
+		this.farmer = farmer;
+		cropGrowthBonus += farmer.getCropBonus();
+		animalHealthBonus += farmer.getAnimalBonus();
 	}
 	
 	public List<Crop> getCrops() {
@@ -80,12 +102,20 @@ public class Farm {
 		return result;
 	}
 	
-	public double getCropBonus() {
-		return cropBonus;
+	public double getCropGrowthBonus() {
+		return cropGrowthBonus;
 	}
 	
-	public int getAnimalBonus() {
-		return animalBonus;
+	public int getAnimalHealthBonus() {
+		return animalHealthBonus;
+	}
+	
+	public double getAnimalMoneyBonus() {
+		return animalMoneyBonus;
+	}
+	
+	public double getCropMoneyBonus() {
+		return cropMoneyBonus;
 	}
 		
 	public double getMoney() {
@@ -104,14 +134,14 @@ public class Farm {
 		}
 	}
 	
-	public void addCropBonus(double amount) {
-		cropBonus += amount;
+	public void addCropGrowthBonus(double amount) {
+		cropGrowthBonus += amount;
 	}
 	
-	public void addAnimalBonus(int amount) {
-		animalBonus += amount;
-		if (animalBonus > 14) { // limit so animals lose minimum 1 happiness/health daily
-			animalBonus = 14;
+	public void addAnimalHealthBonus(int amount) {
+		animalHealthBonus += amount;
+		if (animalHealthBonus > 14) { // limit so animals lose minimum 1 happiness/health daily
+			animalHealthBonus = 14;
 		}
 	}
 	
@@ -148,8 +178,8 @@ public class Farm {
 	}
 	
 	public void tendLand() {
-		addAnimalBonus(2);
-		addCropBonus(0.25);
+		addAnimalHealthBonus(2);
+		addCropGrowthBonus(0.25);
 	}
 	
 	public void useItem(Item item) {

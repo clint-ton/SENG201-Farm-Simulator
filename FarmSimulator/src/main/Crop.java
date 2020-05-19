@@ -54,7 +54,7 @@ public class Crop {
 	}
 	
 	public void grow(double bonus) {
-		ageDays += bonus;
+		ageDays += 1 + bonus;
 	}
 	
 //	public static void main(String[] args) {

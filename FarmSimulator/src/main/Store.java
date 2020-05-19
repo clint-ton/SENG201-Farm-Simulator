@@ -153,9 +153,9 @@ public class Store {
 	}
 
 	public static void main(String[] args) {
-		Farmer farmer = new Farmer("Name", 30, "Skill");
-		Farm farm = new Farm("Name", "Type", farmer);
-		Store store = new Store();
+//		Farmer farmer = new Farmer("Name", 30, "Skill");
+//		Farm farm = new Farm("Name", "Type", farmer);
+//		Store store = new Store();
 //		System.out.println(store.getStoreCrops());
 //		farm.addMoney(99999);
 //		farm.purchaseCrop(store.getStoreCrops().get(0));

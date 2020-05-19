@@ -52,7 +52,11 @@ public class Animal {
 	
 	public void dailyBonus(int bonus) {
 		health += bonus;
-		happiness += (bonus-5); // adjusted for difference in daily losses
+		if (bonus > 9) {
+			happiness += 9;
+		} else {
+		    happiness += (bonus); // adjusted for difference in daily losses
+		}
 		if (health > 100) {
 			health = 100;
 		}
