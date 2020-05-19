@@ -173,16 +173,21 @@ public class Game {
 	
 	public static void animalLoss() {
 		boolean death = false;
+		List<Animal> deadAnimals = new ArrayList<Animal>();
 		for (Animal animal : playerFarm.getAnimals()) {
 			String condition = animal.dailyLoss();
 			if (condition != "") {
 				System.out.println("A " + animal.getType() + " on your farm died overnight due to the following condition(s):");
 				System.out.println(condition);
-				playerFarm.deadAnimal(animal);
+				deadAnimals.add(animal);
+				
 				death = true;
 			}	
 		}
 		if (death) { 
+			for (Animal deadAnimal : deadAnimals) {
+				playerFarm.deadAnimal(deadAnimal);
+			}			
 			System.out.println("Feed and play with your animals regularly to sustain their health and happiness.\n");
 		}		
 	}
@@ -200,6 +205,36 @@ public class Game {
 			animalLoss();
 		}
 		cropGrowth();		
+	}
+	
+	
+	public static double endGameAnimals() {
+		double points = 0;
+		for (Animal animal : playerFarm.getAnimals()) {
+			points += (animal.getHappiness() + animal.getHealth()) * 1.00;
+		}
+		return points;
+	}
+	
+	public static double endGameCrops() {
+		double points = 0;
+		for (Crop crop : playerFarm.getCrops()) {
+			points += (crop.getAgeDays() / crop.getHarvestPeriod()) * crop.getSellPrice() * 0.5; // scaled down points for partially grown crops
+		}
+		return points;
+	}
+	
+	
+	public static void endGame() {
+		double animalPoints = endGameAnimals();
+		double cropPoints = endGameCrops();
+		double moneyPoints = playerFarm.getMoney();
+		double finalScore = animalPoints + cropPoints + moneyPoints;
+		System.out.println("Congratulations, you finished the game!\n");
+		System.out.println("You earned a total of:");
+		System.out.println(" points from your final animal health and happiness levels.");
+		System.out.println(" points from your final animal health and happiness levels.");
+		
 	}
 	
 
@@ -299,6 +334,8 @@ public class Game {
 			daysRemaining -= 1; // moved this out by one into "while (daysRemaining > 0)" loop
 			dailyChange(); // daily bonuses, growth
 		}
+		
+		endGame(); 
 		
 	}
 }

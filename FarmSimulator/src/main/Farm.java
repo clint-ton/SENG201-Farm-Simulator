@@ -110,8 +110,8 @@ public class Farm {
 	
 	public void addAnimalBonus(int amount) {
 		animalBonus += amount;
-		if (animalBonus > 9) { // limit so animals lose minimum 1 happiness/health daily
-			animalBonus = 9;
+		if (animalBonus > 14) { // limit so animals lose minimum 1 happiness/health daily
+			animalBonus = 14;
 		}
 	}
 	

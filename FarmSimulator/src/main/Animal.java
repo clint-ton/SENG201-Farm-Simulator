@@ -52,7 +52,7 @@ public class Animal {
 	
 	public void dailyBonus(int bonus) {
 		health += bonus;
-		happiness += bonus;
+		happiness += (bonus-5); // adjusted for difference in daily losses
 		if (health > 100) {
 			health = 100;
 		}
@@ -68,7 +68,7 @@ public class Animal {
 		if (happiness <= 0) {
 			condition += "Happiness level dropped to 0. Your animal lost the will to live.\n";
 		}
-		health -= 10;
+		health -= 15;
 		if (health <= 0) {
 			condition += "Health level dropped to 0. Your animal's body could no longer function.\n";
 		}
