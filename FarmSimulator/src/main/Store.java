@@ -9,6 +9,8 @@ public class Store {
 	private List<Animal> animals = new ArrayList<>();
 	private List<Item> items = new ArrayList<>();
 	
+	boolean inStore = true;
+	
 	public Store() {
 		restock();
 	}
@@ -40,8 +42,8 @@ public class Store {
 		items.addAll(Arrays.asList(fertiliser, grassFeed, growthHormone, weedSpray));
 	}
 	
-	public boolean viewInventory(Farm farm) {
-		boolean inStore = true;
+	public void viewInventory(Farm farm) { // previously boolean
+		
 		int input;
 		Object item;
 		Scanner in = new Scanner(System.in);
@@ -69,6 +71,7 @@ public class Store {
 			in.nextLine();
 			
 		} while ((input <= 0) & (input > (crops.size() + animals.size() + items.size() + 1)));
+		
 		if (input == crops.size() + animals.size() + items.size() + 1) { // added temporary exit functionality for testing - can refine further
 			inStore = false;
 		} else if (input < crops.size()) {
@@ -77,7 +80,7 @@ public class Store {
 			in.nextLine();
 			
 			for (int i = quantity; i > 0; i--) {
-				farm.purchaseCrop(crops.get(input));
+				farm.purchaseCrop(crops.get(input-1));
 				restock();
 			}
 		} else if (input > animals.size() + crops.size()) {
@@ -101,7 +104,7 @@ public class Store {
 		}
 		
 		
-		return inStore;
+		//return inStore;
 	}
 	
 	public List<Crop> getStoreCrops() {
@@ -133,10 +136,11 @@ public class Store {
 			}
 			while ((storeAction < 0) & (storeAction > 4));
 			if (storeAction == 1) {
+				inStore = true;
 				do {
 					viewInventory(farm);
 				}
-				while (viewInventory(farm));
+				while (inStore);
 			} 
 			else if (storeAction == 2) {
 				System.out.println(farm.viewInventory());

@@ -232,8 +232,11 @@ public class Game {
 		double finalScore = animalPoints + cropPoints + moneyPoints;
 		System.out.println("Congratulations, you finished the game!\n");
 		System.out.println("You earned a total of:");
-		System.out.println(" points from your final animal health and happiness levels.");
-		System.out.println(" points from your final animal health and happiness levels.");
+		System.out.println(animalPoints + " points from your final animal health and happiness levels.");
+		System.out.println(cropPoints + " points from the crops you own that are still growing.");
+		System.out.println(moneyPoints + " points from the final total dollars in your farm's bank account.\n");
+		System.out.println("Your final score is:");
+		System.out.println(finalScore + " points.");
 		
 	}
 	
