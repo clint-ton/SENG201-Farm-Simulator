@@ -89,6 +89,10 @@ public class Farm {
 	}
 	
 	
+	public String toString() {
+		return (type + " Farm: Animal Income Multiplier = " + animalMoneyBonus + " --- Crop Income Multiplier = " + cropMoneyBonus + " --- Starting Balance = $" + money);
+	}
+	
 	public String viewInventory() {
 //		TODO group similar items together
 		String result = "";

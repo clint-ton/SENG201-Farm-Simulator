@@ -9,16 +9,16 @@ class checkFarmStatusTest {
 
 	@Test
 	void noCropsAnimals() {
-		Farmer farmer = new Farmer("name", 20, "skill");
-		Farm farm = new Farm("name", "type", farmer);
+		Farmer farmer = new Farmer("Animal Care", 2, 1);
+		Farm farm = new Farm("Crop Growth", 2, 1, 1000);
 		
 		assertEquals("You have no crops or animals", farm.checkFarmStatus());
 		}
 	
 	@Test
 	void normalUse() {
-		Farmer farmer = new Farmer("name", 20, "skill");
-		Farm farm = new Farm("name", "type", farmer);
+		Farmer farmer = new Farmer("Animal Care", 2, 1);
+		Farm farm = new Farm("Crop Growth", 2, 1, 1000);
 		Goat goat = new Goat();
 		Chicken chicken = new Chicken();
 		Rice rice = new Rice();

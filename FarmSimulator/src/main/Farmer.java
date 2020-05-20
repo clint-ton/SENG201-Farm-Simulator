@@ -47,6 +47,14 @@ public class Farmer {
 	public int getAnimalBonus() {
 		return animalBonus;
 	}
+	
+	public String toString() {
+		if (cropBonus == 0) {
+		    return ("Farmer Skill: " + skill + " = +" + animalBonus + " daily points boost");
+		} else {
+			return ("Farmer Skill: " + skill + " = +" + cropBonus + " daily growth boost");
+		}
+	}
 }
 
 	

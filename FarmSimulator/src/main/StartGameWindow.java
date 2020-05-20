@@ -15,17 +15,25 @@ import javax.swing.JButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class StartGameWindow {
 
 	private JFrame frmFarmSetup;
 	private JTextField playerNameText;
 	private JTextField playerAgeText;
-	private JTextField textField;
+	private JTextField farmNameText;
 	private JLabel lblSelectNumberOf;
+	
+	private Game game;
 	
 	private List<Farmer> farmerTypes = new ArrayList<Farmer>();
 	private List<Farm> farmTypes = new ArrayList<Farm>();
+	
+
+	Farmer selectedFarmer;
+	Farm selectedFarm;
 
 	/**
 	 * Launch the application.
@@ -34,7 +42,7 @@ public class StartGameWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StartGameWindow window = new StartGameWindow();
+					StartGameWindow window = new StartGameWindow(new Game());
 					window.frmFarmSetup.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +54,8 @@ public class StartGameWindow {
 	/**
 	 * Create the application.
 	 */
-	public StartGameWindow() {
+	public StartGameWindow(Game game) { // (Game game)
+		this.game = game;
 		createFarmerList();
 		createFarmList();
 		initialize();
@@ -69,6 +78,7 @@ public class StartGameWindow {
 	 */
 	private void initialize() {
 		frmFarmSetup = new JFrame();
+		frmFarmSetup.setResizable(false);
 		frmFarmSetup.setTitle("Farm Setup");
 		frmFarmSetup.setBounds(100, 100, 1000, 600);
 		frmFarmSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,11 +116,11 @@ public class StartGameWindow {
 		lblEnterYourFarm.setBounds(21, 195, 221, 29);
 		frmFarmSetup.getContentPane().add(lblEnterYourFarm);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField.setColumns(10);
-		textField.setBounds(211, 196, 246, 29);
-		frmFarmSetup.getContentPane().add(textField);
+		farmNameText = new JTextField();
+		farmNameText.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		farmNameText.setColumns(10);
+		farmNameText.setBounds(211, 196, 246, 29);
+		frmFarmSetup.getContentPane().add(farmNameText);
 		
 		lblSelectNumberOf = new JLabel("Select number of days:");
 		lblSelectNumberOf.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -118,6 +128,7 @@ public class StartGameWindow {
 		frmFarmSetup.getContentPane().add(lblSelectNumberOf);
 		
 		JSlider daysRemainingSlider = new JSlider();
+		daysRemainingSlider.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		daysRemainingSlider.setSnapToTicks(true);
 		daysRemainingSlider.setValue(5);
 		daysRemainingSlider.setPaintLabels(true);
@@ -125,66 +136,119 @@ public class StartGameWindow {
 		daysRemainingSlider.setMajorTickSpacing(1);
 		daysRemainingSlider.setMinimum(5);
 		daysRemainingSlider.setMaximum(10);
-		daysRemainingSlider.setBounds(542, 160, 362, 22);
+		daysRemainingSlider.setBounds(540, 157, 362, 64);
 		frmFarmSetup.getContentPane().add(daysRemainingSlider);
-		
-		JLabel days6Label = new JLabel("6");
-		days6Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		days6Label.setBounds(615, 195, 10, 29);
-		frmFarmSetup.getContentPane().add(days6Label);
-		
-		JLabel days7Label = new JLabel("7");
-		days7Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		days7Label.setBounds(684, 195, 10, 29);
-		frmFarmSetup.getContentPane().add(days7Label);
-		
-		JLabel days8Label = new JLabel("8");
-		days8Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		days8Label.setBounds(754, 195, 10, 29);
-		frmFarmSetup.getContentPane().add(days8Label);
-		
-		JLabel days9label = new JLabel("9");
-		days9label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		days9label.setBounds(822, 195, 10, 29);
-		frmFarmSetup.getContentPane().add(days9label);
-		
-		JLabel days10Label = new JLabel("10");
-		days10Label.setHorizontalAlignment(SwingConstants.CENTER);
-		days10Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		days10Label.setBounds(882, 195, 26, 29);
-		frmFarmSetup.getContentPane().add(days10Label);
-		
-		JLabel days5Label = new JLabel("5");
-		days5Label.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		days5Label.setBounds(545, 195, 10, 29);
-		frmFarmSetup.getContentPane().add(days5Label);
 		
 		JLabel lblSelectYourFarmer = new JLabel("Select your farmer skill:");
 		lblSelectYourFarmer.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSelectYourFarmer.setBounds(43, 268, 221, 29);
+		lblSelectYourFarmer.setBounds(21, 268, 221, 29);
 		frmFarmSetup.getContentPane().add(lblSelectYourFarmer);
 		
 		JLabel lblSelectYourStarter = new JLabel("Select your starter farm:");
 		lblSelectYourStarter.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSelectYourStarter.setBounds(412, 268, 221, 29);
+		lblSelectYourStarter.setBounds(318, 268, 221, 29);
 		frmFarmSetup.getContentPane().add(lblSelectYourStarter);
 		
-		DefaultListModel<Farmer> farmerSkillListModel = new DefaultListModel<Farmer>();
-
+		JLabel selectedFarmerLabel = new JLabel("");
+		selectedFarmerLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		selectedFarmerLabel.setBounds(21, 492, 221, 36);
+		frmFarmSetup.getContentPane().add(selectedFarmerLabel);
 		
+		JLabel selectedFarmLabel = new JLabel("");
+		selectedFarmLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		selectedFarmLabel.setBounds(318, 492, 221, 36);
+		frmFarmSetup.getContentPane().add(selectedFarmLabel);
+		
+		DefaultListModel<Farmer> farmerSkillListModel = new DefaultListModel<Farmer>();
+		farmerSkillListModel.addAll(farmerTypes);		
 		JList<Farmer> farmerSkillList = new JList<Farmer>(farmerSkillListModel);
+		farmerSkillList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		farmerSkillList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		farmerSkillList.setBounds(43, 307, 326, 135);
+		farmerSkillList.setBounds(21, 307, 278, 96);
 		frmFarmSetup.getContentPane().add(farmerSkillList);
 		
-		JList<Farm> farmTypeList = new JList<Farm>();
+		DefaultListModel<Farm> farmTypeListModel = new DefaultListModel<Farm>();
+		farmTypeListModel.addAll(farmTypes);
+		JList<Farm> farmTypeList = new JList<Farm>(farmTypeListModel);
+		farmTypeList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		farmTypeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		farmTypeList.setBounds(412, 307, 533, 135);
+		farmTypeList.setBounds(318, 307, 658, 96);
 		frmFarmSetup.getContentPane().add(farmTypeList);
 		
+		
+		
+		JButton selectFarmerButton = new JButton("Select Farmer Skill");
+		selectFarmerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectedFarmer = farmerSkillList.getSelectedValue();
+				selectedFarmerLabel.setText(selectedFarmer.getSkill());
+			}
+		});
+		selectFarmerButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		selectFarmerButton.setBounds(21, 421, 181, 29);
+		frmFarmSetup.getContentPane().add(selectFarmerButton);
+		
+		JButton btnSelectStarterFarm = new JButton("Select Starter Farm");
+		btnSelectStarterFarm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectedFarm = farmTypeList.getSelectedValue();
+				selectedFarmLabel.setText(selectedFarm.getType());
+			}
+		});
+		btnSelectStarterFarm.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnSelectStarterFarm.setBounds(318, 421, 189, 29);
+		frmFarmSetup.getContentPane().add(btnSelectStarterFarm);
+		
+		JLabel yourFarmerlbl = new JLabel("Your Farmer Skill:");
+		yourFarmerlbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		yourFarmerlbl.setBounds(21, 456, 221, 36);
+		frmFarmSetup.getContentPane().add(yourFarmerlbl);
+		
+		JLabel yourFarmlbl = new JLabel("Your Starter Farm:");
+		yourFarmlbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		yourFarmlbl.setBounds(318, 456, 221, 36);
+		frmFarmSetup.getContentPane().add(yourFarmlbl);
+		
+		JLabel startErrorLabel = new JLabel("");
+		startErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		startErrorLabel.setBounds(703, 470, 273, 36);
+		frmFarmSetup.getContentPane().add(startErrorLabel);
+		
 		JButton startGameButton = new JButton("Start");
+		startGameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ageText = playerAgeText.getText();
+				try {
+					Integer.parseInt(ageText); 
+				}catch(NumberFormatException f) {
+					ageText = null;
+				} 
+				if (playerNameText.getText().isEmpty()) {
+					startErrorLabel.setText("Please enter name.");
+				} else if (ageText == null) {
+					startErrorLabel.setText("Please enter valid age.");
+				} else if (selectedFarmerLabel.getText().isEmpty()) {
+					startErrorLabel.setText("Please select farmer skill.");
+				} else if (selectedFarmLabel.getText().isEmpty()) {
+					startErrorLabel.setText("Please select starter farm.");
+				} else {
+					startErrorLabel.setText("");
+					int age = Integer.parseInt(ageText);
+					game.setPlayer(selectedFarmer, playerNameText.getText(), age);
+					game.setPlayerFarm(selectedFarm, farmNameText.getText());
+					game.setDays(daysRemainingSlider.getValue());
+				}
+				
+				
+				
+				
+				
+			}
+		});
 		startGameButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		startGameButton.setBounds(845, 524, 131, 29);
 		frmFarmSetup.getContentPane().add(startGameButton);
+		
+		
 	}
 }

@@ -11,10 +11,28 @@ public class Game {
 	static Store store;
 	static boolean nextDay;
 	
-	public Game(Farmer farmer, Farm farm) {
-		player = farmer;
-		playerFarm = farm;
+	public Game() { //Farmer farmer, Farm farm) {
+//		player = farmer;
+//		playerFarm = farm;
 	}
+	
+	// called from setup window
+	public void setPlayer(Farmer farmer, String name, int age) {
+		player = farmer;
+		player.setAge(age);
+		player.setName(name);
+	}
+	
+	public void setPlayerFarm(Farm farm, String name) {
+		playerFarm = farm;
+		playerFarm.setName(name);
+		playerFarm.setFarmer(player);
+	}
+	
+	public void setDays(int days) {
+		daysRemaining = days;
+	}
+	
 	
 	public static void setFarmer(String name, int age) {
 		Scanner in = new Scanner(System.in);
