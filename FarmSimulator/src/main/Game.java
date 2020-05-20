@@ -16,6 +16,18 @@ public class Game {
 //		playerFarm = farm;
 	}
 	
+	public Farmer getPlayer() {
+		return player;
+	}
+	
+	public Farm getPlayerFarm() {
+		return playerFarm;
+	}
+	
+	public int getDaysRemaining() {
+		return daysRemaining;
+	}
+	
 	// called from setup window
 	public void setPlayer(Farmer farmer, String name, int age) {
 		player = farmer;
@@ -29,7 +41,7 @@ public class Game {
 		playerFarm.setFarmer(player);
 	}
 	
-	public void setDays(int days) {
+	public void setDaysRemaining(int days) {
 		daysRemaining = days;
 	}
 	
@@ -224,11 +236,13 @@ public class Game {
 		System.out.println("\n");
 	}	
 	
-	public static void tendLand() {
+	public static String tendLand() {
+		String message = "";
 		actions--;
 		playerFarm.tendLand();
-		System.out.println("Your farm is looking tidy and well maintained after tending to the land.");
-		System.out.println("Your animals are healthier and happier, and your crops will grow faster.\n");		
+		message += "Your farm is looking tidy and well maintained after tending to the land.";
+		message += "Your animals are healthier and happier, and your crops will grow faster.\n";
+		return message;
 	}
 	
 	public static void moneyBonus() { // daily money bonus for animal happiness/health
@@ -244,14 +258,15 @@ public class Game {
 		}
 	}
 	
-	public static void animalLoss() {
+	public static String animalLoss() {
 		boolean death = false;
+		String message = "";
 		List<Animal> deadAnimals = new ArrayList<Animal>();
 		for (Animal animal : playerFarm.getAnimals()) {
 			String condition = animal.dailyLoss();
 			if (condition != "") {
-				System.out.println("A " + animal.getType() + " on your farm died overnight due to the following condition(s):\n");
-				System.out.println(condition);
+				message += ("A " + animal.getType() + " on your farm died overnight due to the following condition(s):\n");
+				message += (condition + "\n");
 				deadAnimals.add(animal);
 				
 				death = true;
@@ -261,8 +276,9 @@ public class Game {
 			for (Animal deadAnimal : deadAnimals) {
 				playerFarm.deadAnimal(deadAnimal);
 			}			
-			System.out.println("Feed and play with your animals regularly to sustain their health and happiness.\n");
-		}		
+			message += ("\nFeed and play with your animals regularly to sustain their health and happiness.\n");
+		}	
+		return message;
 	}
 	
 	public static void cropGrowth() {
@@ -271,13 +287,15 @@ public class Game {
 		}
 	}
 	
-	public static void dailyChange() {
+	public String dailyChange() {
+		String message = "on your farm died overnight due to the following condition(s):\\n\\nFeed and play with your animals regularly to sustain their health and happiness.\\n";
 		moneyBonus();
 		animalHealthBonus();
 		if (daysRemaining > 0) {
-			animalLoss();
+			message += animalLoss();
 		}
 		cropGrowth();		
+		return message;
 	}
 	
 	
@@ -298,22 +316,37 @@ public class Game {
 	}
 	
 	
-	public static void endGame() {
+	public static String endGame() {
+		String message = "";
 		double animalPoints = endGameAnimals();
 		double cropPoints = endGameCrops();
 		double moneyPoints = playerFarm.getMoney();
 		double finalScore = animalPoints + cropPoints + moneyPoints;
-		System.out.println("Congratulations, you finished the game!\n");
-		System.out.println("You earned a total of:");
-		System.out.println(String.format("%.0f", animalPoints) + " points from your final animal health and happiness levels.");
-		System.out.println(String.format("%.0f", cropPoints) + " points from the crops you own that are still growing.");
-		System.out.println(String.format("%.0f", moneyPoints) + " points from the final total dollars in your farm's bank account.\n");
-		System.out.println("Your final score is:");
-		System.out.println(String.format("%.0f", finalScore) + " points.");	
+		message += ("Congratulations, you finished the game!\n\n");
+		message += ("You earned a total of:\n");
+		message += (String.format("%.0f", animalPoints) + " points from your final animal health and happiness levels.\n");
+		message += (String.format("%.0f", cropPoints) + " points from the crops you own that are still growing.\n");
+		message += (String.format("%.0f", moneyPoints) + " points from the final total dollars in your farm's bank account.\n\n");
+		message += ("Your final score is:\n");
+		message += (String.format("%.0f", finalScore) + " points.");	
+		return message;
+	}
+	
+	public void mainGameLaunch() {
+		MainGameWindow window = new MainGameWindow(this);
+		
 	}
 	
 
 	public static void main(String[] args) {
+		Game game = new Game();
+		StartGameWindow window = new StartGameWindow(game);
+		
+		
+		
+		
+		
+		
 		Scanner in = new Scanner(System.in);
 		do {
 			System.out.println("How many days would you like your game to last? Please Select 5-10");
@@ -398,13 +431,13 @@ public class Game {
 					feedAnimals();
 				}
 				else if (action == 9) {
-					tendLand();
+					System.out.println(tendLand());
 				}
 			}
 			
 			daysRemaining -= 1; // moved this out by one into "while (daysRemaining > 0)" loop
-			dailyChange(); // daily bonuses, growth
+			//System.out.println(dailyChange()); // daily bonuses, growth
 		}
-		endGame(); 
+		System.out.println(endGame()); 
 	}
 }

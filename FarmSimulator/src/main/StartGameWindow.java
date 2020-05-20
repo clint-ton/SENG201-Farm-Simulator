@@ -59,6 +59,7 @@ public class StartGameWindow {
 		createFarmerList();
 		createFarmList();
 		initialize();
+		frmFarmSetup.setVisible(true);
 	}
 	
 	public void createFarmerList() {
@@ -85,8 +86,9 @@ public class StartGameWindow {
 		frmFarmSetup.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome to Farm Simulator!");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblNewLabel.setBounds(283, 22, 400, 48);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setBounds(21, 22, 955, 48);
 		frmFarmSetup.getContentPane().add(lblNewLabel);
 		
 		JLabel playerNameLabel = new JLabel("Enter your name:");
@@ -236,7 +238,9 @@ public class StartGameWindow {
 					int age = Integer.parseInt(ageText);
 					game.setPlayer(selectedFarmer, playerNameText.getText(), age);
 					game.setPlayerFarm(selectedFarm, farmNameText.getText());
-					game.setDays(daysRemainingSlider.getValue());
+					game.setDaysRemaining(daysRemainingSlider.getValue());
+					game.mainGameLaunch();
+					frmFarmSetup.dispose();
 				}
 				
 				
@@ -248,6 +252,8 @@ public class StartGameWindow {
 		startGameButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		startGameButton.setBounds(845, 524, 131, 29);
 		frmFarmSetup.getContentPane().add(startGameButton);
+		
+		
 		
 		
 	}
