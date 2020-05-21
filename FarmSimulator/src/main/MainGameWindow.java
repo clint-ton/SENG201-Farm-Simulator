@@ -127,6 +127,19 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(noActionsErrorLbl);
 		
 		JButton tendLandBtn = new JButton("Tend to Farm Land");
+		tendLandBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					noActionsErrorLbl.setText("No daily actions remaining.");
+				} else {
+					String message = game.tendLand();
+					JOptionPane frame = new JOptionPane();
+					JOptionPane.showMessageDialog(frame, message);	
+					game.mainGameLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
 		tendLandBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tendLandBtn.setBounds(75, 412, 452, 48);
 		mainGameWindow.getContentPane().add(tendLandBtn);
@@ -158,6 +171,16 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(tendCropBtn);
 		
 		JButton harvestCropBtn = new JButton("Harvest a Crop");
+		harvestCropBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					noActionsErrorLbl.setText("No daily actions remaining.");
+				} else {
+					game.harvestCropLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
 		harvestCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		harvestCropBtn.setBounds(75, 238, 452, 48);
 		mainGameWindow.getContentPane().add(harvestCropBtn);
@@ -178,6 +201,22 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(feedAnimalsBtn);
 		
 		JButton playAnimalsBtn = new JButton("Play with Animals");
+		playAnimalsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					noActionsErrorLbl.setText("No daily actions remaining.");
+				} else if (game.getPlayerFarm().getAnimals().size() == 0) {
+					JOptionPane frame = new JOptionPane();
+					JOptionPane.showMessageDialog(frame, "You have no animals to play with.");	
+				} else {
+					String message = game.playWithAnimals();
+					JOptionPane frame = new JOptionPane();
+					JOptionPane.showMessageDialog(frame, message);					
+					game.mainGameLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
 		playAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		playAnimalsBtn.setBounds(75, 354, 452, 48);
 		mainGameWindow.getContentPane().add(playAnimalsBtn);

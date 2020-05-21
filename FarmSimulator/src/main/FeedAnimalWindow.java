@@ -189,10 +189,10 @@ public class FeedAnimalWindow {
 		feedBtn.setBounds(789, 512, 172, 29);
 		feedAnimalWindow.getContentPane().add(feedBtn);
 		
-		JLabel lblCtrlshiftClick = new JLabel("Ctrl/Shift + Click to select up to 10 animals.");
-		lblCtrlshiftClick.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCtrlshiftClick.setBounds(62, 467, 399, 29);
-		feedAnimalWindow.getContentPane().add(lblCtrlshiftClick);
+		JLabel ctrlshiftLbl = new JLabel("Ctrl/Shift + Click to select up to 10 animals.");
+		ctrlshiftLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ctrlshiftLbl.setBounds(62, 467, 399, 29);
+		feedAnimalWindow.getContentPane().add(ctrlshiftLbl);
 		
 
 		

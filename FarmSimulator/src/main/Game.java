@@ -99,7 +99,7 @@ public class Game {
 		actions--;
 		playerFarm.tendLand();
 		message += "Your farm is looking tidy and well maintained after tending to the land." + nln;
-		message += "Your animals are healthier and happier, and your crops will grow faster." + nln;
+		message += "Your animals will be healthier and happier, and your crops will grow faster." + nln;
 		return message;
 	}
 	
@@ -203,6 +203,10 @@ public class Game {
 		FeedAnimalWindow window = new FeedAnimalWindow(this);
 	}
 	
+	public void harvestCropLaunch() {
+		HarvestCropWindow window = new HarvestCropWindow(this);
+	}
+	
 	public static void main(String[] args) {     // for GUI application
 		Game game = new Game();
 		StartGameWindow window = new StartGameWindow(game);
@@ -304,7 +308,12 @@ public class Game {
 //					}
 //				}
 //				else if (action == 7) {
-//					System.out.println(game.playWithAnimals());
+//					if (game.getAnimals().size() == 0) {
+//						System.out.println("You have no animals to play with.");
+//					} else {
+//						System.out.println(game.playWithAnimals());
+//					}
+// 
 //				}
 //				else if (action == 8) {
 //					AnimalItem selectedFood = selector.selectAnimalItem();

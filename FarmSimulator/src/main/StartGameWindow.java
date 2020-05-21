@@ -177,6 +177,7 @@ public class StartGameWindow {
 		DefaultListModel<Farm> farmTypeListModel = new DefaultListModel<Farm>();
 		farmTypeListModel.addAll(farmTypes);
 		JList<Farm> farmTypeList = new JList<Farm>(farmTypeListModel);
+		farmTypeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		farmTypeList.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		farmTypeList.setBackground(UIManager.getColor("Button.background"));
 		farmTypeList.setFont(new Font("Tahoma", Font.PLAIN, 12));
