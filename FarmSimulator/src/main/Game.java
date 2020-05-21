@@ -195,6 +195,14 @@ public class Game {
 		
 	}
 	
+	public void tendCropLaunch() {
+		TendCropWindow window = new TendCropWindow(this);
+	}
+	
+	public void feedAnimalLaunch() {
+		FeedAnimalWindow window = new FeedAnimalWindow(this);
+	}
+	
 	public static void main(String[] args) {     // for GUI application
 		Game game = new Game();
 		StartGameWindow window = new StartGameWindow(game);

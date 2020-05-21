@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 public class StartGameWindow {
 
@@ -153,19 +154,20 @@ public class StartGameWindow {
 		lblSelectYourStarter.setBounds(318, 268, 221, 29);
 		farmSetupWindow.getContentPane().add(lblSelectYourStarter);
 		
-		JLabel selectedFarmerLabel = new JLabel("");
+		JLabel selectedFarmerLabel = new JLabel("Your Farmer Skill: ");
 		selectedFarmerLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		selectedFarmerLabel.setBounds(21, 480, 221, 36);
+		selectedFarmerLabel.setBounds(21, 470, 292, 36);
 		farmSetupWindow.getContentPane().add(selectedFarmerLabel);
 		
-		JLabel selectedFarmLabel = new JLabel("");
+		JLabel selectedFarmLabel = new JLabel("Your Starter Farm: ");
 		selectedFarmLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		selectedFarmLabel.setBounds(318, 480, 221, 36);
+		selectedFarmLabel.setBounds(318, 470, 341, 36);
 		farmSetupWindow.getContentPane().add(selectedFarmLabel);
 		
 		DefaultListModel<Farmer> farmerSkillListModel = new DefaultListModel<Farmer>();
 		farmerSkillListModel.addAll(farmerTypes);		
 		JList<Farmer> farmerSkillList = new JList<Farmer>(farmerSkillListModel);
+		farmerSkillList.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		farmerSkillList.setBackground(UIManager.getColor("Button.background"));
 		farmerSkillList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		farmerSkillList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -175,9 +177,9 @@ public class StartGameWindow {
 		DefaultListModel<Farm> farmTypeListModel = new DefaultListModel<Farm>();
 		farmTypeListModel.addAll(farmTypes);
 		JList<Farm> farmTypeList = new JList<Farm>(farmTypeListModel);
+		farmTypeList.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		farmTypeList.setBackground(UIManager.getColor("Button.background"));
 		farmTypeList.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		farmTypeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		farmTypeList.setBounds(318, 307, 658, 96);
 		farmSetupWindow.getContentPane().add(farmTypeList);
 		
@@ -186,8 +188,10 @@ public class StartGameWindow {
 		JButton selectFarmerButton = new JButton("Select Farmer Skill");
 		selectFarmerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedFarmer = farmerSkillList.getSelectedValue();
-				selectedFarmerLabel.setText(selectedFarmer.getSkill());
+				if (farmerSkillList.getSelectedIndex() != -1) {
+					selectedFarmer = farmerSkillList.getSelectedValue();
+					selectedFarmerLabel.setText("Your Farmer Skill: " + selectedFarmer.getSkill());
+				}
 			}
 		});
 		selectFarmerButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -197,23 +201,15 @@ public class StartGameWindow {
 		JButton btnSelectStarterFarm = new JButton("Select Starter Farm");
 		btnSelectStarterFarm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				selectedFarm = farmTypeList.getSelectedValue();
-				selectedFarmLabel.setText(selectedFarm.getType());
+				if (farmTypeList.getSelectedIndex() != -1) {
+					selectedFarm = farmTypeList.getSelectedValue();
+					selectedFarmLabel.setText("Your Starter Farm: " + selectedFarm.getType());
+				}
 			}
 		});
 		btnSelectStarterFarm.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSelectStarterFarm.setBounds(318, 421, 189, 29);
 		farmSetupWindow.getContentPane().add(btnSelectStarterFarm);
-		
-		JLabel yourFarmerlbl = new JLabel("Your Farmer Skill:");
-		yourFarmerlbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		yourFarmerlbl.setBounds(21, 456, 221, 36);
-		farmSetupWindow.getContentPane().add(yourFarmerlbl);
-		
-		JLabel yourFarmlbl = new JLabel("Your Starter Farm:");
-		yourFarmlbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		yourFarmlbl.setBounds(318, 456, 221, 36);
-		farmSetupWindow.getContentPane().add(yourFarmlbl);
 		
 		JLabel startErrorLabel = new JLabel("");
 		startErrorLabel.setForeground(Color.RED);
@@ -234,9 +230,9 @@ public class StartGameWindow {
 					startErrorLabel.setText("Please enter name.");
 				} else if (ageText == null) {
 					startErrorLabel.setText("Please enter valid age.");
-				} else if (selectedFarmerLabel.getText().isEmpty()) {
+				} else if (selectedFarmerLabel.getText() == "Your Farmer Skill: ") {
 					startErrorLabel.setText("Please select farmer skill.");
-				} else if (selectedFarmLabel.getText().isEmpty()) {
+				} else if (selectedFarmLabel.getText() == "Your Starter Farm: ") {
 					startErrorLabel.setText("Please select starter farm.");
 				} else {
 					startErrorLabel.setText("");

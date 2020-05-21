@@ -65,7 +65,7 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(farmTitlelbl);
 		
 		JLabel daysRemaininglbl = new JLabel("New label");
-		daysRemaininglbl.setBounds(21, 516, 338, 35);
+		daysRemaininglbl.setBounds(75, 519, 338, 29);
 		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		daysRemaininglbl.setText("Days remaining: " + game.getDaysRemaining());
 		mainGameWindow.getContentPane().add(daysRemaininglbl);
@@ -73,15 +73,27 @@ public class MainGameWindow {
 		JButton nextDayButton = new JButton("Next Day");
 		nextDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String message = game.dailyChange();
-				if (message != "") {
-					JOptionPane frame = new JOptionPane();
-					JOptionPane.showMessageDialog(frame, message);
+				if (game.getActions() > 0) {
+					String prompt = "Are you sure? You still have " + game.getActions() + " daily actions remaining.";
+					JOptionPane nextDayChoose = new JOptionPane();
+					int choice = JOptionPane.showConfirmDialog(nextDayChoose, prompt, "Next Day", JOptionPane.YES_NO_OPTION);
+					if (choice == JOptionPane.YES_OPTION) {
+						String animalMessage = game.dailyChange();
+						if (animalMessage != "") {
+							JOptionPane animalFrame = new JOptionPane();
+							JOptionPane.showMessageDialog(animalFrame, animalMessage);
+						}
+						if (game.getDaysRemaining() > 0) {
+							String greeter = "Good Morning! You have " + game.getDaysRemaining() + " days remaining.";
+							JOptionPane greeterFrame = new JOptionPane();
+							JOptionPane.showMessageDialog(greeterFrame, greeter);
+							game.mainGameLaunch();
+							mainGameWindow.dispose();
+				        } else {
+				        	// end game
+				        }
+					}
 				}
-				if (game.getDaysRemaining() > 0) {
-					MainGameWindow window = new MainGameWindow(game);
-					mainGameWindow.dispose();
-		        }
 			}
 		});
 		nextDayButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -90,13 +102,13 @@ public class MainGameWindow {
 		
 		JLabel accBalanceLbl = new JLabel("New label");
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(456, 516, 392, 35);
+		accBalanceLbl.setBounds(508, 519, 392, 29);
 		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
 		mainGameWindow.getContentPane().add(accBalanceLbl);
 		
 		JLabel daysRemainingLbl = new JLabel("Days remaining: 0");
 		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysRemainingLbl.setBounds(206, 516, 338, 35);
+		daysRemainingLbl.setBounds(258, 519, 338, 29);
 		daysRemainingLbl.setText("Daily Actions Remaining: " + game.getActions());
 		mainGameWindow.getContentPane().add(daysRemainingLbl);
 		
@@ -135,7 +147,7 @@ public class MainGameWindow {
 				if (game.getActions() == 0) {
 					noActionsErrorLbl.setText("No daily actions remaining.");
 				} else {
-					TendCropWindow tendCropWindow = new TendCropWindow(game);
+					game.tendCropLaunch();
 					mainGameWindow.dispose();
 				}
 				
@@ -151,6 +163,16 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(harvestCropBtn);
 		
 		JButton feedAnimalsBtn = new JButton("Feed Animals");
+		feedAnimalsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					noActionsErrorLbl.setText("No daily actions remaining.");
+				} else {
+					game.feedAnimalLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
 		feedAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		feedAnimalsBtn.setBounds(75, 296, 452, 48);
 		mainGameWindow.getContentPane().add(feedAnimalsBtn);
