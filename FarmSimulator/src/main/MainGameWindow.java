@@ -11,10 +11,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import java.awt.Color;
 
 public class MainGameWindow {
 
-	private JFrame frmFarmSimulator;
+	private JFrame mainGameWindow;
 	
 	
 	private Game game;
@@ -27,7 +29,7 @@ public class MainGameWindow {
 			public void run() {
 				try {
 					MainGameWindow window = new MainGameWindow(new Game());
-					window.frmFarmSimulator.setVisible(true);
+					window.mainGameWindow.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,32 +43,32 @@ public class MainGameWindow {
 	public MainGameWindow(Game game) {
 		this.game = game;
 		initialize();
-		frmFarmSimulator.setVisible(true);
+		mainGameWindow.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmFarmSimulator = new JFrame();
-		frmFarmSimulator.setResizable(false);
-		frmFarmSimulator.setTitle("Farm Simulator");
-		frmFarmSimulator.setBounds(100, 100, 1000, 600);
-		frmFarmSimulator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmFarmSimulator.getContentPane().setLayout(null);
+		mainGameWindow = new JFrame();
+		mainGameWindow.setResizable(false);
+		mainGameWindow.setTitle("Farm Simulator");
+		mainGameWindow.setBounds(100, 100, 1000, 600);
+		mainGameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainGameWindow.getContentPane().setLayout(null);
 		
 		JLabel farmTitlelbl = new JLabel("");
-		farmTitlelbl.setBounds(10, 22, 976, 48);
+		farmTitlelbl.setBounds(10, 37, 976, 48);
 		farmTitlelbl.setHorizontalAlignment(SwingConstants.CENTER);
 		farmTitlelbl.setFont(new Font("Tahoma", Font.BOLD, 30));
-		farmTitlelbl.setText(game.getPlayerFarm().getName());
-		frmFarmSimulator.getContentPane().add(farmTitlelbl);
+		farmTitlelbl.setText(game.getPlayerFarm().getName() + " Manager");
+		mainGameWindow.getContentPane().add(farmTitlelbl);
 		
 		JLabel daysRemaininglbl = new JLabel("New label");
-		daysRemaininglbl.setBounds(10, 527, 338, 35);
+		daysRemaininglbl.setBounds(21, 516, 338, 35);
 		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		daysRemaininglbl.setText("Days remaining: " + game.getDaysRemaining());
-		frmFarmSimulator.getContentPane().add(daysRemaininglbl);
+		mainGameWindow.getContentPane().add(daysRemaininglbl);
 		
 		JButton nextDayButton = new JButton("Next Day");
 		nextDayButton.addActionListener(new ActionListener() {
@@ -76,20 +78,88 @@ public class MainGameWindow {
 					JOptionPane frame = new JOptionPane();
 					JOptionPane.showMessageDialog(frame, message);
 				}
-				
 				if (game.getDaysRemaining() > 0) {
 					MainGameWindow window = new MainGameWindow(game);
-					frmFarmSimulator.dispose();
-			
+					mainGameWindow.dispose();
 		        }
-				
-				
-				
 			}
 		});
 		nextDayButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		nextDayButton.setBounds(855, 533, 131, 29);
-		frmFarmSimulator.getContentPane().add(nextDayButton);
+		nextDayButton.setBounds(836, 519, 131, 29);
+		mainGameWindow.getContentPane().add(nextDayButton);
+		
+		JLabel accBalanceLbl = new JLabel("New label");
+		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		accBalanceLbl.setBounds(456, 516, 392, 35);
+		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
+		mainGameWindow.getContentPane().add(accBalanceLbl);
+		
+		JLabel daysRemainingLbl = new JLabel("Days remaining: 0");
+		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		daysRemainingLbl.setBounds(206, 516, 338, 35);
+		daysRemainingLbl.setText("Daily Actions Remaining: " + game.getActions());
+		mainGameWindow.getContentPane().add(daysRemainingLbl);
+		
+		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
+		dailyActionsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		dailyActionsLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
+		dailyActionsLbl.setBounds(75, 132, 452, 35);
+		dailyActionsLbl.setText(game.getPlayer().getName() + "'s Daily Actions:");
+		mainGameWindow.getContentPane().add(dailyActionsLbl);
+		
+		JLabel noActionsErrorLbl = new JLabel("");
+		noActionsErrorLbl.setForeground(Color.RED);
+		noActionsErrorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		noActionsErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		noActionsErrorLbl.setBounds(75, 470, 452, 35);
+		mainGameWindow.getContentPane().add(noActionsErrorLbl);
+		
+		JButton tendLandBtn = new JButton("Tend to Farm Land");
+		tendLandBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tendLandBtn.setBounds(75, 412, 452, 48);
+		mainGameWindow.getContentPane().add(tendLandBtn);
+		
+		JButton farmStatusBtn = new JButton("View Farm Status");
+		farmStatusBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		farmStatusBtn.setBounds(595, 180, 306, 131);
+		mainGameWindow.getContentPane().add(farmStatusBtn);
+		
+		JButton visitStoreBtn = new JButton("Visit Store");
+		visitStoreBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		visitStoreBtn.setBounds(595, 329, 306, 131);
+		mainGameWindow.getContentPane().add(visitStoreBtn);
+		
+		JButton tendCropBtn = new JButton("Tend to a Crop");
+		tendCropBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					noActionsErrorLbl.setText("No daily actions remaining.");
+				} else {
+					TendCropWindow tendCropWindow = new TendCropWindow(game);
+					mainGameWindow.dispose();
+				}
+				
+			}
+		});
+		tendCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tendCropBtn.setBounds(75, 180, 452, 48);
+		mainGameWindow.getContentPane().add(tendCropBtn);
+		
+		JButton harvestCropBtn = new JButton("Harvest a Crop");
+		harvestCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		harvestCropBtn.setBounds(75, 238, 452, 48);
+		mainGameWindow.getContentPane().add(harvestCropBtn);
+		
+		JButton feedAnimalsBtn = new JButton("Feed Animals");
+		feedAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		feedAnimalsBtn.setBounds(75, 296, 452, 48);
+		mainGameWindow.getContentPane().add(feedAnimalsBtn);
+		
+		JButton playAnimalsBtn = new JButton("Play with Animals");
+		playAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		playAnimalsBtn.setBounds(75, 354, 452, 48);
+		mainGameWindow.getContentPane().add(playAnimalsBtn);
+		
+		
 	}
-
 }
