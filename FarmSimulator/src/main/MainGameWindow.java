@@ -145,11 +145,23 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(tendLandBtn);
 		
 		JButton farmStatusBtn = new JButton("View Farm Status");
+		farmStatusBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.statusLaunch();
+				mainGameWindow.dispose();
+			}
+		});
 		farmStatusBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		farmStatusBtn.setBounds(595, 180, 306, 131);
 		mainGameWindow.getContentPane().add(farmStatusBtn);
 		
 		JButton visitStoreBtn = new JButton("Visit Store");
+		visitStoreBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.storeLaunch();
+				mainGameWindow.dispose();
+			}
+		});
 		visitStoreBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		visitStoreBtn.setBounds(595, 329, 306, 131);
 		mainGameWindow.getContentPane().add(visitStoreBtn);

@@ -36,6 +36,14 @@ public class Animal {
 		return health;
 	}
 	
+	public String toString() {
+		return(type + ": Health = " + health + " Happiness = " + happiness);
+	}
+	
+	public String storeString() {
+		return (type + Game.nln + "Daily Income = $" + income + Game.nln + "Price/Unit = $" + price);
+	}
+	
 	public void feed(AnimalItem item) {
 		health += item.getHealthBoost();
 		if (health > 100) {

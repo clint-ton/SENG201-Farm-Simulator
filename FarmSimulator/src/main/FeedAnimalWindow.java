@@ -26,7 +26,7 @@ public class FeedAnimalWindow {
 	private JFrame feedAnimalWindow;
 	
 	private Game game;
-	private ArrayList<Animal> selectedAnimals = new ArrayList<Animal>();
+	private List<Animal> selectedAnimals = new ArrayList<Animal>();
 	private AnimalItem selectedFood = null;
 
 	/**
@@ -138,14 +138,14 @@ public class FeedAnimalWindow {
 		
 		
 
-		JButton selectAnimalsBtn = new JButton("Add Selected Animals");
+		JButton selectAnimalsBtn = new JButton("Select Animals");
 		selectAnimalsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (animalList.getSelectedIndex() != -1) {
 					if (animalList.getSelectedValuesList().size() > 10) {
 						errorLabel.setText("Can only feed up to 10 animals.");
 					} else {
-						selectedAnimals.addAll(animalList.getSelectedValuesList());
+						selectedAnimals = animalList.getSelectedValuesList();
 					}
 					selectedAnimalsLbl.setText(selectedAnimals.size() + " Animals selected.");
 				}
@@ -189,7 +189,7 @@ public class FeedAnimalWindow {
 		feedBtn.setBounds(789, 512, 172, 29);
 		feedAnimalWindow.getContentPane().add(feedBtn);
 		
-		JLabel ctrlshiftLbl = new JLabel("Ctrl/Shift + Click to select up to 10 animals.");
+		JLabel ctrlshiftLbl = new JLabel("Ctrl+Click or Shift+Click to select up to 10 animals.");
 		ctrlshiftLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ctrlshiftLbl.setBounds(62, 467, 399, 29);
 		feedAnimalWindow.getContentPane().add(ctrlshiftLbl);

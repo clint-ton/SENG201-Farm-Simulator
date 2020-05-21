@@ -241,6 +241,7 @@ public class StartGameWindow {
 					game.setPlayer(selectedFarmer, playerNameText.getText(), age);
 					game.setPlayerFarm(selectedFarm, farmNameText.getText());
 					game.setDaysRemaining(daysRemainingSlider.getValue());
+					game.setStore();
 					game.mainGameLaunch();
 					farmSetupWindow.dispose();
 				}

@@ -61,26 +61,21 @@ public class HarvestCropWindow {
 		harvestWindow.getContentPane().setLayout(null);
 		
 		
-		JLabel harvestCropBtn = new JLabel("Harvest a Crop");
-		harvestCropBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		harvestCropBtn.setFont(new Font("Tahoma", Font.BOLD, 30));
-		harvestCropBtn.setBounds(10, 33, 966, 48);
-		harvestWindow.getContentPane().add(harvestCropBtn);
+		JLabel harvestCropLbl = new JLabel("Harvest a Crop");
+		harvestCropLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		harvestCropLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
+		harvestCropLbl.setBounds(10, 33, 966, 48);
+		harvestWindow.getContentPane().add(harvestCropLbl);
 		
 		
-		JLabel cropsLbl = new JLabel(game.getPlayer().getName() + "'s Animals:");
-		if (game.getPlayerFarm().getCrops().size() == 0) {
-			cropsLbl.setText("You have no Animals.");
+		JLabel cropsLbl = new JLabel(game.getPlayer().getName() + "'s Crops:");
+		if (game.getPlayerFarm().getHarvestCrops().size() == 0) {
+			cropsLbl.setText("You have no Crops ready to harvest.");
 		}
 		cropsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cropsLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cropsLbl.setBounds(293, 125, 399, 32);
-		harvestWindow.getContentPane().add(cropsLbl);
-		if (game.getPlayerFarm().getCropItems().size() == 0) {
-			cropsLbl.setText("You have no Crops.");
-		}
-		
-		
+		harvestWindow.getContentPane().add(cropsLbl);		
 		
 		JButton backBtn = new JButton("Back");
 		backBtn.addActionListener(new ActionListener() {
@@ -107,7 +102,7 @@ public class HarvestCropWindow {
 		
 		
 		DefaultListModel<Crop> cropListModel = new DefaultListModel<Crop>();
-		cropListModel.addAll(game.getPlayerFarm().getCrops());
+		cropListModel.addAll(game.getPlayerFarm().getHarvestCrops());
 		JList<Crop> cropList = new JList<Crop>(cropListModel);
 		cropList.setBackground(UIManager.getColor("Button.background"));
 		JScrollPane cropScroll = new JScrollPane(cropList);

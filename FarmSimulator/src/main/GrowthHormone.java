@@ -3,7 +3,7 @@ package main;
 public class GrowthHormone extends AnimalItem {
 	
 	public GrowthHormone() {
-		super("Growth Hormone", 80, 30);
+		super("Growth Hormone", 80.00, 30);
 	}
 
 }

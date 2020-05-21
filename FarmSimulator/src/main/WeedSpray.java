@@ -3,7 +3,7 @@ package main;
 public class WeedSpray extends CropItem{
 	
 	public WeedSpray() {
-		super("Weed Spray", 125.00, 1);
+		super("Weed Spray", 55.00, 1);
 	}
 
 }

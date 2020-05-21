@@ -10,7 +10,7 @@ public class Game {
 	private int actions = 2;
 	private Store store;
 	private boolean nextDay;
-	private static String nln = System.lineSeparator(); 
+	public static String nln = System.lineSeparator(); 
 	
 	public Game() { //Farmer farmer, Farm farm) {
 //		player = farmer;
@@ -33,6 +33,10 @@ public class Game {
 		return daysRemaining;
 	}
 	
+	public Store getStore() {
+		return store;
+	}
+	
 	// called from setup window
 	public void setPlayer(Farmer farmer, String name, int age) {
 		player = farmer;
@@ -50,17 +54,46 @@ public class Game {
 		daysRemaining = days;
 	}
 	
+	public void setStore() {
+		store = new Store();
+	}
+	
 	public String waterCrop(Crop selectedCrop) {
 		selectedCrop.water();
 		actions--;
-		return ("Your " + selectedCrop.getType() + " crop is growing fast and healthy.");
+		return ("You watered your " + selectedCrop.getType() + " crop." + nln + "It is growing fast and healthy.");
 	}
+	
+	public String purchase(Object product, double price, int quantity) {
+		String type = "";
+		if (product instanceof Crop) {
+			for (int i = 0; i < quantity ; i++) {
+				Crop crop = (Crop) product;
+				playerFarm.purchaseCrop(crop);
+				type = crop.getType();
+			}
+		} else if (product instanceof Animal) {
+			for (int i = 0; i < quantity ; i++) {
+				Animal animal = (Animal) product;
+				playerFarm.purchaseAnimal(animal);
+				type = animal.getType();
+			}
+		} else {
+			for (int i = 0; i < quantity ; i++) {
+				Item item = (Item) product;
+				playerFarm.purchaseItem(item);
+				type = item.getName();				
+			}
+		}
+		return ("Success - " + quantity + " " + type + " purchased for $" + price*quantity);
+	}
+	
 	
 	public String tendToCrop(CropItem selectedItem, Crop selectedCrop) {
 		selectedCrop.tendCrop(selectedItem);
 		playerFarm.useItem(selectedItem);
 		actions--; // reduce action count only if crop is tended to
-	    return ("Your " + selectedCrop.getType() + " crop is growing fast and healthy.");
+	    return ("You used " + selectedItem.getName() + " on your " + selectedCrop.getType() + " crop." + nln + "It is growing fast and healthy.");
 	}
 	
 	public String harvestCrop(Crop selectedCrop) {
@@ -205,6 +238,18 @@ public class Game {
 	
 	public void harvestCropLaunch() {
 		HarvestCropWindow window = new HarvestCropWindow(this);
+	}
+	
+	public void storeLaunch() {
+		StoreWindow window = new StoreWindow(this);
+	}
+	
+	public void inventoryLaunch() {
+		InventoryWindow window = new InventoryWindow(this);
+	}
+	
+	public void statusLaunch() {
+		StatusWindow window = new StatusWindow(this);
 	}
 	
 	public static void main(String[] args) {     // for GUI application

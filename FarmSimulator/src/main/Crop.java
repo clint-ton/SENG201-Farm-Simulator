@@ -35,6 +35,15 @@ public class Crop {
 		return ageDays;
 	}
 	
+	public String toString() {
+		return (type + ": Days Growing = " + ageDays + " days" + "Days to Harvest =  " + (harvestPeriod - ageDays) + " days");
+	}
+	
+	public String storeString() {
+		return (type + Game.nln + "Harvest Period = " + harvestPeriod + " days" + Game.nln + "Sell Price = $" + sellPrice + Game.nln + "Price/Unit = $" + purchasePrice);
+	}
+	
+	
 	public void tendCrop(CropItem item) {
 		ageDays = ageDays + item.getGrowthBoost();
 		
@@ -60,12 +69,14 @@ public class Crop {
 //	public static void main(String[] args) {
 //	    Wheat wheat = new Wheat();
 //		wheat.water();
-//		wheat.grow();
+//		Object j = wheat;
+//		System.out.println(j instanceof Wheat);
 //		Fertiliser item1 = new Fertiliser();
 //		wheat.tendCrop(item1);
+//		Wheat x = (Wheat) j;
 //		
 //		while (wheat.getAgeDays() < wheat.getHarvestPeriod()) {
-//			wheat.grow();	
+//			//wheat.grow();	
 //		}
 //
 //		System.out.println("Number of days to harvest: " + wheat.getAgeDays());
