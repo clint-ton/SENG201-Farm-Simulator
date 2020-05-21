@@ -88,6 +88,16 @@ public class Farm {
 		return cropItems;
 	}
 	
+	public List<Crop> getHarvestCrops() {
+		List<Crop> harvestCrops = new ArrayList<Crop>();
+		for (Crop crop : crops) {
+			if (crop.readyToHarvest()) {
+				harvestCrops.add(crop);
+			}
+		}
+		return harvestCrops;
+	}
+	
 	
 	public String toString() {
 		return (type + " Farm: Animal Income Multiplier = " + animalMoneyBonus + " --- Crop Income Multiplier = " + cropMoneyBonus + " --- Starting Balance = $" + money);

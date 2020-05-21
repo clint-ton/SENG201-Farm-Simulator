@@ -71,7 +71,6 @@ public class MainGameWindow {
 		JButton nextDayButton = new JButton("Next Day");
 		nextDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.setDaysRemaining(game.getDaysRemaining()-1);
 				String message = game.dailyChange();
 				if (message != "") {
 					JOptionPane frame = new JOptionPane();
