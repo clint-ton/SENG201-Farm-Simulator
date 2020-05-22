@@ -9,7 +9,8 @@ public class Game {
 	private int daysRemaining;
 	private int actions = 2;
 	private Store store;
-	private boolean nextDay;
+
+//	private boolean nextDay;
 	public static String nln = System.lineSeparator();  // newline character for specific machine
 	
 	public Game() { //Farmer farmer, Farm farm) {
@@ -38,6 +39,12 @@ public class Game {
 	}
 	
 	// called from setup window
+	/**
+	 * Creates the player, called from setup window
+	 * @param farmer
+	 * @param name
+	 * @param age
+	 */
 	public void setPlayer(Farmer farmer, String name, int age) {
 		player = farmer;
 		player.setAge(age);

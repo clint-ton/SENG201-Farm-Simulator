@@ -5,26 +5,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class checkFarmStatusTest {
+class FarmTest {
 
 	@Test
-	void noCropsAnimals() {
-		Farmer farmer = new Farmer("Animal Care", 2, 1);
+	void farmStatusEmpty() {
 		Farm farm = new Farm("Crop Growth", 2, 1, 1000);
 		
 		assertEquals("You have no crops or animals", farm.checkFarmStatus());
 		}
 	
 	@Test
-	void normalUse() {
-		Farmer farmer = new Farmer("Animal Care", 2, 1);
+	void farmStatusNormalUse() {
 		Farm farm = new Farm("Crop Growth", 2, 1, 1000);
 		Goat goat = new Goat();
 		Chicken chicken = new Chicken();
 		Rice rice = new Rice();
 		Berries berries = new Berries();
-				
-		farm.addMoney(999999);
+
 		farm.purchaseAnimal(goat);
 		farm.purchaseAnimal(chicken);
 		farm.purchaseCrop(rice);

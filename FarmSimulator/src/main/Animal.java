@@ -1,4 +1,10 @@
 package main;
+/**
+ * Contains the attributes and methods common
+ * to all animals
+ * 
+ *
+ */
 
 public class Animal {
 	
@@ -16,48 +22,79 @@ public class Animal {
 		this.health = 80; // Bought health of 80, max of 100 min of 0
 	}
 	
+	/**
+	 * Getter for animal type (cow, goat, etc.)
+	 *@return The animals type
+	 */
 	public String getType() {
 		return type;
 	}
 	
+	/**
+	 * Getter for price (purchase cost)
+	 * @return The price of the animal
+	 */
 	public double getPrice() {
 		return price;
 	}
-	
+	/**
+	 * Getter for daily income
+	 * @return The animals daily income
+	 */
 	public double getIncome() {
 		return income;
 	}
-	
+	/**
+	 * Getter for animal happiness
+	 * @return The animals happiness level
+	 */
 	public int getHappiness() {
 		return happiness;
 	}
-	
+	/**
+	 * Getter for health
+	 * @return The animals health
+	 */
 	public int getHealth() {
 		return health;
 	}
-	
+	/**
+	 * A textual representation of the animals state
+	 */
 	public String toString() {
 		return(type + ": Health = " + health + " Happiness = " + happiness);
 	}
 	
+	/**
+	 * Textual representation to be used by the store
+	 */
 	public String storeString() {
 		return (type + Game.nln + "Daily Income = $" + income + Game.nln + "Price/Unit = $" + price);
 	}
 	
+	/**
+	 * Uses the specified item granting a boost to health
+	 * @param item to be used
+	 */
 	public void feed(AnimalItem item) {
 		health += item.getHealthBoost();
 		if (health > 100) {
 			health = 100;
 		}
 	}
-	
+	/**
+	 * Increases happiness
+	 */
 	public void play() {
 		happiness += 20;
 		if (happiness > 100) {
 			happiness = 100;
 		}
 	}
-	
+	/**
+	 * Gives a bonus to happiness and health maxing out at 100
+	 * @param bonus to be given, capped at 9 for happiness
+	 */
 	public void dailyBonus(int bonus) {
 		health += bonus;
 		if (bonus > 9) {
@@ -72,7 +109,10 @@ public class Animal {
 			happiness = 100;
 		}
 	}
-	
+	/**
+	 * Decreases happiness and health by a set amount for daily decay
+	 * @return The animals condition, "" if animal is not dead
+	 */
 	public String dailyLoss() {
 		// Daily loss of happiness/health - implement at start of day 
 		String condition = "";
