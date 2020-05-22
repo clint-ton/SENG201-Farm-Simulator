@@ -81,7 +81,7 @@ public class StoreWindow {
 		
 		JLabel errorLbl = new JLabel("");
 		errorLbl.setForeground(Color.RED);
-		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		errorLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		errorLbl.setBounds(655, 468, 307, 35);
 		storeWindow.getContentPane().add(errorLbl);

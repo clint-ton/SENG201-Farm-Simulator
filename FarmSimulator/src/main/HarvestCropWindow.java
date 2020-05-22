@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 public class HarvestCropWindow {
 
@@ -69,6 +70,7 @@ public class HarvestCropWindow {
 		
 		
 		JLabel cropsLbl = new JLabel(game.getPlayer().getName() + "'s Crops:");
+		cropsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getHarvestCrops().size() == 0) {
 			cropsLbl.setText("You have no Crops ready to harvest.");
 		}

@@ -5,7 +5,7 @@ public class Farm1 extends Farm {
 	
 	
 	public Farm1() {
-		super("2x Animal Multiplier", 2, 1, 1000.00);
+		super("Animal Starter", 2, 1, 1000.00);
 	}
 	
 

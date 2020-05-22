@@ -10,7 +10,7 @@ public class Game {
 	private int actions = 2;
 	private Store store;
 	private boolean nextDay;
-	public static String nln = System.lineSeparator(); 
+	public static String nln = System.lineSeparator();  // newline character for specific machine
 	
 	public Game() { //Farmer farmer, Farm farm) {
 //		player = farmer;
@@ -120,7 +120,7 @@ public class Game {
 		for (int j = 0; j < animals.size(); j++) { // need to decide if food items feed all owned animals or up to a certain amount
 			animals.get(j).feed(food);
 		}
-		System.out.println("Your animals are well fed and nourished." + nln);
+		message += ("You fed " + animals.size() + " animals with " + food.getName() + "." + nln + "They are well fed and nourished." + nln);
 		playerFarm.useItem(food);
 		
 		actions--;
@@ -132,6 +132,8 @@ public class Game {
 		actions--;
 		playerFarm.tendLand();
 		message += "Your farm is looking tidy and well maintained after tending to the land." + nln;
+		message += "Crop Growth Bonus: +0.25 Days" + nln;
+		message += "Animal Health Bonus: +2 Points" + nln;
 		message += "Your animals will be healthier and happier, and your crops will grow faster." + nln;
 		return message;
 	}
@@ -179,6 +181,7 @@ public class Game {
 	
 	public String dailyChange() {
 		daysRemaining -= 1;
+		actions = 2;
 		String message = "";
 		moneyBonus();
 		animalHealthBonus();
@@ -206,21 +209,25 @@ public class Game {
 		return points;
 	}
 	
+	public double endGameTotal() {
+		return (endGameAnimals() + endGameCrops() + playerFarm.getMoney());
+	}
 	
-	public String endGame() {
+	public String endGameMessage() {
 		String message = "";
 		double animalPoints = endGameAnimals();
 		double cropPoints = endGameCrops();
 		double moneyPoints = playerFarm.getMoney();
-		double finalScore = animalPoints + cropPoints + moneyPoints;
-		message += ("Congratulations, you finished the game!" + nln + nln);
-		message += ("You earned a total of:" + nln);
 		message += (String.format("%.0f", animalPoints) + " points from your final animal health and happiness levels." + nln);
 		message += (String.format("%.0f", cropPoints) + " points from the crops you own that are still growing." + nln + "");
 		message += (String.format("%.0f", moneyPoints) + " points from the final total dollars in your farm's bank account." + nln + nln);
-		message += ("Your final score is:" + nln);
-		message += (String.format("%.0f", finalScore) + " points.");	
 		return message;
+	}
+	
+	
+	public static void startGameLaunch() {
+		Game game = new Game();
+		StartGameWindow window = new StartGameWindow(game);
 	}
 	
 	public void mainGameLaunch() {
@@ -252,9 +259,12 @@ public class Game {
 		StatusWindow window = new StatusWindow(this);
 	}
 	
+	public void endGameLaunch() {
+		EndGameWindow window = new EndGameWindow(this);
+	}
+	
 	public static void main(String[] args) {     // for GUI application
-		Game game = new Game();
-		StartGameWindow window = new StartGameWindow(game);
+		startGameLaunch();
 	}
 }
 	
@@ -291,7 +301,7 @@ public class Game {
 //			
 //			while(!game.nextDay) {
 //				int action = 0;
-//				System.out.println("You have " + game.actions + " actions avalible. " + nln + "" + nln + "");
+//				System.out.println("You have " + game.actions + " actions available. " + Game.nln + "" + Game.nln + "");
 //				do {
 //					System.out.println("What would you like to do? (please enter a number)");
 //					System.out.println("Free daily activities:");
@@ -309,7 +319,7 @@ public class Game {
 //					in.nextLine();
 //					
 //					if ((game.actions == 0) && ((action > 4) && (action < 10))) { // sets action out of range if a counted action is selected but no actions remaining
-//						System.out.println("Sorry, you have no daily actions remaining. Please select a free option." + nln + "");
+//						System.out.println("Sorry, you have no daily actions remaining. Please select a free option." + Game.nln + "");
 //						action = 10;
 //					}
 //				}
@@ -318,7 +328,7 @@ public class Game {
 //					System.out.println(game.playerFarm.checkFarmStatus());
 //				}
 //				else if (action == 2) {
-//					System.out.println("The farm currently has $" + game.playerFarm.getMoney() + " avalible");
+//					System.out.println("The farm currently has $" + game.playerFarm.getMoney() + " available");
 //				}
 //				else if (action == 3) {
 //					game.store.visitStore(game.playerFarm);
@@ -373,6 +383,10 @@ public class Game {
 //			
 //			System.out.println(game.dailyChange()); // daily bonuses, growth, reduce day count
 //		}
-//		System.out.println(game.endGame()); 
+//      System.out.println("Congratulations, you finished the game!" + Game.nln + Game.nln);
+//      System.out.println("You score a total of: " + Game.nln);
+//      System.out.println(game.endGame());
+//        System.out.println("Your final score is: ");
+//      System.out.println(String.format("%.0f", endGameTotal()) + " points.");
 //	}
 //}

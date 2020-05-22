@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.border.LineBorder;
 
 public class FeedAnimalWindow {
 
@@ -71,6 +72,7 @@ public class FeedAnimalWindow {
 		
 		
 		JLabel animalsLbl = new JLabel(game.getPlayer().getName() + "'s Animals:");
+		animalsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getCrops().size() == 0) {
 			animalsLbl.setText("You have no Animals.");
 		}
@@ -80,6 +82,7 @@ public class FeedAnimalWindow {
 		feedAnimalWindow.getContentPane().add(animalsLbl);
 		
 		JLabel foodLbl = new JLabel(game.getPlayer().getName() + "'s Food Items:");
+		foodLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getCropItems().size() == 0) {
 			foodLbl.setText("You have no Food Items.");
 		}
@@ -160,7 +163,7 @@ public class FeedAnimalWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (foodList.getSelectedIndex() != -1) {
 					selectedFood = foodList.getSelectedValue();
-					selectedFoodLbl.setText("Selected food: " + selectedFood.getName());
+					selectedFoodLbl.setText("Selected Food: " + selectedFood.getName());
 				}
 			}
 		});

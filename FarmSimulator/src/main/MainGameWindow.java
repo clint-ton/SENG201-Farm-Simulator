@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import javax.swing.JSeparator;
+import javax.swing.border.LineBorder;
+import javax.swing.UIManager;
 
 public class MainGameWindow {
 
@@ -64,46 +67,50 @@ public class MainGameWindow {
 		farmTitlelbl.setText(game.getPlayerFarm().getName() + " Manager");
 		mainGameWindow.getContentPane().add(farmTitlelbl);
 		
-		JLabel daysRemaininglbl = new JLabel("New label");
+		JLabel daysRemaininglbl = new JLabel("Days remaining: " + game.getDaysRemaining());
 		daysRemaininglbl.setBounds(75, 519, 338, 29);
 		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysRemaininglbl.setText("Days remaining: " + game.getDaysRemaining());
 		mainGameWindow.getContentPane().add(daysRemaininglbl);
 		
 		JButton nextDayButton = new JButton("Next Day");
+		if (game.getDaysRemaining() == 1) {
+			nextDayButton.setText("Finish Game");
+		}
 		nextDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int choice = -1;
 				if (game.getActions() > 0) {
 					String prompt = "Are you sure? You still have " + game.getActions() + " daily actions remaining.";
 					JOptionPane nextDayChoose = new JOptionPane();
-					int choice = JOptionPane.showConfirmDialog(nextDayChoose, prompt, "Next Day", JOptionPane.YES_NO_OPTION);
-					if (choice == JOptionPane.YES_OPTION) {
-						String animalMessage = game.dailyChange();
-						if (animalMessage != "") {
-							JOptionPane animalFrame = new JOptionPane();
-							JOptionPane.showMessageDialog(animalFrame, animalMessage);
-						}
-						if (game.getDaysRemaining() > 0) {
-							String greeter = "Good Morning! You have " + game.getDaysRemaining() + " days remaining.";
-							JOptionPane greeterFrame = new JOptionPane();
-							JOptionPane.showMessageDialog(greeterFrame, greeter);
-							game.mainGameLaunch();
-							mainGameWindow.dispose();
-				        } else {
-				        	// end game
-				        }
+					choice = JOptionPane.showConfirmDialog(nextDayChoose, prompt, "Next Day", JOptionPane.YES_NO_OPTION);
+				}					
+				if ((choice == -1) || (choice == JOptionPane.YES_OPTION)) {
+					String animalMessage = game.dailyChange();
+					if (animalMessage != "") {
+						JOptionPane animalFrame = new JOptionPane();
+						JOptionPane.showMessageDialog(animalFrame, animalMessage);
+					}
+					if (game.getDaysRemaining() > 0) {
+						String greeter = "Good Morning! You have " + game.getDaysRemaining() + " days remaining.";
+						JOptionPane greeterFrame = new JOptionPane();
+						JOptionPane.showMessageDialog(greeterFrame, greeter);
+						game.mainGameLaunch();
+						mainGameWindow.dispose();
+					} else {
+						game.endGameLaunch();
+						mainGameWindow.dispose();
 					}
 				}
 			}
+			
 		});
 		nextDayButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		nextDayButton.setBounds(836, 519, 131, 29);
+		nextDayButton.setBounds(795, 519, 172, 29);
 		mainGameWindow.getContentPane().add(nextDayButton);
 		
-		JLabel accBalanceLbl = new JLabel("New label");
+		JLabel accBalanceLbl = new JLabel("Account Balance: $" + game.getPlayerFarm().getMoney());
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		accBalanceLbl.setBounds(508, 519, 392, 29);
-		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
 		mainGameWindow.getContentPane().add(accBalanceLbl);
 		
 		JLabel daysRemainingLbl = new JLabel("Days remaining: 0");
@@ -113,6 +120,7 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(daysRemainingLbl);
 		
 		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
+		dailyActionsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		dailyActionsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		dailyActionsLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
 		dailyActionsLbl.setBounds(75, 132, 452, 35);
@@ -232,6 +240,11 @@ public class MainGameWindow {
 		playAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		playAnimalsBtn.setBounds(75, 354, 452, 48);
 		mainGameWindow.getContentPane().add(playAnimalsBtn);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(561, 180, 1, 278);
+		mainGameWindow.getContentPane().add(separator);
 		
 		
 	}

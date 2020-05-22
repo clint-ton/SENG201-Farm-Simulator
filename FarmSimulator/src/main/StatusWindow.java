@@ -99,7 +99,7 @@ public class StatusWindow {
 		cropList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		cropList.setBackground(UIManager.getColor("Button.background"));
 		JScrollPane cropScroll = new JScrollPane(cropList);
-		cropScroll.setBounds(64, 151, 399, 312);
+		cropScroll.setBounds(64, 151, 399, 301);
 		statusWindow.getContentPane().add(cropScroll);
 		
 		DefaultListModel<Animal> animalListModel = new DefaultListModel<Animal>();
@@ -108,8 +108,32 @@ public class StatusWindow {
 		animalList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		animalList.setBackground(UIManager.getColor("Button.background"));
 		JScrollPane animalScroll = new JScrollPane(animalList);
-		animalScroll.setBounds(528, 151, 399, 312);
+		animalScroll.setBounds(528, 151, 399, 301);
 		statusWindow.getContentPane().add(animalScroll);
+		
+		JLabel cropGrowthLbl = new JLabel("Crop Growth Bonus: " + game.getPlayerFarm().getCropGrowthBonus());
+		cropGrowthLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cropGrowthLbl.setBorder(null);
+		cropGrowthLbl.setBounds(64, 450, 399, 34);
+		statusWindow.getContentPane().add(cropGrowthLbl);
+		
+		JLabel animalHealthLbl = new JLabel("Animal Health Bonus: " + game.getPlayerFarm().getAnimalHealthBonus());
+		animalHealthLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		animalHealthLbl.setBorder(null);
+		animalHealthLbl.setBounds(528, 450, 399, 34);
+		statusWindow.getContentPane().add(animalHealthLbl);
+		
+		JLabel cropMoneyLbl = new JLabel("Crop Money Multiplier: " + game.getPlayerFarm().getCropMoneyBonus());
+		cropMoneyLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cropMoneyLbl.setBorder(null);
+		cropMoneyLbl.setBounds(64, 470, 399, 34);
+		statusWindow.getContentPane().add(cropMoneyLbl);
+		
+		JLabel animalMoneyLbl = new JLabel("Animal Money Multiplier: " + game.getPlayerFarm().getAnimalMoneyBonus());
+		animalMoneyLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		animalMoneyLbl.setBorder(null);
+		animalMoneyLbl.setBounds(528, 470, 399, 34);
+		statusWindow.getContentPane().add(animalMoneyLbl);
 		
 	}
 

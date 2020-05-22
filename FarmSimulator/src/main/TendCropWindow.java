@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class TendCropWindow {
 
@@ -179,6 +180,7 @@ public class TendCropWindow {
 		tendCropWindow.getContentPane().add(waterBtn);
 		
 		JLabel cropsLbl = new JLabel(game.getPlayer().getName() + "'s Crops:");
+		cropsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getCrops().size() == 0) {
 			cropsLbl.setText("You have no Crops.");
 		}
@@ -188,6 +190,7 @@ public class TendCropWindow {
 		tendCropWindow.getContentPane().add(cropsLbl);
 		
 		JLabel cropItemsLbl = new JLabel(game.getPlayer().getName() + "'s Crop Items:");
+		cropItemsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getCropItems().size() == 0) {
 			cropItemsLbl.setText("You have no Crop Items.");
 		}
