@@ -63,7 +63,7 @@ public class EndGameWindow {
 		JButton playAgainBtn = new JButton("Play Again");
 		playAgainBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Game.startGameLaunch();
+				game.restartGame();
 				endGameWindow.dispose();
 			}
 		});

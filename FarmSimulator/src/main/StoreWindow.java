@@ -479,7 +479,7 @@ public class StoreWindow {
 				} else if ((selectedPrice * quantity) > game.getPlayerFarm().getMoney()) {
 					errorLbl.setText("Insufficient funds.");
 				} else {
-					String message = game.purchase(selected, selectedPrice, quantity);
+					String message = game.purchaseProduct(selected, selectedPrice, quantity);
 					JOptionPane frame = new JOptionPane();
 					JOptionPane.showMessageDialog(frame, message);
 					game.storeLaunch();

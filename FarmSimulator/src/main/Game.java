@@ -71,29 +71,111 @@ public class Game {
 		return ("You watered your " + selectedCrop.getType() + " crop." + nln + "It is growing fast and healthy.");
 	}
 	
-	public String purchase(Object product, double price, int quantity) {
+	public String purchaseCrops(Crop crop, int quantity) {
 		String type = "";
-		if (product instanceof Crop) {
+		if (crop instanceof Cabbage) {
 			for (int i = 0; i < quantity ; i++) {
-				Crop crop = (Crop) product;
-				playerFarm.purchaseCrop(crop);
+				playerFarm.purchaseCrop(new Cabbage());
 				type = crop.getType();
 			}
-		} else if (product instanceof Animal) {
+		} else if (crop instanceof Berries) {
 			for (int i = 0; i < quantity ; i++) {
-				Animal animal = (Animal) product;
-				playerFarm.purchaseAnimal(animal);
+				playerFarm.purchaseCrop(new Berries());
+				type = crop.getType();
+			}
+		} else if (crop instanceof Corn) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseCrop(new Corn());
+				type = crop.getType();
+			}
+		} else if (crop instanceof Rice) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseCrop(new Rice());
+				type = crop.getType();
+			}
+		} else if (crop instanceof Wheat) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseCrop(new Wheat());
+				type = crop.getType();
+			}
+		} else {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseCrop(new Beans());
+				type = crop.getType();
+			}
+		}
+		return type;
+	}
+	
+	public String purchaseAnimals(Animal animal, int quantity) {
+		String type = "";
+		if (animal instanceof Cow) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseAnimal(new Cow());
+				type = animal.getType();
+			}
+		} else if (animal instanceof Chicken) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseAnimal(new Cow());
 				type = animal.getType();
 			}
 		} else {
 			for (int i = 0; i < quantity ; i++) {
-				Item item = (Item) product;
-				playerFarm.purchaseItem(item);
-				type = item.getName();				
+				playerFarm.purchaseAnimal(new Goat());
+				type = animal.getType();
 			}
+		}
+		return type;
+	}
+	
+	public String purchaseItems(Item item, int quantity) {
+		String type = "";
+		if (item instanceof Fertiliser) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseItem(new Fertiliser());
+				type = item.getName();
+			}
+		} else if (item instanceof WeedSpray) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseItem(new WeedSpray());
+				type = item.getName();
+			}
+		} else if (item instanceof NutrientBoost) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseItem(new NutrientBoost());
+				type = item.getName();
+			}
+		} else if (item instanceof GrowthHormone) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseItem(new GrowthHormone());
+				type = item.getName();
+			}
+		} else if (item instanceof GrassFeed) {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseItem(new GrassFeed());
+				type = item.getName();
+			}
+		} else {
+			for (int i = 0; i < quantity ; i++) {
+				playerFarm.purchaseItem(new ImmuneBoost());
+				type = item.getName();
+			}
+		}
+		return type;
+	}
+	
+	public String purchaseProduct(Object product, double price, int quantity) {
+		String type;
+		if (product instanceof Crop) {
+			type = purchaseCrops((Crop) product, quantity);
+		} else if (product instanceof Animal) {
+			type = purchaseAnimals((Animal) product, quantity);
+		} else {
+			type = purchaseItems((Item) product, quantity);
 		}
 		return ("Success - " + quantity + " " + type + " purchased for $" + price*quantity);
 	}
+	
 	
 	
 	public String tendToCrop(CropItem selectedItem, Crop selectedCrop) {
@@ -161,21 +243,23 @@ public class Game {
 	public String animalLoss() {
 		boolean death = false;
 		String message = "";
+		int count = 0;
 		List<Animal> deadAnimals = new ArrayList<Animal>();
-		for (Animal animal : playerFarm.getAnimals()) {
-			String condition = animal.dailyLoss();
-			if (condition != "") {
-				message += ("A " + animal.getType() + " on your farm died overnight due to the following condition(s):" + nln);
-				message += (condition + "" + nln);
-				deadAnimals.add(animal);
+		for (int i = 0; i < playerFarm.getAnimals().size(); i++) {
+			boolean deadAnimal = playerFarm.getAnimals().get(i).dailyLoss();
+			if (deadAnimal) {
+				count+=1;
 				death = true;
+				deadAnimals.add(playerFarm.getAnimals().get(i));
 			}	
 		}
 		if (death) { 
 			for (Animal deadAnimal : deadAnimals) {
 				playerFarm.deadAnimal(deadAnimal);
-			}			
-			message += (nln + "Feed and play with your animals regularly to sustain their health and happiness." + nln);
+			}
+			message = (count + " of your animals died overnight due to happiness and/or health levels dropping below 0." + nln);
+			message += ("Animals need nourishment and joy to survive on your farm." + nln);
+			message += ("Feed and play with your animals regularly to sustain their health and happiness." + nln);
 		}	
 		return message;
 	}
@@ -198,8 +282,7 @@ public class Game {
 		cropGrowth();		
 		return message;
 	}
-	
-	
+
 	public double endGameAnimals() {
 		double points = 0;
 		for (Animal animal : playerFarm.getAnimals()) {
@@ -232,9 +315,8 @@ public class Game {
 	}
 	
 	
-	public static void startGameLaunch() {
-		Game game = new Game();
-		StartGameWindow window = new StartGameWindow(game);
+	public void startGameLaunch() {
+		StartGameWindow window = new StartGameWindow(this);
 	}
 	
 	public void mainGameLaunch() {
@@ -270,8 +352,14 @@ public class Game {
 		EndGameWindow window = new EndGameWindow(this);
 	}
 	
+	public void restartGame() {
+		Game game = new Game();
+		game.startGameLaunch();
+	}
+	
 	public static void main(String[] args) {     // for GUI application
-		startGameLaunch();
+		Game game = new Game();
+		game.startGameLaunch();
 	}
 }
 	

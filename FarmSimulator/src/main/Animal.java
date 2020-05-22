@@ -113,18 +113,18 @@ public class Animal {
 	 * Decreases happiness and health by a set amount for daily decay
 	 * @return The animals condition, "" if animal is not dead
 	 */
-	public String dailyLoss() {
+	public boolean dailyLoss() {
 		// Daily loss of happiness/health - implement at start of day 
-		String condition = "";
+		boolean death = false;
 		happiness -= 10;
 		if (happiness <= 0) {
-			condition += "Happiness level dropped to 0. Your animal lost the will to live.\n";
+			death = true;
 		}
 		health -= 15;
 		if (health <= 0) {
-			condition += "Health level dropped to 0. Your animal's body could no longer function.\n";
+			death = true;
 		}
-		return condition.trim();
+		return death;
 	}
 	
 
