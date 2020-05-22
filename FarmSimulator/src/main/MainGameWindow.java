@@ -67,8 +67,9 @@ public class MainGameWindow {
 		farmTitlelbl.setText(game.getPlayerFarm().getName() + " Manager");
 		mainGameWindow.getContentPane().add(farmTitlelbl);
 		
-		JLabel daysRemaininglbl = new JLabel("Days remaining: " + game.getDaysRemaining());
-		daysRemaininglbl.setBounds(75, 519, 338, 29);
+		JLabel daysRemaininglbl = new JLabel("Days Remaining: " + game.getDaysRemaining());
+		daysRemaininglbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		daysRemaininglbl.setBounds(248, 494, 338, 29);
 		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		mainGameWindow.getContentPane().add(daysRemaininglbl);
 		
@@ -110,17 +111,17 @@ public class MainGameWindow {
 		
 		JLabel accBalanceLbl = new JLabel("Account Balance: $" + game.getPlayerFarm().getMoney());
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(508, 519, 392, 29);
+		accBalanceLbl.setBounds(431, 519, 348, 29);
 		mainGameWindow.getContentPane().add(accBalanceLbl);
 		
-		JLabel daysRemainingLbl = new JLabel("Days remaining: 0");
+		JLabel daysRemainingLbl = new JLabel("Daily Actions Remaining: " + game.getActions());
+		daysRemainingLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysRemainingLbl.setBounds(258, 519, 338, 29);
-		daysRemainingLbl.setText("Daily Actions Remaining: " + game.getActions());
+		daysRemainingLbl.setBounds(248, 470, 338, 29);
 		mainGameWindow.getContentPane().add(daysRemainingLbl);
 		
 		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
-		dailyActionsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		dailyActionsLbl.setBorder(null);
 		dailyActionsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		dailyActionsLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
 		dailyActionsLbl.setBounds(75, 132, 452, 35);
@@ -129,9 +130,9 @@ public class MainGameWindow {
 		
 		JLabel noActionsErrorLbl = new JLabel("");
 		noActionsErrorLbl.setForeground(Color.RED);
-		noActionsErrorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		noActionsErrorLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		noActionsErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		noActionsErrorLbl.setBounds(75, 470, 452, 35);
+		noActionsErrorLbl.setBounds(75, 464, 272, 35);
 		mainGameWindow.getContentPane().add(noActionsErrorLbl);
 		
 		JButton tendLandBtn = new JButton("Tend to Farm Land");
@@ -183,7 +184,6 @@ public class MainGameWindow {
 					game.tendCropLaunch();
 					mainGameWindow.dispose();
 				}
-				
 			}
 		});
 		tendCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -227,7 +227,7 @@ public class MainGameWindow {
 					noActionsErrorLbl.setText("No daily actions remaining.");
 				} else if (game.getPlayerFarm().getAnimals().size() == 0) {
 					JOptionPane frame = new JOptionPane();
-					JOptionPane.showMessageDialog(frame, "You have no animals to play with.");	
+					JOptionPane.showMessageDialog(frame, "You have no animals to play with." + Game.nln + "Purchase animals from the store.");	
 				} else {
 					String message = game.playWithAnimals();
 					JOptionPane frame = new JOptionPane();
@@ -245,6 +245,24 @@ public class MainGameWindow {
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBounds(561, 180, 1, 278);
 		mainGameWindow.getContentPane().add(separator);
+		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Click View Farm Status to view the Crops and Animals owned by the Farm." + Game.nln;
+				message += "Purchase Crops, Items, and Animals from the Store." + Game.nln;
+				message += "Crops can be grown, tended to with Items, harvested, and sold for a money bonus." + Game.nln;
+				message += "Animals can be fed with Items, played with, and can return a daily money bonus." + Game.nln;
+				message += "Tending to aspects of the farm costs one daily action." + Game.nln;
+				message += "You have a maximum of 2 daily actions per day." + Game.nln;
+				message += "Maximise your final score by farming more Crops and Animals.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		mainGameWindow.getContentPane().add(instructionsBtn);
 		
 		
 	}

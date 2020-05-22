@@ -200,7 +200,7 @@ public class Game {
 		for (Animal animal : playerFarm.getAnimals()) {
 			animal.play();
 		}
-		return ("Your animals are filled with joy!" + nln);
+		return ("Your animals are filled with joy!" + nln + "Animal Happiness = +20 Points");
 	}
 	
 	
@@ -229,7 +229,7 @@ public class Game {
 	
 	public void moneyBonus() { // daily money bonus for animal happiness/health
 		for (Animal animal : playerFarm.getAnimals()) {
-			double bonus = ((animal.getHappiness() + animal.getHealth())* 0.10) * playerFarm.getAnimalMoneyBonus(); 
+			double bonus = ((animal.getIncome()) * playerFarm.getAnimalMoneyBonus()); 
 			playerFarm.addMoney(bonus);
 		}
 	}

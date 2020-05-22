@@ -115,8 +115,8 @@ public class TendCropWindow {
 		cropScroll.setBounds(62, 167, 399, 230);
 		tendCropWindow.getContentPane().add(cropScroll);
 		
-		JButton tendBtn = new JButton("Tend to Crop");
-		tendBtn.addActionListener(new ActionListener() {
+		JButton useItemBtn = new JButton("Use Item");
+		useItemBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCrop == null) {
 					errorLabel.setText("No crop selected.");
@@ -131,9 +131,9 @@ public class TendCropWindow {
 				}
 			}
 		});
-		tendBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tendBtn.setBounds(789, 512, 172, 29);
-		tendCropWindow.getContentPane().add(tendBtn);
+		useItemBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		useItemBtn.setBounds(789, 512, 172, 29);
+		tendCropWindow.getContentPane().add(useItemBtn);
 		
 		JButton selectCropBtn = new JButton("Select Crop");
 		selectCropBtn.addActionListener(new ActionListener() {
@@ -161,7 +161,7 @@ public class TendCropWindow {
 		selectItemBtn.setBounds(650, 407, 145, 29);
 		tendCropWindow.getContentPane().add(selectItemBtn);
 		
-		JButton waterBtn = new JButton("Water Crop");
+		JButton waterBtn = new JButton("Water");
 		waterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCrop == null) {
@@ -176,7 +176,7 @@ public class TendCropWindow {
 			}
 		});
 		waterBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		waterBtn.setBounds(789, 481, 172, 29);
+		waterBtn.setBounds(789, 478, 172, 29);
 		tendCropWindow.getContentPane().add(waterBtn);
 		
 		JLabel cropsLbl = new JLabel(game.getPlayer().getName() + "'s Crops:");
@@ -198,6 +198,22 @@ public class TendCropWindow {
 		cropItemsLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cropItemsLbl.setBounds(523, 125, 399, 32);
 		tendCropWindow.getContentPane().add(cropItemsLbl);
+		
+		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Select a crop from the list you would like to tend to." + Game.nln;
+				message += "Clicking Water will boost the growth of your crop without using an item." + Game.nln;
+				message += "Select an item and click Use Item to use an item on a crop." + Game.nln;
+				message += "Using an item on your crop will give a bigger growth boost.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		tendCropWindow.getContentPane().add(instructionsBtn);
 		
 		
 		

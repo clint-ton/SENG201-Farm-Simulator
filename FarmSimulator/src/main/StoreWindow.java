@@ -74,7 +74,7 @@ public class StoreWindow {
 		
 		JLabel accBalanceLbl = new JLabel("New label");
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(503, 513, 392, 29);
+		accBalanceLbl.setBounds(344, 513, 392, 29);
 		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
 		storeWindow.getContentPane().add(accBalanceLbl);
 		
@@ -448,13 +448,14 @@ public class StoreWindow {
 		storeWindow.getContentPane().add(quantityLbl);
 		
 		quantityText = new JTextField();
-		quantityText.setBounds(745, 429, 131, 29);
+		quantityText.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		quantityText.setBounds(745, 429, 76, 29);
 		storeWindow.getContentPane().add(quantityText);
 		quantityText.setColumns(10);
 		
 	
 		
-		JButton priceBtn = new JButton("Price");
+		JButton priceBtn = new JButton("Get Price");
 		priceBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String quantityStr = quantityText.getText();
@@ -468,7 +469,7 @@ public class StoreWindow {
 			}
 		});
 		priceBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		priceBtn.setBounds(886, 428, 84, 31);
+		priceBtn.setBounds(831, 428, 139, 31);
 		storeWindow.getContentPane().add(priceBtn);
 		
 		JButton purchaseBtn = new JButton("Purchase");
@@ -490,6 +491,21 @@ public class StoreWindow {
 		purchaseBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		purchaseBtn.setBounds(831, 513, 131, 29);
 		storeWindow.getContentPane().add(purchaseBtn);
+		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Click View Inventory to view currently owned items." + Game.nln;
+				message += "Select a product to view its attributes." + Game.nln;
+				message += "Adjust the quantity and click Get Price to get total purchase price." + Game.nln;
+				message += "Click Purchase to purchase the entered quantity of the selected product.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		storeWindow.getContentPane().add(instructionsBtn);
 		
 	}
 }

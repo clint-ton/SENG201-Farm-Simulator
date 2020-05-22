@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -78,7 +79,7 @@ public class StatusWindow {
 		
 		JLabel accBalanceLbl = new JLabel("New label");
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(508, 519, 392, 29);
+		accBalanceLbl.setBounds(359, 512, 392, 29);
 		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
 		statusWindow.getContentPane().add(accBalanceLbl);
 		
@@ -134,6 +135,21 @@ public class StatusWindow {
 		animalMoneyLbl.setBorder(null);
 		animalMoneyLbl.setBounds(528, 470, 399, 34);
 		statusWindow.getContentPane().add(animalMoneyLbl);
+		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Crop Growth Bonus is the growth boost received by crops each day." + Game.nln;
+				message += "Crop Money Multiplier is the increase in money received when selling crops." + Game.nln;
+				message += "Animal Health Bonus is the health and happiness bonus received by animals each day." + Game.nln;
+				message += "Animal Money Bonus is the increase in daily income earned from owned animals.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		statusWindow.getContentPane().add(instructionsBtn);
 		
 	}
 

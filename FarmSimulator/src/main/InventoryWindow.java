@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -78,7 +79,7 @@ public class InventoryWindow {
 		
 		JLabel accBalanceLbl = new JLabel("New label");
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(508, 519, 392, 29);
+		accBalanceLbl.setBounds(376, 512, 392, 29);
 		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
 		inventoryWindow.getContentPane().add(accBalanceLbl);
 		
@@ -119,6 +120,20 @@ public class InventoryWindow {
 		JScrollPane animalItemScroll = new JScrollPane(animalItemList);
 		animalItemScroll.setBounds(528, 151, 399, 312);
 		inventoryWindow.getContentPane().add(animalItemScroll);
+		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Inventory holds the items you currently own." + Game.nln;
+				message += "Crop items can be used to tend to crops." + Game.nln;
+				message += "Animal items can be used to feed animals.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		inventoryWindow.getContentPane().add(instructionsBtn);
 	}
 
 }

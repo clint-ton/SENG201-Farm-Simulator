@@ -142,7 +142,19 @@ public class HarvestCropWindow {
 		harvestBtn.setBounds(828, 512, 131, 29);
 		harvestWindow.getContentPane().add(harvestBtn);
 		
-		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Select a crop from the list you would like to harvest." + Game.nln;
+				message += "Click Harvest to harvest the selected crop and receive a cash bonus." + Game.nln;
+				message += "Harvested crops will not regrow - more can be purchased from the store.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		harvestWindow.getContentPane().add(instructionsBtn);
 		
 		
 	}

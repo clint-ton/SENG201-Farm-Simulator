@@ -197,6 +197,21 @@ public class FeedAnimalWindow {
 		ctrlshiftLbl.setBounds(62, 467, 399, 29);
 		feedAnimalWindow.getContentPane().add(ctrlshiftLbl);
 		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String message = "Select up to 10 animals you would like to feed." + Game.nln;
+				message += "Use Ctrl+Click or Shift+Click to select multiple animals." + Game.nln;
+				message += "Select an item and click Feed Animals to feed selected animals." + Game.nln;
+				message += "Fed animals receive a health boost from the item.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		feedAnimalWindow.getContentPane().add(instructionsBtn);
+		
 
 		
 	

@@ -81,7 +81,7 @@ public class EndGameWindow {
 		scoresPane.setEditable(false);
 		scoresPane.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		scoresPane.setBackground(UIManager.getColor("Button.background"));
-		scoresPane.setBounds(142, 254, 703, 178);
+		scoresPane.setBounds(184, 254, 630, 106);
 		scoresPane.setText(game.endGameMessage());
 		endGameWindow.getContentPane().add(scoresPane);
 		
@@ -91,10 +91,10 @@ public class EndGameWindow {
 		youScoredLbl.setBounds(142, 174, 703, 48);
 		endGameWindow.getContentPane().add(youScoredLbl);
 		
-		JLabel finalScoreLbl = new JLabel("Your final score is: " + game.endGameTotal() + " Points");
+		JLabel finalScoreLbl = new JLabel("Your final score is:");
 		finalScoreLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		finalScoreLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
-		finalScoreLbl.setBounds(142, 426, 703, 48);
+		finalScoreLbl.setBounds(142, 375, 703, 48);
 		endGameWindow.getContentPane().add(finalScoreLbl);
 		
 		JButton closeBtn = new JButton("Close");
@@ -106,6 +106,12 @@ public class EndGameWindow {
 		closeBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		closeBtn.setBounds(27, 509, 158, 29);
 		endGameWindow.getContentPane().add(closeBtn);
+		
+		JLabel pointsLbl = new JLabel(String.format("%.0f",game.endGameTotal()) + " Points");
+		pointsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		pointsLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
+		pointsLbl.setBounds(142, 414, 703, 48);
+		endGameWindow.getContentPane().add(pointsLbl);
 		
 		
 	}
