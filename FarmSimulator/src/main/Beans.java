@@ -1,5 +1,7 @@
 package main;
-
+/**
+ * Crop beans, Price: 75, Sells for, 800, Takes 5 to grow
+ */
 public class Beans extends Crop {
 	
     public Beans() {

@@ -1,5 +1,7 @@
 package main;
-
+/**
+ * Items to be used on crops
+ */
 public class CropItem extends Item {
 	
     private double growthBoost;
@@ -16,7 +18,9 @@ public class CropItem extends Item {
 	public String toString() {
 		return (this.getName() + ": Type = " + this.getType() + " Growth Boost = " + growthBoost);
 	}
-		
+	/**
+	 * 	String used by the store
+	 */
 	public String storeString() {
 		return (this.getName() + Game.nln + "Type: " + this.getType() + Game.nln + "Growth Boost = " + growthBoost + " days" + Game.nln + "Price/Unit = $" + this.getPrice());
 	}
