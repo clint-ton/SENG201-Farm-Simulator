@@ -58,10 +58,7 @@ class CropTests {
         Game game = setupTest();
         Crop selectedCrop = game.getPlayerFarm().getCrops().get(0);
         selectedCrop.water();
-        System.out.println(selectedCrop.getSellPrice());
-        System.out.println(game.getPlayerFarm().getMoney());
-        System.out.println(game.harvestCrop(selectedCrop));
-        System.out.println(game.getPlayerFarm().getMoney());
+        game.harvestCrop(selectedCrop);
     	assertEquals(game.getActions(), 1);
     	assertTrue(game.getPlayerFarm().getMoney() > 2000);
     	assertTrue(game.getPlayerFarm().getCrops().isEmpty());
