@@ -18,27 +18,20 @@ import java.awt.Component;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 
+/**
+ * Player inventory GUI window
+ * @author jke99, cjw237
+ *
+ */
+
 public class InventoryWindow {
 
 	private JFrame inventoryWindow;
 	
-	private Game game;
-
 	/**
-	 * Launch the application.
+	 * Current state game variable
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InventoryWindow window = new InventoryWindow(new Game());
-					window.inventoryWindow.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Game game;
 
 	/**
 	 * Create the application.
@@ -59,13 +52,82 @@ public class InventoryWindow {
 		inventoryWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inventoryWindow.getContentPane().setLayout(null);
 		
+		/**
+		 * Header label
+		 */
 		JLabel inventoryLbl = new JLabel(game.getPlayer().getName() + "'s Inventory");
 		inventoryLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		inventoryLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
 		inventoryLbl.setBounds(10, 33, 966, 48);
 		inventoryWindow.getContentPane().add(inventoryLbl);
 		
+		/**
+		 * Player farm account balance
+		 */
+		JLabel accBalanceLbl = new JLabel("New label");
+		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		accBalanceLbl.setBounds(376, 512, 392, 29);
+		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
+		inventoryWindow.getContentPane().add(accBalanceLbl);
 		
+		/**
+		 * Crop Items label with player name
+		 * Alerts player if no Crop Items owned 
+		 */
+		JLabel cropItemLbl = new JLabel("Crop Items");
+		cropItemLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		cropItemLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		cropItemLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		cropItemLbl.setBounds(64, 107, 399, 34);
+		if (game.getPlayerFarm().getCropItems().size() == 0) {
+			cropItemLbl.setText("You have no Crop Items");
+		}
+		inventoryWindow.getContentPane().add(cropItemLbl);
+		
+		/**
+		 * Animal Items label with player name
+		 * Alerts player if no Animal Items owned 
+		 */
+		JLabel animalItemsLbl = new JLabel("Animal Items");
+		animalItemsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		animalItemsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		animalItemsLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		animalItemsLbl.setBounds(529, 107, 398, 34);
+		if (game.getPlayerFarm().getAnimalItems().size() == 0) {
+			animalItemsLbl.setText("You have no Animal Items");
+		}
+		inventoryWindow.getContentPane().add(animalItemsLbl);
+		
+		
+		/**
+		 * List of Crop Items owned by player
+		 * Contained in JScrollPane to allow scrolling if list exceeds text area
+		 */
+		DefaultListModel<CropItem> cropItemListModel = new DefaultListModel<CropItem>();
+		cropItemListModel.addAll(game.getPlayerFarm().getCropItems());
+		JList<CropItem> cropItemList = new JList<CropItem>(cropItemListModel);
+		cropItemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		cropItemList.setBackground(UIManager.getColor("Button.background"));
+		JScrollPane cropItemScroll = new JScrollPane(cropItemList);
+		cropItemScroll.setBounds(64, 151, 399, 312);
+		inventoryWindow.getContentPane().add(cropItemScroll);
+		
+		/**
+		 * List of Food Items owned by player
+		 * Contained in JScrollPane to allow scrolling if list exceeds text area
+		 */
+		DefaultListModel<AnimalItem> animalItemListModel = new DefaultListModel<AnimalItem>();
+		animalItemListModel.addAll(game.getPlayerFarm().getAnimalItems());
+		JList<AnimalItem> animalItemList = new JList<AnimalItem>(animalItemListModel);
+		animalItemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		animalItemList.setBackground(UIManager.getColor("Button.background"));
+		JScrollPane animalItemScroll = new JScrollPane(animalItemList);
+		animalItemScroll.setBounds(528, 151, 399, 312);
+		inventoryWindow.getContentPane().add(animalItemScroll);
+		
+		/**
+		 * Button returns player to store window
+		 */
 		JButton backBtn = new JButton("Back");
 		backBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -77,56 +139,9 @@ public class InventoryWindow {
 		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		inventoryWindow.getContentPane().add(backBtn);
 		
-		JLabel accBalanceLbl = new JLabel("New label");
-		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(376, 512, 392, 29);
-		accBalanceLbl.setText("Account Balance: $" + game.getPlayerFarm().getMoney());
-		inventoryWindow.getContentPane().add(accBalanceLbl);
-		
-		JLabel cropItemLbl = new JLabel("Crop Items");
-		cropItemLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
-		cropItemLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		cropItemLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		cropItemLbl.setBounds(64, 107, 399, 34);
-		if (game.getPlayerFarm().getCropItems().size() == 0) {
-			cropItemLbl.setText("You have no Crop Items");
-		}
-		inventoryWindow.getContentPane().add(cropItemLbl);
-		
-		JLabel animalItemsLbl = new JLabel("Animal Items");
-		animalItemsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
-		animalItemsLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		animalItemsLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		animalItemsLbl.setBounds(529, 107, 398, 34);
-		if (game.getPlayerFarm().getAnimalItems().size() == 0) {
-			animalItemsLbl.setText("You have no Animal Items");
-		}
-		inventoryWindow.getContentPane().add(animalItemsLbl);
-		
-		DefaultListModel<Crop> cropListModel = new DefaultListModel<Crop>();
-		cropListModel.addAll(game.getPlayerFarm().getCrops());
-		
-		DefaultListModel<CropItem> cropItemListModel = new DefaultListModel<CropItem>();
-		cropItemListModel.addAll(game.getPlayerFarm().getCropItems());
-		JList<CropItem> cropItemList = new JList<CropItem>(cropItemListModel);
-		cropItemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		cropItemList.setBackground(UIManager.getColor("Button.background"));
-		JScrollPane cropItemScroll = new JScrollPane(cropItemList);
-		cropItemScroll.setBounds(64, 151, 399, 312);
-		inventoryWindow.getContentPane().add(cropItemScroll);
-		
-		DefaultListModel<Animal> animalListModel = new DefaultListModel<Animal>();
-		animalListModel.addAll(game.getPlayerFarm().getAnimals());
-		
-		DefaultListModel<AnimalItem> animalItemListModel = new DefaultListModel<AnimalItem>();
-		animalItemListModel.addAll(game.getPlayerFarm().getAnimalItems());
-		JList<AnimalItem> animalItemList = new JList<AnimalItem>(animalItemListModel);
-		animalItemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		animalItemList.setBackground(UIManager.getColor("Button.background"));
-		JScrollPane animalItemScroll = new JScrollPane(animalItemList);
-		animalItemScroll.setBounds(528, 151, 399, 312);
-		inventoryWindow.getContentPane().add(animalItemScroll);
-		
+		/**
+		 * Help button displays JOptionPane with instructions and descriptions for the current window
+		 */
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

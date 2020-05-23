@@ -17,29 +17,25 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+/**
+ * Harvest player owned crop GUI window
+ * @author jke99, cjw237
+ *
+ */
 public class HarvestCropWindow {
 
 	private JFrame harvestWindow;
 	
+	/**
+	 * Current state game variable
+	 */
 	private Game game;
 	
+	/**
+	 * Crop selected for harvest variable
+	 */
 	private Crop selectedCrop = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HarvestCropWindow window = new HarvestCropWindow(new Game());
-					window.harvestWindow.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -61,7 +57,9 @@ public class HarvestCropWindow {
 		harvestWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		harvestWindow.getContentPane().setLayout(null);
 		
-		
+		/**
+		 * Header label
+		 */
 		JLabel harvestCropLbl = new JLabel("Harvest a Crop");
 		harvestCropLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		harvestCropLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -69,6 +67,18 @@ public class HarvestCropWindow {
 		harvestWindow.getContentPane().add(harvestCropLbl);
 		
 		
+		/**
+		 * Displays Crop player selects to harvest
+		 */
+		JLabel selectedCropLbl = new JLabel("Selected Crop: ");
+		selectedCropLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		selectedCropLbl.setBounds(293, 447, 399, 29);
+		harvestWindow.getContentPane().add(selectedCropLbl);
+		
+		/**
+		 * Crops label with player name
+		 * Alerts player if no Crops owned 
+		 */
 		JLabel cropsLbl = new JLabel(game.getPlayer().getName() + "'s Crops:");
 		cropsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getHarvestCrops().size() == 0) {
@@ -77,24 +87,12 @@ public class HarvestCropWindow {
 		cropsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cropsLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cropsLbl.setBounds(293, 125, 399, 32);
-		harvestWindow.getContentPane().add(cropsLbl);		
+		harvestWindow.getContentPane().add(cropsLbl);	
 		
-		JButton backBtn = new JButton("Back");
-		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.mainGameLaunch();
-				harvestWindow.dispose();
-			}
-		});
-		backBtn.setBounds(24, 512, 131, 29);
-		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		harvestWindow.getContentPane().add(backBtn);
 		
-		JLabel selectedCropLbl = new JLabel("Selected Crop: ");
-		selectedCropLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		selectedCropLbl.setBounds(293, 447, 399, 29);
-		harvestWindow.getContentPane().add(selectedCropLbl);
-		
+		/**
+		 * Alerts player if no Crop or no Crop Item selected when attempting to tend to Crop
+		 */
 		JLabel errorLbl = new JLabel("");
 		errorLbl.setForeground(Color.RED);
 		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -102,7 +100,10 @@ public class HarvestCropWindow {
 		errorLbl.setBounds(304, 512, 366, 29);
 		harvestWindow.getContentPane().add(errorLbl);
 		
-		
+		/**
+		 * List of Crops owned by player
+		 * Contained in JScrollPane to allow scrolling if list exceeds text area
+		 */
 		DefaultListModel<Crop> cropListModel = new DefaultListModel<Crop>();
 		cropListModel.addAll(game.getPlayerFarm().getHarvestCrops());
 		JList<Crop> cropList = new JList<Crop>(cropListModel);
@@ -111,6 +112,10 @@ public class HarvestCropWindow {
 		cropScroll.setBounds(293, 168, 399, 230);
 		harvestWindow.getContentPane().add(cropScroll);
 		
+		
+		/**
+		 * Sets selectedCrop variable to Crop selected in list
+		 */
 		JButton selectCropBtn = new JButton("Select Crop");
 		selectCropBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,6 +130,10 @@ public class HarvestCropWindow {
 		selectCropBtn.setBounds(405, 408, 172, 29);
 		harvestWindow.getContentPane().add(selectCropBtn);
 		
+		/**
+		 * Calls method in Game class to harvest the Crop held in variable selectedCrop
+		 * Sets errorLbl text to to notify player if no Crop Selected
+		 */
 		JButton harvestBtn = new JButton("Harvest");
 		harvestBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,6 +152,23 @@ public class HarvestCropWindow {
 		harvestBtn.setBounds(828, 512, 131, 29);
 		harvestWindow.getContentPane().add(harvestBtn);
 		
+		/**
+		 * Button returns player to main window
+		 */
+		JButton backBtn = new JButton("Back");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.mainGameLaunch();
+				harvestWindow.dispose();
+			}
+		});
+		backBtn.setBounds(24, 512, 131, 29);
+		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		harvestWindow.getContentPane().add(backBtn);
+		
+		/**
+		 * Help button displays JOptionPane with instructions and descriptions for the current window
+		 */
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

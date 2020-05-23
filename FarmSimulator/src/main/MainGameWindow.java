@@ -17,28 +17,22 @@ import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 import javax.swing.UIManager;
 
+
+/**
+ * Main game GUI window
+ * @author jke99, cjw237
+ *
+ */
 public class MainGameWindow {
 
 	private JFrame mainGameWindow;
 	
-	
+	/**
+	 * Current state game variable
+	 */
 	private Game game;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainGameWindow window = new MainGameWindow(new Game());
-					window.mainGameWindow.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
@@ -60,6 +54,10 @@ public class MainGameWindow {
 		mainGameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainGameWindow.getContentPane().setLayout(null);
 		
+		
+		/**
+		 * Header label
+		 */
 		JLabel farmTitlelbl = new JLabel("");
 		farmTitlelbl.setBounds(10, 37, 976, 48);
 		farmTitlelbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -67,12 +65,211 @@ public class MainGameWindow {
 		farmTitlelbl.setText(game.getPlayerFarm().getName() + " Manager");
 		mainGameWindow.getContentPane().add(farmTitlelbl);
 		
-		JLabel daysRemaininglbl = new JLabel("Days Remaining: " + game.getDaysRemaining());
-		daysRemaininglbl.setHorizontalAlignment(SwingConstants.LEFT);
-		daysRemaininglbl.setBounds(93, 494, 338, 29);
-		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		mainGameWindow.getContentPane().add(daysRemaininglbl);
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(423, 182, 1, 278);
+		mainGameWindow.getContentPane().add(separator);
 		
+		/**
+		 * Label in-game days progressed
+		 */
+		JLabel dayLbl = new JLabel("Day: " + game.getDay());
+		dayLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		dayLbl.setBounds(93, 470, 348, 29);
+		mainGameWindow.getContentPane().add(dayLbl);
+		
+		/**
+		 * Label for in-game days remaining
+		 */
+		JLabel daysRemainingLbl = new JLabel("Days Remaining: " + game.getDaysRemaining());
+		daysRemainingLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		daysRemainingLbl.setBounds(93, 494, 338, 29);
+		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		mainGameWindow.getContentPane().add(daysRemainingLbl);
+		
+		/**
+		 * Player farm account balance
+		 */
+		JLabel accBalanceLbl = new JLabel("Account Balance: $" + game.getPlayerFarm().getMoney());
+		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		accBalanceLbl.setBounds(374, 519, 348, 29);
+		mainGameWindow.getContentPane().add(accBalanceLbl);
+		
+		/**
+		 * Label number of player daily actions remaining
+		 */
+		JLabel actionsRemainingLbl = new JLabel("Daily Actions Remaining: " + game.getActions());
+		actionsRemainingLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		actionsRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		actionsRemainingLbl.setBounds(93, 519, 322, 29);
+		mainGameWindow.getContentPane().add(actionsRemainingLbl);
+		
+		/**
+		 * Actions header
+		 */
+		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
+		dailyActionsLbl.setBorder(null);
+		dailyActionsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		dailyActionsLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
+		dailyActionsLbl.setBounds(449, 132, 452, 35);
+		dailyActionsLbl.setText(game.getPlayer().getName() + "'s Daily Actions:");
+		mainGameWindow.getContentPane().add(dailyActionsLbl);
+		
+		/**
+		 * Alerts player if action attempted but no actions remaining
+		 */
+		JLabel errorLbl = new JLabel("");
+		errorLbl.setForeground(Color.RED);
+		errorLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		errorLbl.setBounds(629, 464, 272, 35);
+		mainGameWindow.getContentPane().add(errorLbl);
+		
+		
+		/**
+		 * Opens StatusWindow to view player farm status
+		 */
+		JButton farmStatusBtn = new JButton("View Farm Status");
+		farmStatusBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.statusLaunch();
+				mainGameWindow.dispose();
+			}
+		});
+		farmStatusBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		farmStatusBtn.setBounds(93, 180, 306, 131);
+		mainGameWindow.getContentPane().add(farmStatusBtn);
+		
+		/**
+		 * Opens StoreWindow to visit farm store
+		 */
+		JButton visitStoreBtn = new JButton("Visit Store");
+		visitStoreBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.storeLaunch();
+				mainGameWindow.dispose();
+			}
+		});
+		visitStoreBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		visitStoreBtn.setBounds(93, 329, 306, 131);
+		mainGameWindow.getContentPane().add(visitStoreBtn);
+		
+		/**
+		 * Calls method in Game class to tend to farm land
+		 * Opens JOptionPane displaying feedback from method called
+		 * Sets errorLbl text to notify player if no actions remaining
+		 */
+		JButton tendLandBtn = new JButton("Tend to Farm Land");
+		tendLandBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					errorLbl.setText("No daily actions remaining.");
+				} else {
+					String message = game.tendLand();
+					JOptionPane frame = new JOptionPane();
+					JOptionPane.showMessageDialog(frame, message);	
+					game.mainGameLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
+		tendLandBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tendLandBtn.setBounds(449, 412, 452, 48);
+		mainGameWindow.getContentPane().add(tendLandBtn);
+		
+		/**
+		 * Opens TendCropWindow to tend to player crop
+		 * Sets errorLbl text to notify player if no actions remaining
+		 */
+		JButton tendCropBtn = new JButton("Tend to a Crop");
+		tendCropBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					errorLbl.setText("No daily actions remaining.");
+				} else {
+					game.tendCropLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
+		tendCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tendCropBtn.setBounds(449, 180, 452, 48);
+		mainGameWindow.getContentPane().add(tendCropBtn);
+		
+		/**
+		 * Opens HarvestCropWindow to harvest player crop
+		 * Sets errorLbl text to notify player if no actions remaining
+		 */
+		JButton harvestCropBtn = new JButton("Harvest a Crop");
+		harvestCropBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					errorLbl.setText("No daily actions remaining.");
+				} else {
+					game.harvestCropLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
+		harvestCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		harvestCropBtn.setBounds(449, 238, 452, 48);
+		mainGameWindow.getContentPane().add(harvestCropBtn);
+		
+		
+		/**
+		 * Opens FeedAnimalsWindow to feed player animals
+		 * Sets errorLbl text to notify player if no actions remaining
+		 */
+		JButton feedAnimalsBtn = new JButton("Feed Animals");
+		feedAnimalsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					errorLbl.setText("No daily actions remaining.");
+				} else {
+					game.feedAnimalLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
+		feedAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		feedAnimalsBtn.setBounds(449, 296, 452, 48);
+		mainGameWindow.getContentPane().add(feedAnimalsBtn);
+		
+		
+		/**
+		 * Calls method in Game class to play with player animals
+		 * Opens JOptionPane to display feedback from method called
+		 * Sets errorLbl text to notify player if no actions remaining
+		 */
+		JButton playAnimalsBtn = new JButton("Play with Animals");
+		playAnimalsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (game.getActions() == 0) {
+					errorLbl.setText("No daily actions remaining.");
+				} else if (game.getPlayerFarm().getAnimals().size() == 0) {
+					JOptionPane frame = new JOptionPane();
+					JOptionPane.showMessageDialog(frame, "You have no animals to play with." + Game.nln + "Purchase animals from the store.");	
+				} else {
+					String message = game.playWithAnimals();
+					JOptionPane frame = new JOptionPane();
+					JOptionPane.showMessageDialog(frame, message);					
+					game.mainGameLaunch();
+					mainGameWindow.dispose();
+				}
+			}
+		});
+		playAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		playAnimalsBtn.setBounds(449, 354, 452, 48);
+		mainGameWindow.getContentPane().add(playAnimalsBtn);
+		
+		
+		
+		/**
+		 * Button closes current MainGameWindow
+		 * Opens new MainGameWindow for next day with updated game state if daysRemaining Game variable is greater than 0
+		 * Opens EndGameWindow to finish game if daysRemaining Game variable = 0
+		 * JOptionPane gets user choice to progress to next day if actions Game variable is not 0
+		 */
 		JButton nextDayButton = new JButton("Next Day");
 		if (game.getDaysRemaining() == 1) {
 			nextDayButton.setText("Finish Game");
@@ -109,143 +306,9 @@ public class MainGameWindow {
 		nextDayButton.setBounds(795, 519, 172, 29);
 		mainGameWindow.getContentPane().add(nextDayButton);
 		
-		JLabel accBalanceLbl = new JLabel("Account Balance: $" + game.getPlayerFarm().getMoney());
-		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(374, 519, 348, 29);
-		mainGameWindow.getContentPane().add(accBalanceLbl);
-		
-		JLabel daysRemainingLbl = new JLabel("Daily Actions Remaining: " + game.getActions());
-		daysRemainingLbl.setHorizontalAlignment(SwingConstants.LEFT);
-		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysRemainingLbl.setBounds(93, 519, 322, 29);
-		mainGameWindow.getContentPane().add(daysRemainingLbl);
-		
-		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
-		dailyActionsLbl.setBorder(null);
-		dailyActionsLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		dailyActionsLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
-		dailyActionsLbl.setBounds(449, 132, 452, 35);
-		dailyActionsLbl.setText(game.getPlayer().getName() + "'s Daily Actions:");
-		mainGameWindow.getContentPane().add(dailyActionsLbl);
-		
-		JLabel errorLbl = new JLabel("");
-		errorLbl.setForeground(Color.RED);
-		errorLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		errorLbl.setBounds(629, 464, 272, 35);
-		mainGameWindow.getContentPane().add(errorLbl);
-		
-		JButton tendLandBtn = new JButton("Tend to Farm Land");
-		tendLandBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (game.getActions() == 0) {
-					errorLbl.setText("No daily actions remaining.");
-				} else {
-					String message = game.tendLand();
-					JOptionPane frame = new JOptionPane();
-					JOptionPane.showMessageDialog(frame, message);	
-					game.mainGameLaunch();
-					mainGameWindow.dispose();
-				}
-			}
-		});
-		tendLandBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tendLandBtn.setBounds(449, 412, 452, 48);
-		mainGameWindow.getContentPane().add(tendLandBtn);
-		
-		JButton farmStatusBtn = new JButton("View Farm Status");
-		farmStatusBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.statusLaunch();
-				mainGameWindow.dispose();
-			}
-		});
-		farmStatusBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		farmStatusBtn.setBounds(93, 180, 306, 131);
-		mainGameWindow.getContentPane().add(farmStatusBtn);
-		
-		JButton visitStoreBtn = new JButton("Visit Store");
-		visitStoreBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.storeLaunch();
-				mainGameWindow.dispose();
-			}
-		});
-		visitStoreBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		visitStoreBtn.setBounds(93, 329, 306, 131);
-		mainGameWindow.getContentPane().add(visitStoreBtn);
-		
-		JButton tendCropBtn = new JButton("Tend to a Crop");
-		tendCropBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (game.getActions() == 0) {
-					errorLbl.setText("No daily actions remaining.");
-				} else {
-					game.tendCropLaunch();
-					mainGameWindow.dispose();
-				}
-			}
-		});
-		tendCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tendCropBtn.setBounds(449, 180, 452, 48);
-		mainGameWindow.getContentPane().add(tendCropBtn);
-		
-		JButton harvestCropBtn = new JButton("Harvest a Crop");
-		harvestCropBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (game.getActions() == 0) {
-					errorLbl.setText("No daily actions remaining.");
-				} else {
-					game.harvestCropLaunch();
-					mainGameWindow.dispose();
-				}
-			}
-		});
-		harvestCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		harvestCropBtn.setBounds(449, 238, 452, 48);
-		mainGameWindow.getContentPane().add(harvestCropBtn);
-		
-		JButton feedAnimalsBtn = new JButton("Feed Animals");
-		feedAnimalsBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (game.getActions() == 0) {
-					errorLbl.setText("No daily actions remaining.");
-				} else {
-					game.feedAnimalLaunch();
-					mainGameWindow.dispose();
-				}
-			}
-		});
-		feedAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		feedAnimalsBtn.setBounds(449, 296, 452, 48);
-		mainGameWindow.getContentPane().add(feedAnimalsBtn);
-		
-		JButton playAnimalsBtn = new JButton("Play with Animals");
-		playAnimalsBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (game.getActions() == 0) {
-					errorLbl.setText("No daily actions remaining.");
-				} else if (game.getPlayerFarm().getAnimals().size() == 0) {
-					JOptionPane frame = new JOptionPane();
-					JOptionPane.showMessageDialog(frame, "You have no animals to play with." + Game.nln + "Purchase animals from the store.");	
-				} else {
-					String message = game.playWithAnimals();
-					JOptionPane frame = new JOptionPane();
-					JOptionPane.showMessageDialog(frame, message);					
-					game.mainGameLaunch();
-					mainGameWindow.dispose();
-				}
-			}
-		});
-		playAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		playAnimalsBtn.setBounds(449, 354, 452, 48);
-		mainGameWindow.getContentPane().add(playAnimalsBtn);
-		
-		JSeparator separator = new JSeparator();
-		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(423, 182, 1, 278);
-		mainGameWindow.getContentPane().add(separator);
-		
+		/**
+		 * Help button displays JOptionPane with instructions and descriptions for the current window
+		 */
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -266,10 +329,7 @@ public class MainGameWindow {
 		instructionsBtn.setBounds(892, 15, 75, 29);
 		mainGameWindow.getContentPane().add(instructionsBtn);
 		
-		JLabel dayLbl = new JLabel("Day: " + game.getDay());
-		dayLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		dayLbl.setBounds(93, 470, 348, 29);
-		mainGameWindow.getContentPane().add(dayLbl);
+		
 		
 		
 	}

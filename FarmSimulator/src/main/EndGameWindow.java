@@ -13,26 +13,17 @@ import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.JTextArea;
 
+/**
+ * End of game GUI window
+ * @author jke99, cjw237
+ *
+ */
+
 public class EndGameWindow {
 
 	private JFrame endGameWindow;
 	private Game game;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EndGameWindow window = new EndGameWindow(new Game());
-					window.endGameWindow.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -53,37 +44,14 @@ public class EndGameWindow {
 		endGameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		endGameWindow.getContentPane().setLayout(null);
 		
+		/**
+		 * Header labels
+		 */
 		JLabel gameCompleteLbl = new JLabel("Game Completed");
 		gameCompleteLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		gameCompleteLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
 		gameCompleteLbl.setBounds(10, 33, 966, 48);
 		endGameWindow.getContentPane().add(gameCompleteLbl);
-		
-		
-		JButton playAgainBtn = new JButton("Play Again");
-		playAgainBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.restartGame();
-				endGameWindow.dispose();
-			}
-		});
-		playAgainBtn.setBounds(799, 509, 158, 29);
-		playAgainBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		endGameWindow.getContentPane().add(playAgainBtn);
-		
-		JLabel congratulationsLBl = new JLabel("Congratulations " + game.getPlayer().getName() + " - You Finished the Game!");
-		congratulationsLBl.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		congratulationsLBl.setHorizontalAlignment(SwingConstants.CENTER);
-		congratulationsLBl.setBounds(142, 116, 703, 48);
-		endGameWindow.getContentPane().add(congratulationsLBl);
-		
-		JTextPane scoresPane = new JTextPane();
-		scoresPane.setEditable(false);
-		scoresPane.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		scoresPane.setBackground(UIManager.getColor("Button.background"));
-		scoresPane.setBounds(184, 254, 630, 106);
-		scoresPane.setText(game.endGameMessage());
-		endGameWindow.getContentPane().add(scoresPane);
 		
 		JLabel youScoredLbl = new JLabel("You scored a total of:");
 		youScoredLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,6 +65,54 @@ public class EndGameWindow {
 		finalScoreLbl.setBounds(142, 375, 703, 48);
 		endGameWindow.getContentPane().add(finalScoreLbl);
 		
+		
+		/**
+		 * Gets player name
+		 */
+		JLabel congratulationsLBl = new JLabel("Congratulations " + game.getPlayer().getName() + " - You Finished the Game!");
+		congratulationsLBl.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		congratulationsLBl.setHorizontalAlignment(SwingConstants.CENTER);
+		congratulationsLBl.setBounds(142, 116, 703, 48);
+		endGameWindow.getContentPane().add(congratulationsLBl);
+		
+		/**
+		 * Calls method in game class to calculate scores from each area of the game and displays string representation of the scores 
+		 */
+		JTextPane scoresPane = new JTextPane();
+		scoresPane.setEditable(false);
+		scoresPane.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		scoresPane.setBackground(UIManager.getColor("Button.background"));
+		scoresPane.setBounds(184, 254, 630, 106);
+		scoresPane.setText(game.endGameMessage());
+		endGameWindow.getContentPane().add(scoresPane);
+		
+		/**
+		 * Calls method in Game class to calculate and display final total score
+		 */
+		JLabel pointsLbl = new JLabel(String.format("%.0f",game.endGameTotal()) + " Points");
+		pointsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		pointsLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
+		pointsLbl.setBounds(142, 414, 703, 48);
+		endGameWindow.getContentPane().add(pointsLbl);
+		
+        /**
+         * Calls method in Game class to restart game and dispose of current game
+         */
+		JButton playAgainBtn = new JButton("Play Again");
+		playAgainBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.restartGame();
+				endGameWindow.dispose();
+			}
+		});
+		playAgainBtn.setBounds(799, 509, 158, 29);
+		playAgainBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		endGameWindow.getContentPane().add(playAgainBtn);
+		
+		
+		/**
+		 * Closes window and ends game
+		 */
 		JButton closeBtn = new JButton("Close");
 		closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,11 +123,7 @@ public class EndGameWindow {
 		closeBtn.setBounds(27, 509, 158, 29);
 		endGameWindow.getContentPane().add(closeBtn);
 		
-		JLabel pointsLbl = new JLabel(String.format("%.0f",game.endGameTotal()) + " Points");
-		pointsLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		pointsLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
-		pointsLbl.setBounds(142, 414, 703, 48);
-		endGameWindow.getContentPane().add(pointsLbl);
+		
 		
 		
 	}

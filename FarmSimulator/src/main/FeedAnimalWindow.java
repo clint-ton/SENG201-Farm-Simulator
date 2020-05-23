@@ -23,6 +23,11 @@ import java.util.List;
 import javax.swing.border.LineBorder;
 import javax.swing.ListSelectionModel;
 
+/**
+ * Feed player animals GUI window
+ * @author jke99, cjw237
+ *
+ */
 public class FeedAnimalWindow {
 
 	private JFrame feedAnimalWindow;
@@ -31,21 +36,7 @@ public class FeedAnimalWindow {
 	private List<Animal> selectedAnimals = new ArrayList<Animal>();
 	private AnimalItem selectedFood = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FeedAnimalWindow window = new FeedAnimalWindow(new Game());
-					window.feedAnimalWindow.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the application.
@@ -66,13 +57,15 @@ public class FeedAnimalWindow {
 		feedAnimalWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		feedAnimalWindow.getContentPane().setLayout(null);
 		
+		/**
+		 * Header labels
+		 */
 		JLabel feedAnimalsLbl = new JLabel("Feed Animals");
 		feedAnimalsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		feedAnimalsLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
 		feedAnimalsLbl.setBounds(10, 33, 966, 48);
 		feedAnimalWindow.getContentPane().add(feedAnimalsLbl);
-		
-		
+			
 		JLabel animalsLbl = new JLabel(game.getPlayer().getName() + "'s Animals:");
 		animalsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
 		if (game.getPlayerFarm().getAnimals().size() == 0) {
@@ -93,19 +86,33 @@ public class FeedAnimalWindow {
 		foodLbl.setBounds(523, 125, 399, 32);
 		feedAnimalWindow.getContentPane().add(foodLbl);
 		
+		/**
+		 * Displays Animals player selected to feed
+		 */
+		JLabel selectedAnimalsLbl = new JLabel("0 Animals selected.");
+		selectedAnimalsLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		selectedAnimalsLbl.setBounds(62, 442, 158, 29);
+		feedAnimalWindow.getContentPane().add(selectedAnimalsLbl);
 		
+		/**
+		 * Displays Food Item player selected to feed animals with
+		 */
+		JLabel selectedFoodLbl = new JLabel("Selected Food: ");
+		selectedFoodLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		selectedFoodLbl.setBounds(523, 442, 399, 29);
+		feedAnimalWindow.getContentPane().add(selectedFoodLbl);
 		
-		JButton backBtn = new JButton("Back");
-		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				game.mainGameLaunch();
-				feedAnimalWindow.dispose();
-			}
-		});
-		backBtn.setBounds(24, 512, 131, 29);
-		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		feedAnimalWindow.getContentPane().add(backBtn);
+		/**
+		 * Explains animal selection
+		 */
+		JLabel ctrlshiftLbl = new JLabel("Ctrl+Click or Shift+Click to select up to 10 animals.");
+		ctrlshiftLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		ctrlshiftLbl.setBounds(62, 467, 399, 29);
+		feedAnimalWindow.getContentPane().add(ctrlshiftLbl);
 		
+		/**
+		 * Alerts player if no Animal or no Food Item selected when attempting to feed Animals
+		 */
 		JLabel errorLbl = new JLabel("");
 		errorLbl.setForeground(Color.RED);
 		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,17 +120,11 @@ public class FeedAnimalWindow {
 		errorLbl.setBounds(304, 512, 366, 29);
 		feedAnimalWindow.getContentPane().add(errorLbl);
 		
-		JLabel selectedAnimalsLbl = new JLabel("0 Animals selected.");
-		selectedAnimalsLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		selectedAnimalsLbl.setBounds(62, 442, 158, 29);
-		feedAnimalWindow.getContentPane().add(selectedAnimalsLbl);
 		
-		JLabel selectedFoodLbl = new JLabel("Selected Food: ");
-		selectedFoodLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		selectedFoodLbl.setBounds(523, 442, 399, 29);
-		feedAnimalWindow.getContentPane().add(selectedFoodLbl);
-		
-		
+		/**
+		 * List of Animals owned by player
+		 * Contained in JScrollPane to allow scrolling if list exceeds text area
+		 */
 		DefaultListModel<Animal> animalListModel = new DefaultListModel<Animal>();
 		animalListModel.addAll(game.getPlayerFarm().getAnimals());
 		JList<Animal> animalList = new JList<Animal>(animalListModel);
@@ -132,7 +133,10 @@ public class FeedAnimalWindow {
 		animalsScroll.setBounds(62, 168, 399, 230);
 		feedAnimalWindow.getContentPane().add(animalsScroll);
 		
-		
+		/**
+		 * List of Food Items owned by player
+		 * Contained in JScrollPane to allow scrolling if list exceeds text area
+		 */
 		DefaultListModel<AnimalItem> foodListModel = new DefaultListModel<AnimalItem>();
 		foodListModel.addAll(game.getPlayerFarm().getAnimalItems());
 		JList<AnimalItem> foodList = new JList<AnimalItem>(foodListModel);
@@ -143,7 +147,10 @@ public class FeedAnimalWindow {
 		feedAnimalWindow.getContentPane().add(foodScroll);
 		
 		
-
+		/**
+		 * Sets selectedAnimals variable to Animals selected in list
+		 * Sets errorLbl text to to notify player if more than 10 animals selected
+		 */
 		JButton selectAnimalsBtn = new JButton("Select Animals");
 		selectAnimalsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,6 +169,9 @@ public class FeedAnimalWindow {
 		selectAnimalsBtn.setBounds(169, 408, 172, 29);
 		feedAnimalWindow.getContentPane().add(selectAnimalsBtn);
 		
+		/**
+		 * Sets selectedFood variable to Food Item selected in list
+		 */
 		JButton selectFoodBtn = new JButton("Select Food");
 		selectFoodBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -176,7 +186,10 @@ public class FeedAnimalWindow {
 		selectFoodBtn.setBounds(650, 407, 145, 29);
 		feedAnimalWindow.getContentPane().add(selectFoodBtn);
 		
-		
+		/**
+		 * Calls method in Game class to feed the Animals held in variable selectedAnimals
+		 *  Sets errorLbl text to to notify player if no Animals or no Food selected
+		 */
 		JButton feedBtn = new JButton("Feed Animals");
 		feedBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -197,11 +210,26 @@ public class FeedAnimalWindow {
 		feedBtn.setBounds(789, 512, 172, 29);
 		feedAnimalWindow.getContentPane().add(feedBtn);
 		
-		JLabel ctrlshiftLbl = new JLabel("Ctrl+Click or Shift+Click to select up to 10 animals.");
-		ctrlshiftLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ctrlshiftLbl.setBounds(62, 467, 399, 29);
-		feedAnimalWindow.getContentPane().add(ctrlshiftLbl);
 		
+		
+		/**
+		 * Back button returns player to main window
+		 */
+		JButton backBtn = new JButton("Back");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.mainGameLaunch();
+				feedAnimalWindow.dispose();
+			}
+		});
+		backBtn.setBounds(24, 512, 131, 29);
+		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		feedAnimalWindow.getContentPane().add(backBtn);
+		
+		
+		/**
+		 * Help button displays JOptionPane with instructions and descriptions for the current window
+		 */
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
