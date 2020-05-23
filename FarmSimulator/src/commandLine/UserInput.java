@@ -1,9 +1,25 @@
-package main;
+package commandLine;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import main.Animal;
+import main.AnimalItem;
+import main.Crop;
+import main.CropItem;
+import main.Farm;
+import main.Farm1;
+import main.Farm2;
+import main.Farm3;
+import main.Farm4;
+import main.Farmer;
+import main.Farmer1;
+import main.Farmer2;
+import main.Game;
+/**
+ * @deprecated
+ */
 public class UserInput {
 	
 	private Game game;

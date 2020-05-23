@@ -1,9 +1,29 @@
-package main;
+package commandLine;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import main.Animal;
+import main.Beans;
+import main.Berries;
+import main.Cabbage;
+import main.Chicken;
+import main.Corn;
+import main.Cow;
+import main.Crop;
+import main.Farm;
+import main.Fertiliser;
+import main.Goat;
+import main.GrassFeed;
+import main.GrowthHormone;
+import main.Item;
+import main.Rice;
+import main.WeedSpray;
+import main.Wheat;
+/**
+ * @deprecated
+ */
 public class Store {
 	private List<Crop> crops = new ArrayList<>();
 	private List<Animal> animals = new ArrayList<>();

@@ -1,7 +1,9 @@
 package main;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Contains player inventory, crops/animals and the various bonuses
+ */
 public class Farm {
 	
 	private String name;
@@ -49,7 +51,10 @@ public class Farm {
 	public Farmer getFarmer() {
 		return farmer;
 	}
-	
+	/**
+	 * Sets the farmer and adds the farmers bonuses to existing bonuses
+	 * @param farmer to be used on the farm
+	 */
 	public void setFarmer(Farmer farmer) {
 		this.farmer = farmer;
 		cropGrowthBonus += farmer.getCropBonus();
@@ -87,7 +92,10 @@ public class Farm {
 		}
 		return cropItems;
 	}
-	
+	/**
+	 * Gets only harvestable crops.
+	 * @return list of crops
+	 */
 	public List<Crop> getHarvestCrops() {
 		List<Crop> harvestCrops = new ArrayList<Crop>();
 		for (Crop crop : crops) {
@@ -140,6 +148,10 @@ public class Farm {
 		money += amount;
 	}
 	
+	/**
+	 * To be used when buying items, raises an exception if insufficient balance
+	 * @param amount
+	 */
 	public void spendMoney(double amount) {
 		if (money - amount >= 0) {
 			money -= amount;
@@ -158,7 +170,10 @@ public class Farm {
 			animalHealthBonus = 14;
 		}
 	}
-	
+	/**
+	 * Purchases the selected animal if enough money
+	 * @param crop
+	 */
 	public String purchaseCrop(Crop crop) {
 		try
 		{
@@ -169,7 +184,10 @@ public class Farm {
 			return "Not enought money for that.";
 		}
 	}
-
+	/**
+	 * Purchases the selected crop if enough money
+	 * @param crop
+	 */
 	public String purchaseAnimal(Animal animal) {
 		try
 		{
@@ -180,6 +198,10 @@ public class Farm {
 			return "Not enought money for that.";
 		}		
 	}
+	/**
+	 * Purchases the selected item if enough money
+	 * @param crop
+	 */
 	public String purchaseItem(Item item) {
 		try
 		{
@@ -190,12 +212,17 @@ public class Farm {
 			return "Not enought money for that.";
 		}		
 	}
-	
+	/**
+	 * Increases bonus to crops and animals
+	 */
 	public void tendLand() {
 		addAnimalHealthBonus(2);
 		addCropGrowthBonus(0.25);
 	}
-	
+	/**
+	 * Removes an item from farm inventory, to be called when item is used
+	 * @param item to be used
+	 */
 	public void useItem(Item item) {
 		items.remove(item);
 	}
@@ -221,15 +248,4 @@ public class Farm {
 		}
 		return result;
 	}
-	
-	
-//	public static void main (String[] args) {
-//		Farmer player = new Farmer("Name", 30, "None");
-//		Farm playerFarm = new Farm("Name", "None", player);
-//		playerFarm.addMoney(150);
-//		Rice rice = new Rice();
-//		playerFarm.purchaseCrop(rice);
-//		System.out.println(playerFarm.crops);
-//		System.out.println(playerFarm.getMoney());
-//	}
 }
