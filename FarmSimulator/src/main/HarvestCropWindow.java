@@ -95,12 +95,12 @@ public class HarvestCropWindow {
 		selectedCropLbl.setBounds(293, 447, 399, 29);
 		harvestWindow.getContentPane().add(selectedCropLbl);
 		
-		JLabel errorLabel = new JLabel("");
-		errorLabel.setForeground(Color.RED);
-		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		errorLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		errorLabel.setBounds(304, 512, 366, 29);
-		harvestWindow.getContentPane().add(errorLabel);
+		JLabel errorLbl = new JLabel("");
+		errorLbl.setForeground(Color.RED);
+		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		errorLbl.setBounds(304, 512, 366, 29);
+		harvestWindow.getContentPane().add(errorLbl);
 		
 		
 		DefaultListModel<Crop> cropListModel = new DefaultListModel<Crop>();
@@ -117,6 +117,7 @@ public class HarvestCropWindow {
 				if (cropList.getSelectedIndex() != -1) {
 					selectedCrop = cropList.getSelectedValue();
 					selectedCropLbl.setText("Selected Crop: " + selectedCrop.getType());
+					errorLbl.setText("");
 				}
 			}
 		});
@@ -128,7 +129,7 @@ public class HarvestCropWindow {
 		harvestBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCrop == null) {
-					errorLabel.setText("No crop selected.");
+					errorLbl.setText("No crop selected.");
 				} else {
 					String message = game.harvestCrop(selectedCrop);
 					JOptionPane frame = new JOptionPane();
@@ -145,11 +146,13 @@ public class HarvestCropWindow {
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				errorLbl.setText("");
 				String message = "Select a crop from the list you would like to harvest." + Game.nln;
 				message += "Click Harvest to harvest the selected crop and receive a cash bonus." + Game.nln;
 				message += "Harvested crops will not regrow - more can be purchased from the store.";
 				JOptionPane frame = new JOptionPane();
 				JOptionPane.showMessageDialog(frame, message);	
+				
 			}
 		});
 		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));

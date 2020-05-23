@@ -78,12 +78,12 @@ public class TendCropWindow {
 		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tendCropWindow.getContentPane().add(backBtn);
 		
-		JLabel errorLabel = new JLabel("");
-		errorLabel.setForeground(Color.RED);
-		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		errorLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		errorLabel.setBounds(304, 512, 366, 29);
-		tendCropWindow.getContentPane().add(errorLabel);
+		JLabel errorLbl = new JLabel("");
+		errorLbl.setForeground(Color.RED);
+		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		errorLbl.setBounds(304, 512, 366, 29);
+		tendCropWindow.getContentPane().add(errorLbl);
 		
 		
 		JLabel selectedCropLbl = new JLabel("Selected Crop: ");
@@ -119,9 +119,9 @@ public class TendCropWindow {
 		useItemBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCrop == null) {
-					errorLabel.setText("No crop selected.");
+					errorLbl.setText("No crop selected.");
 				} else if (selectedItem == null) {
-					errorLabel.setText("No item selected.");					
+					errorLbl.setText("No item selected.");					
 				} else {
 					String message = game.tendToCrop(selectedItem, selectedCrop);
 					JOptionPane frame = new JOptionPane();
@@ -141,6 +141,7 @@ public class TendCropWindow {
 				if (cropList.getSelectedIndex() != -1) {
 					selectedCrop = cropList.getSelectedValue();
 					selectedCropLbl.setText("Selected Crop: " + selectedCrop.getType());
+					errorLbl.setText("");
 				}
 			}
 		});
@@ -154,6 +155,7 @@ public class TendCropWindow {
 				if (cropItemList.getSelectedIndex() != -1) {
 					selectedItem = cropItemList.getSelectedValue();
 					selectedItemLbl.setText("Selected Item: " + selectedItem.getName());
+					errorLbl.setText("");
 				}
 			}
 		});
@@ -165,7 +167,7 @@ public class TendCropWindow {
 		waterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCrop == null) {
-					errorLabel.setText("No crop selected.");
+					errorLbl.setText("No crop selected.");
 				} else {
 					String message = game.waterCrop(selectedCrop);
 					JOptionPane frame = new JOptionPane();
@@ -203,6 +205,7 @@ public class TendCropWindow {
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				errorLbl.setText("");
 				String message = "Select a crop from the list you would like to tend to." + Game.nln;
 				message += "Clicking Water will boost the growth of your crop without using an item." + Game.nln;
 				message += "Select an item and click Use Item to use an item on a crop." + Game.nln;

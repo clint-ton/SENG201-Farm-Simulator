@@ -69,7 +69,7 @@ public class MainGameWindow {
 		
 		JLabel daysRemaininglbl = new JLabel("Days Remaining: " + game.getDaysRemaining());
 		daysRemaininglbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		daysRemaininglbl.setBounds(248, 494, 338, 29);
+		daysRemaininglbl.setBounds(212, 494, 338, 29);
 		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		mainGameWindow.getContentPane().add(daysRemaininglbl);
 		
@@ -111,13 +111,13 @@ public class MainGameWindow {
 		
 		JLabel accBalanceLbl = new JLabel("Account Balance: $" + game.getPlayerFarm().getMoney());
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(431, 519, 348, 29);
+		accBalanceLbl.setBounds(395, 519, 348, 29);
 		mainGameWindow.getContentPane().add(accBalanceLbl);
 		
 		JLabel daysRemainingLbl = new JLabel("Daily Actions Remaining: " + game.getActions());
 		daysRemainingLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysRemainingLbl.setBounds(248, 470, 338, 29);
+		daysRemainingLbl.setBounds(212, 470, 338, 29);
 		mainGameWindow.getContentPane().add(daysRemainingLbl);
 		
 		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
@@ -128,18 +128,18 @@ public class MainGameWindow {
 		dailyActionsLbl.setText(game.getPlayer().getName() + "'s Daily Actions:");
 		mainGameWindow.getContentPane().add(dailyActionsLbl);
 		
-		JLabel noActionsErrorLbl = new JLabel("");
-		noActionsErrorLbl.setForeground(Color.RED);
-		noActionsErrorLbl.setHorizontalAlignment(SwingConstants.LEFT);
-		noActionsErrorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		noActionsErrorLbl.setBounds(75, 464, 272, 35);
-		mainGameWindow.getContentPane().add(noActionsErrorLbl);
+		JLabel errorLbl = new JLabel("");
+		errorLbl.setForeground(Color.RED);
+		errorLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		errorLbl.setBounds(75, 464, 272, 35);
+		mainGameWindow.getContentPane().add(errorLbl);
 		
 		JButton tendLandBtn = new JButton("Tend to Farm Land");
 		tendLandBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (game.getActions() == 0) {
-					noActionsErrorLbl.setText("No daily actions remaining.");
+					errorLbl.setText("No daily actions remaining.");
 				} else {
 					String message = game.tendLand();
 					JOptionPane frame = new JOptionPane();
@@ -179,7 +179,7 @@ public class MainGameWindow {
 		tendCropBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (game.getActions() == 0) {
-					noActionsErrorLbl.setText("No daily actions remaining.");
+					errorLbl.setText("No daily actions remaining.");
 				} else {
 					game.tendCropLaunch();
 					mainGameWindow.dispose();
@@ -194,7 +194,7 @@ public class MainGameWindow {
 		harvestCropBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (game.getActions() == 0) {
-					noActionsErrorLbl.setText("No daily actions remaining.");
+					errorLbl.setText("No daily actions remaining.");
 				} else {
 					game.harvestCropLaunch();
 					mainGameWindow.dispose();
@@ -209,7 +209,7 @@ public class MainGameWindow {
 		feedAnimalsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (game.getActions() == 0) {
-					noActionsErrorLbl.setText("No daily actions remaining.");
+					errorLbl.setText("No daily actions remaining.");
 				} else {
 					game.feedAnimalLaunch();
 					mainGameWindow.dispose();
@@ -224,7 +224,7 @@ public class MainGameWindow {
 		playAnimalsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (game.getActions() == 0) {
-					noActionsErrorLbl.setText("No daily actions remaining.");
+					errorLbl.setText("No daily actions remaining.");
 				} else if (game.getPlayerFarm().getAnimals().size() == 0) {
 					JOptionPane frame = new JOptionPane();
 					JOptionPane.showMessageDialog(frame, "You have no animals to play with." + Game.nln + "Purchase animals from the store.");	
@@ -249,12 +249,13 @@ public class MainGameWindow {
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				errorLbl.setText("");
 				String message = "Click View Farm Status to view the Crops and Animals owned by the Farm." + Game.nln;
 				message += "Purchase Crops, Items, and Animals from the Store." + Game.nln;
 				message += "Crops can be grown, tended to with Items, harvested, and sold for a money bonus." + Game.nln;
 				message += "Animals can be fed with Items, played with, and can return a daily money bonus." + Game.nln;
 				message += "Tending to aspects of the farm costs one daily action." + Game.nln;
-				message += "You have a maximum of 2 daily actions per day." + Game.nln;
+				message += "You have a maximum of 2 daily actions per day. Click Next Day to progress for more actions." + Game.nln;
 				message += "Maximise your final score by farming more Crops and Animals.";
 				JOptionPane frame = new JOptionPane();
 				JOptionPane.showMessageDialog(frame, message);	
