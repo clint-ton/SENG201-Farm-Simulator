@@ -11,7 +11,6 @@ public class Game {
 	private Farm playerFarm;
 	private int daysRemaining;
 	private int actions = 2;
-	private Store store;
 	private int day = 1;
 
 //	private boolean nextDay;
@@ -42,10 +41,6 @@ public class Game {
 		return day;
 	}
 	
-	public Store getStore() {
-		return store;
-	}
-	
 	// called from setup window
 	/**
 	 * Creates the player, called from setup window
@@ -69,9 +64,6 @@ public class Game {
 		daysRemaining = days;
 	}
 	
-	public void setStore() {
-		store = new Store();
-	}
 	
 	public String waterCrop(Crop selectedCrop) {
 		selectedCrop.water();

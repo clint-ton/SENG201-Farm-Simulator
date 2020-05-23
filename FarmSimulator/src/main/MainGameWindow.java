@@ -36,6 +36,7 @@ public class MainGameWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public MainGameWindow(Game game) {
 		this.game = game;

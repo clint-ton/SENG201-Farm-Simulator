@@ -35,6 +35,7 @@ public class InventoryWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public InventoryWindow(Game game) {
 		this.game = game;

@@ -45,6 +45,7 @@ public class TendCropWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public TendCropWindow(Game game) {
 		this.game = game;

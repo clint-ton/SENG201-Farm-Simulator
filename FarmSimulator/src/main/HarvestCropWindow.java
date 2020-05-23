@@ -39,6 +39,7 @@ public class HarvestCropWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public HarvestCropWindow(Game game) {
 		this.game = game;

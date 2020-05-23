@@ -40,6 +40,7 @@ public class FeedAnimalWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public FeedAnimalWindow(Game game) {
 		this.game = game;

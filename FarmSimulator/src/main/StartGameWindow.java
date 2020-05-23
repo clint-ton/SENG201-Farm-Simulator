@@ -75,6 +75,7 @@ public class StartGameWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public StartGameWindow(Game game) { // (Game game)
 		this.game = game;
@@ -153,7 +154,7 @@ public class StartGameWindow {
 		JLabel daysLbl = new JLabel("Select in-game number of days:");
 		daysLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		daysLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysLbl.setBounds(631, 118, 226, 29);
+		daysLbl.setBounds(569, 118, 348, 29);
 		farmSetupWindow.getContentPane().add(daysLbl);
 		
 		JLabel selectFarmerLbl = new JLabel("Choose your farmer skill:");
@@ -516,7 +517,6 @@ public class StartGameWindow {
 					game.setPlayer(selectedFarmer, playerNameText.getText(), age);
 					game.setPlayerFarm(selectedFarm, farmNameText.getText());
 					game.setDaysRemaining(daysRemainingSlider.getValue());
-					game.setStore();
 					game.mainGameLaunch();
 					farmSetupWindow.dispose();
 					String message = "Welcome to Farm Simulator!" + Game.nln + Game.nln;

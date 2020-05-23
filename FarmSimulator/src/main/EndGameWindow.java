@@ -27,6 +27,7 @@ public class EndGameWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public EndGameWindow(Game game) {
 		this.game = game;

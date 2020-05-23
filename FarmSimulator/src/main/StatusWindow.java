@@ -35,6 +35,7 @@ public class StatusWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public StatusWindow(Game game) {
 		this.game = game;
@@ -55,7 +56,7 @@ public class StatusWindow {
 		/**
 		 * Header label
 		 */
-		JLabel statusLbl = new JLabel(game.getPlayerFarm().getName() + "Status");
+		JLabel statusLbl = new JLabel(game.getPlayerFarm().getName() + " Status");
 		statusLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		statusLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
 		statusLbl.setBounds(10, 33, 966, 48);

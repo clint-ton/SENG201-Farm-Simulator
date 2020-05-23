@@ -52,6 +52,7 @@ public class StoreWindow {
 
 	/**
 	 * Create the application.
+	 * @param game Game state passed to window
 	 */
 	public StoreWindow(Game game) {
 		this.game = game;
