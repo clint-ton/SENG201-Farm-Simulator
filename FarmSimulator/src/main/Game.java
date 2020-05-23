@@ -286,7 +286,7 @@ public class Game {
 	public double endGameAnimals() {
 		double points = 0;
 		for (Animal animal : playerFarm.getAnimals()) {
-			points += (animal.getHappiness() + animal.getHealth()) * playerFarm.getAnimalMoneyBonus();
+			points += (animal.getHappiness() + animal.getHealth()) * 0.5  * playerFarm.getAnimalMoneyBonus();
 		}
 		return points;
 	}

@@ -60,20 +60,21 @@ public class FeedAnimalWindow {
 	 */
 	private void initialize() {
 		feedAnimalWindow = new JFrame();
+		feedAnimalWindow.setTitle("Feed Animals");
 		feedAnimalWindow.setBounds(100, 100, 1000, 600);
 		feedAnimalWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		feedAnimalWindow.getContentPane().setLayout(null);
 		
-		JLabel lblFeedAnimals = new JLabel("Feed Animals");
-		lblFeedAnimals.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFeedAnimals.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblFeedAnimals.setBounds(10, 33, 966, 48);
-		feedAnimalWindow.getContentPane().add(lblFeedAnimals);
+		JLabel feedAnimalsLbl = new JLabel("Feed Animals");
+		feedAnimalsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		feedAnimalsLbl.setFont(new Font("Tahoma", Font.BOLD, 30));
+		feedAnimalsLbl.setBounds(10, 33, 966, 48);
+		feedAnimalWindow.getContentPane().add(feedAnimalsLbl);
 		
 		
 		JLabel animalsLbl = new JLabel(game.getPlayer().getName() + "'s Animals:");
 		animalsLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
-		if (game.getPlayerFarm().getCrops().size() == 0) {
+		if (game.getPlayerFarm().getAnimals().size() == 0) {
 			animalsLbl.setText("You have no Animals.");
 		}
 		animalsLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,7 +84,7 @@ public class FeedAnimalWindow {
 		
 		JLabel foodLbl = new JLabel(game.getPlayer().getName() + "'s Food Items:");
 		foodLbl.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
-		if (game.getPlayerFarm().getCropItems().size() == 0) {
+		if (game.getPlayerFarm().getAnimalItems().size() == 0) {
 			foodLbl.setText("You have no Food Items.");
 		}
 		foodLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,12 +105,12 @@ public class FeedAnimalWindow {
 		backBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		feedAnimalWindow.getContentPane().add(backBtn);
 		
-		JLabel errorLabel = new JLabel("");
-		errorLabel.setForeground(Color.RED);
-		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		errorLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		errorLabel.setBounds(304, 512, 366, 29);
-		feedAnimalWindow.getContentPane().add(errorLabel);
+		JLabel errorLbl = new JLabel("");
+		errorLbl.setForeground(Color.RED);
+		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		errorLbl.setBounds(304, 512, 366, 29);
+		feedAnimalWindow.getContentPane().add(errorLbl);
 		
 		JLabel selectedAnimalsLbl = new JLabel("0 Animals selected.");
 		selectedAnimalsLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -146,9 +147,10 @@ public class FeedAnimalWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (animalList.getSelectedIndex() != -1) {
 					if (animalList.getSelectedValuesList().size() > 10) {
-						errorLabel.setText("Can only feed up to 10 animals.");
+						errorLbl.setText("Can only feed up to 10 animals.");
 					} else {
 						selectedAnimals = animalList.getSelectedValuesList();
+						errorLbl.setText("");
 					}
 					selectedAnimalsLbl.setText(selectedAnimals.size() + " Animals selected.");
 				}
@@ -164,6 +166,7 @@ public class FeedAnimalWindow {
 				if (foodList.getSelectedIndex() != -1) {
 					selectedFood = foodList.getSelectedValue();
 					selectedFoodLbl.setText("Selected Food: " + selectedFood.getName());
+					errorLbl.setText("");
 				}
 			}
 		});
@@ -176,9 +179,9 @@ public class FeedAnimalWindow {
 		feedBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedAnimals.size() == 0) {
-					errorLabel.setText("No Animal selected.");
+					errorLbl.setText("No Animal selected.");
 				} else if (selectedFood == null) {
-					errorLabel.setText("No food selected.");					
+					errorLbl.setText("No food selected.");					
 				} else {
 					String message = game.feedAnimals(selectedFood, selectedAnimals);
 					JOptionPane frame = new JOptionPane();
@@ -200,6 +203,7 @@ public class FeedAnimalWindow {
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				errorLbl.setText("");
 				String message = "Select up to 10 animals you would like to feed." + Game.nln;
 				message += "Use Ctrl+Click or Shift+Click to select multiple animals." + Game.nln;
 				message += "Select an item and click Feed Animals to feed selected animals." + Game.nln;

@@ -150,6 +150,7 @@ public class StoreWindow {
 				attributesPane.setText(cabbage.storeString());
 				selected = cabbage;
 				selectedProductLbl.setText("Selected Product: Cabbage");
+				errorLbl.setText("");
 			}
 		});
 		cabbageBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -167,6 +168,7 @@ public class StoreWindow {
 				attributesPane.setText(beans.storeString());
 				selected = beans;
 				selectedProductLbl.setText("Selected Product: Beans");
+				errorLbl.setText("");
 			}
 		});
 		beansBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -184,6 +186,7 @@ public class StoreWindow {
 				attributesPane.setText(berries.storeString());
 				selected = berries;
 				selectedProductLbl.setText("Selected Product: Berries");
+				errorLbl.setText("");
 			}
 		});
 		berriesBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -201,6 +204,7 @@ public class StoreWindow {
 				attributesPane.setText(corn.storeString());
 				selected = corn;
 				selectedProductLbl.setText("Selected Product: Corn");
+				errorLbl.setText("");
 			}
 		});
 		cornBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -218,6 +222,7 @@ public class StoreWindow {
 				attributesPane.setText(rice.storeString());
 				selected = rice;
 				selectedProductLbl.setText("Selected Product: Rice");	
+				errorLbl.setText("");
 			}
 		});
 		riceBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -235,14 +240,15 @@ public class StoreWindow {
 				attributesPane.setText(wheat.storeString());
 				selected = wheat;
 				selectedProductLbl.setText("Selected Product: Wheat");
+				errorLbl.setText("");
 			}
 		});
 		wheatBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		wheatBtn.setBounds(24, 298, 117, 48);
 		storeWindow.getContentPane().add(wheatBtn);
 		
-		JButton btnFertiliser = new JButton("Fertiliser");
-		btnFertiliser.addActionListener(new ActionListener() {
+		JButton fertiliserBtn = new JButton("Fertiliser");
+		fertiliserBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				quantityText.setText("1");
 				quantity = 1;
@@ -252,11 +258,12 @@ public class StoreWindow {
 				attributesPane.setText(fertiliser.storeString());
 				selected = fertiliser;
 				selectedProductLbl.setText("Selected Product: Fertiliser");
+				errorLbl.setText("");
 			}
 		});
-		btnFertiliser.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnFertiliser.setBounds(305, 240, 117, 48);
-		storeWindow.getContentPane().add(btnFertiliser);
+		fertiliserBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		fertiliserBtn.setBounds(305, 240, 117, 48);
+		storeWindow.getContentPane().add(fertiliserBtn);
 		
 		JButton nutrientBoostBtn = new JButton("Nutrient Boost");
 		nutrientBoostBtn.addActionListener(new ActionListener() {
@@ -269,6 +276,7 @@ public class StoreWindow {
 				attributesPane.setText(nutrient.storeString());
 				selected = nutrient;
 				selectedProductLbl.setText("Selected Product: Nutrient Boost");
+				errorLbl.setText("");
 			}
 		});
 		nutrientBoostBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -286,14 +294,15 @@ public class StoreWindow {
 				attributesPane.setText(weedSpray.storeString());
 				selected = weedSpray;
 				selectedProductLbl.setText("Selected Product: WeedSpray");
+				errorLbl.setText("");
 			}
 		});
 		weedSprayBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		weedSprayBtn.setBounds(305, 356, 117, 48);
 		storeWindow.getContentPane().add(weedSprayBtn);
 		
-		JButton btnGrowthHormone = new JButton("Growth Hormone");
-		btnGrowthHormone.addActionListener(new ActionListener() {
+		JButton growthHormoneBtn = new JButton("Growth Hormone");
+		growthHormoneBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				quantityText.setText("1");
 				quantity = 1;
@@ -303,11 +312,12 @@ public class StoreWindow {
 				attributesPane.setText(growth.storeString());
 				selected = growth;
 				selectedProductLbl.setText("Selected Product: Growth Hormone");
+				errorLbl.setText("");
 			}
 		});
-		btnGrowthHormone.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnGrowthHormone.setBounds(596, 240, 117, 48);
-		storeWindow.getContentPane().add(btnGrowthHormone);
+		growthHormoneBtn.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		growthHormoneBtn.setBounds(596, 240, 117, 48);
+		storeWindow.getContentPane().add(growthHormoneBtn);
 		
 		JButton grassFeedBtn = new JButton("Grass Feed");
 		grassFeedBtn.addActionListener(new ActionListener() {
@@ -320,6 +330,7 @@ public class StoreWindow {
 				attributesPane.setText(grass.storeString());
 				selected = grass;
 				selectedProductLbl.setText("Selected Product: Grass Feed");
+				errorLbl.setText("");
 			}
 		});
 		grassFeedBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -337,6 +348,7 @@ public class StoreWindow {
 				attributesPane.setText(immune.storeString());
 				selected = immune;
 				selectedProductLbl.setText("Selected Product: Immunity Boost");
+				errorLbl.setText("");
 			}
 		});
 		immunityBoostBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -354,6 +366,7 @@ public class StoreWindow {
 				attributesPane.setText(goat.storeString());
 				selected = goat;
 				selectedProductLbl.setText("Selected Product: Goat");
+				errorLbl.setText("");
 			}
 		});
 		goatBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -371,6 +384,7 @@ public class StoreWindow {
 				attributesPane.setText(chicken.storeString());
 				selected = chicken;
 				selectedProductLbl.setText("Selected Product: Chicken");
+				errorLbl.setText("");
 			}
 		});
 		chickenBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -388,6 +402,7 @@ public class StoreWindow {
 				attributesPane.setText(cow.storeString());
 				selected = cow;
 				selectedProductLbl.setText("Selected Product: Cow");
+				errorLbl.setText("");
 			}
 		});
 		cowBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -463,6 +478,7 @@ public class StoreWindow {
 					int quantityInt = Integer.parseInt(quantityStr); 
 					purchasePriceLbl.setText("Purchase Price: $" + quantityInt * selectedPrice);
 					quantity = quantityInt;
+					errorLbl.setText("");
 				}catch(NumberFormatException f) {
 					errorLbl.setText("Enter valid quantity.");
 				}
@@ -495,6 +511,7 @@ public class StoreWindow {
 		JButton instructionsBtn = new JButton("Help");
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				errorLbl.setText("");
 				String message = "Click View Inventory to view currently owned items." + Game.nln;
 				message += "Select a product to view its attributes." + Game.nln;
 				message += "Adjust the quantity and click Get Price to get total purchase price." + Game.nln;
