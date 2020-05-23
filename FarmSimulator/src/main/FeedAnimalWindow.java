@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.border.LineBorder;
+import javax.swing.ListSelectionModel;
 
 public class FeedAnimalWindow {
 
@@ -135,6 +136,7 @@ public class FeedAnimalWindow {
 		DefaultListModel<AnimalItem> foodListModel = new DefaultListModel<AnimalItem>();
 		foodListModel.addAll(game.getPlayerFarm().getAnimalItems());
 		JList<AnimalItem> foodList = new JList<AnimalItem>(foodListModel);
+		foodList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		foodList.setBackground(UIManager.getColor("Button.background"));
 		JScrollPane foodScroll = new JScrollPane(foodList);
 		foodScroll.setBounds(523, 167, 399, 230);

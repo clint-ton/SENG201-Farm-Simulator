@@ -68,6 +68,9 @@ public class StatusWindow {
 		cropLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cropLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cropLbl.setBounds(64, 107, 399, 34);
+		if (game.getPlayerFarm().getCrops().size() == 0) {
+			cropLbl.setText("You have no Crops");
+		}
 		statusWindow.getContentPane().add(cropLbl);
 		
 		JLabel animalLbl = new JLabel("Animals");
@@ -75,6 +78,9 @@ public class StatusWindow {
 		animalLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		animalLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		animalLbl.setBounds(528, 107, 399, 34);
+		if (game.getPlayerFarm().getAnimals().size() == 0) {
+			cropLbl.setText("You have no Animals");
+		}
 		statusWindow.getContentPane().add(animalLbl);
 		
 		JLabel accBalanceLbl = new JLabel("New label");

@@ -12,6 +12,7 @@ public class Game {
 	private int daysRemaining;
 	private int actions = 2;
 	private Store store;
+	private int day = 1;
 
 //	private boolean nextDay;
 	public static String nln = System.lineSeparator();  // newline character for specific machine
@@ -35,6 +36,10 @@ public class Game {
 	
 	public int getDaysRemaining() {
 		return daysRemaining;
+	}
+	
+	public int getDay() {
+		return day;
 	}
 	
 	public Store getStore() {
@@ -275,6 +280,7 @@ public class Game {
 	
 	public String dailyChange() {
 		daysRemaining -= 1;
+		day += 1;
 		actions = 2;
 		String message = "";
 		moneyBonus();

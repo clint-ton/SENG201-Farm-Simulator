@@ -130,7 +130,7 @@ public class StartGameWindow {
 		farmNameText.setBounds(211, 196, 246, 29);
 		farmSetupWindow.getContentPane().add(farmNameText);
 		
-		daysLbl = new JLabel("Select number of days:");
+		daysLbl = new JLabel("Select in-game number of days:");
 		daysLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		daysLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		daysLbl.setBounds(631, 118, 226, 29);
@@ -148,38 +148,38 @@ public class StartGameWindow {
 		daysRemainingSlider.setBounds(563, 157, 362, 64);
 		farmSetupWindow.getContentPane().add(daysRemainingSlider);
 		
-		JLabel selectFarmerLbl = new JLabel("Select farmer skill:");
+		JLabel selectFarmerLbl = new JLabel("Choose your farmer skill:");
 		selectFarmerLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		selectFarmerLbl.setBounds(22, 257, 221, 29);
+		selectFarmerLbl.setBounds(22, 257, 246, 29);
 		farmSetupWindow.getContentPane().add(selectFarmerLbl);
 		
-		JLabel selectFarmLbl = new JLabel("Select starter farm:");
+		JLabel selectFarmLbl = new JLabel("Choose your starting farm:");
 		selectFarmLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		selectFarmLbl.setBounds(333, 257, 221, 29);
+		selectFarmLbl.setBounds(333, 257, 266, 29);
 		farmSetupWindow.getContentPane().add(selectFarmLbl);
 		
 		JLabel yourFarmerLbl = new JLabel("Your Farmer Skill:");
 		yourFarmerLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		yourFarmerLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		yourFarmerLbl.setBounds(42, 433, 183, 48);
+		yourFarmerLbl.setBounds(21, 433, 204, 48);
 		farmSetupWindow.getContentPane().add(yourFarmerLbl);
 		
 		JLabel yourFarmLbl = new JLabel("Your Starter Farm:");
 		yourFarmLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		yourFarmLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		yourFarmLbl.setBounds(356, 433, 172, 49);
+		yourFarmLbl.setBounds(333, 433, 195, 49);
 		farmSetupWindow.getContentPane().add(yourFarmLbl);
 		
 		JLabel selectedFarmerLbl = new JLabel("");
 		selectedFarmerLbl.setHorizontalAlignment(SwingConstants.LEFT);
-		selectedFarmerLbl.setFont(new Font("Tahoma", Font.BOLD, 16));
-		selectedFarmerLbl.setBounds(158, 433, 165, 49);
+		selectedFarmerLbl.setFont(new Font("Tahoma", Font.BOLD, 14));
+		selectedFarmerLbl.setBounds(136, 433, 189, 49);
 		farmSetupWindow.getContentPane().add(selectedFarmerLbl);
 		
 		JLabel selectedFarmLbl = new JLabel("");
 		selectedFarmLbl.setHorizontalAlignment(SwingConstants.LEFT);
-		selectedFarmLbl.setFont(new Font("Tahoma", Font.BOLD, 16));
-		selectedFarmLbl.setBounds(481, 433, 226, 49);
+		selectedFarmLbl.setFont(new Font("Tahoma", Font.BOLD, 14));
+		selectedFarmLbl.setBounds(451, 433, 256, 49);
 		farmSetupWindow.getContentPane().add(selectedFarmLbl);
 		
 		
@@ -213,7 +213,7 @@ public class StartGameWindow {
 		mult2Lbl.setBounds(703, 289, 139, 36);
 		farmSetupWindow.getContentPane().add(mult2Lbl);
 		
-		JLabel skillLbl = new JLabel("Bonus");
+		JLabel skillLbl = new JLabel("Skill Bonus");
 		skillLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		skillLbl.setFont(new Font("Tahoma", Font.BOLD, 14));
 		skillLbl.setBounds(151, 279, 139, 36);
@@ -264,7 +264,7 @@ public class StartGameWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (tempFarmer != null) {
 					selectedFarmer = tempFarmer;
-					selectedFarmerLbl.setText(selectedFarmer.getSkill());
+					selectedFarmerLbl.setText("Skill " + (farmerTypes.indexOf(selectedFarmer)+1) + ": " + selectedFarmer.getSkill());
 					errorLbl.setText("");
 				}
 			}
@@ -278,7 +278,7 @@ public class StartGameWindow {
 			public void actionPerformed(ActionEvent e) {
 				if (tempFarm != null) {
 					selectedFarm = tempFarm;
-					selectedFarmLbl.setText(selectedFarm.getType());
+					selectedFarmLbl.setText("Farm " + (farmTypes.indexOf(selectedFarm)+1) + ": " + selectedFarm.getType());
 					errorLbl.setText("");
 				}
 			}
@@ -322,10 +322,11 @@ public class StartGameWindow {
 					message += "Purchase Crops, Items, and Animals from the Store." + Game.nln;
 					message += "Crops can be grown, tended to with Items, harvested, and sold for a money bonus." + Game.nln;
 					message += "Animals can be fed with Items, played with, and can return a daily money bonus." + Game.nln;
-					message += "Tending to aspects of the farm costs one daily action." + Game.nln;
+					message += "Animals will not survive without regular feeding and play." + Game.nln + Game.nln;
+					message += "Tending to aspects of the farm will cost one daily action." + Game.nln;
 					message += "You have a maximum of 2 daily actions per day. Click Next Day to progress for more actions." + Game.nln;
 					message += "Maximise your final score by farming more Crops and Animals." + Game.nln + Game.nln;
-					message += "Click the Help button to view more farming tips.";
+					message += "Click the Help button in each window to view more farming tips.";
 					JOptionPane frame = new JOptionPane();
 					JOptionPane.showMessageDialog(frame, message);	
 					
@@ -337,18 +338,18 @@ public class StartGameWindow {
 		startGameBtn.setBounds(831, 509, 131, 29);
 		farmSetupWindow.getContentPane().add(startGameBtn);
 		
-		JButton farmer2Btn = new JButton(farmerTypes.get(1).getSkill());
+		JButton farmer2Btn = new JButton("Skill 2"); //(farmerTypes.get(1).getSkill());
 		farmer2Btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		farmer2Btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tempFarmer = farmerTypes.get(1);
-				selectedSkillLbl.setText("+" + tempFarmer.getAnimalBonus() + " Animal Health");
+				selectedSkillLbl.setText("+" + tempFarmer.getAnimalBonus() + " Animal Care");
 			}
 		});
 		farmer2Btn.setBounds(21, 347, 113, 45);
 		farmSetupWindow.getContentPane().add(farmer2Btn);
 		
-		JButton farm1Btn = new JButton(farmTypes.get(0).getType());
+		JButton farm1Btn = new JButton("Farm 1"); //(farmTypes.get(0).getType());
 		farm1Btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		farm1Btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -361,7 +362,7 @@ public class StartGameWindow {
 		farm1Btn.setBounds(333, 296, 113, 45);
 		farmSetupWindow.getContentPane().add(farm1Btn);
 		
-		JButton farm3Btn = new JButton(farmTypes.get(2).getType());
+		JButton farm3Btn = new JButton("Farm 3"); //(farmTypes.get(2).getType());
 		farm3Btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		farm3Btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -374,7 +375,7 @@ public class StartGameWindow {
 		farm3Btn.setBounds(333, 347, 113, 45);
 		farmSetupWindow.getContentPane().add(farm3Btn);
 		
-		JButton farmer1Btn = new JButton(farmerTypes.get(0).getSkill());
+		JButton farmer1Btn = new JButton("Skill 1"); //(farmerTypes.get(0).getSkill());
 		farmer1Btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		farmer1Btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -386,7 +387,7 @@ public class StartGameWindow {
 		farmer1Btn.setBounds(21, 296, 113, 45);
 		farmSetupWindow.getContentPane().add(farmer1Btn);
 		
-		JButton farm2Btn = new JButton(farmTypes.get(1).getType());
+		JButton farm2Btn = new JButton("Farm 2"); //(farmTypes.get(1).getType());
 		farm2Btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		farm2Btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -399,7 +400,7 @@ public class StartGameWindow {
 		farm2Btn.setBounds(456, 296, 113, 45);
 		farmSetupWindow.getContentPane().add(farm2Btn);
 		
-		JButton farm4Btn = new JButton(farmTypes.get(3).getType());
+		JButton farm4Btn = new JButton("Farm 4"); //(farmTypes.get(3).getType());
 		farm4Btn.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		farm4Btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -425,12 +426,39 @@ public class StartGameWindow {
 		JLabel instructionBtn = new JLabel("Enter details and press Start.");
 		instructionBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		instructionBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		instructionBtn.setBounds(279, 509, 381, 29);
+		instructionBtn.setBounds(279, 519, 381, 29);
 		farmSetupWindow.getContentPane().add(instructionBtn);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 481, 986, 29);
+		separator.setBounds(0, 481, 986, 15);
 		farmSetupWindow.getContentPane().add(separator);
+		
+		
+		JButton instructionsBtn = new JButton("Help");
+		instructionsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorLbl.setText("");
+				String message = "Enter your name, age and farm name." + Game.nln;
+				message += "Select the number of in-game days you would like the simulation to last." + Game.nln;
+				message += "Choose your farmer skill. Farmer skills improve your crop growing or animal care ability." + Game.nln;
+				message += "Choose your farm. Each farm has different starter bonuses and starting accounts." + Game.nln;
+				message += "You can still grow animals and crops on any type of farm." + Game.nln;
+				message += "You can improve your bonuses as you progress through the game." + Game.nln;
+				message += "Game-play instructions are available after setup." + Game.nln;
+				message += "Enter all required fields and press Start.";
+				JOptionPane frame = new JOptionPane();
+				JOptionPane.showMessageDialog(frame, message);	
+			}
+		});
+		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		instructionsBtn.setBounds(892, 15, 75, 29);
+		farmSetupWindow.getContentPane().add(instructionsBtn);
+		
+		JLabel lblPressHelpFor = new JLabel("Press Help for setup instructions.");
+		lblPressHelpFor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPressHelpFor.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPressHelpFor.setBounds(279, 496, 381, 29);
+		farmSetupWindow.getContentPane().add(lblPressHelpFor);
 		
 		
 		

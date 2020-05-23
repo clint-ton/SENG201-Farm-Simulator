@@ -293,7 +293,7 @@ public class StoreWindow {
 				purchasePriceLbl.setText("Purchase Price: $" + selectedPrice);
 				attributesPane.setText(weedSpray.storeString());
 				selected = weedSpray;
-				selectedProductLbl.setText("Selected Product: WeedSpray");
+				selectedProductLbl.setText("Selected Product: Weed Spray");
 				errorLbl.setText("");
 			}
 		});

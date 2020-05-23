@@ -88,6 +88,9 @@ public class InventoryWindow {
 		cropItemLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cropItemLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cropItemLbl.setBounds(64, 107, 399, 34);
+		if (game.getPlayerFarm().getCropItems().size() == 0) {
+			cropItemLbl.setText("You have no Crop Items");
+		}
 		inventoryWindow.getContentPane().add(cropItemLbl);
 		
 		JLabel animalItemsLbl = new JLabel("Animal Items");
@@ -95,6 +98,9 @@ public class InventoryWindow {
 		animalItemsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		animalItemsLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		animalItemsLbl.setBounds(529, 107, 398, 34);
+		if (game.getPlayerFarm().getAnimalItems().size() == 0) {
+			animalItemsLbl.setText("You have no Animal Items");
+		}
 		inventoryWindow.getContentPane().add(animalItemsLbl);
 		
 		DefaultListModel<Crop> cropListModel = new DefaultListModel<Crop>();

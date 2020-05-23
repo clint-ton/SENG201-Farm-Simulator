@@ -68,8 +68,8 @@ public class MainGameWindow {
 		mainGameWindow.getContentPane().add(farmTitlelbl);
 		
 		JLabel daysRemaininglbl = new JLabel("Days Remaining: " + game.getDaysRemaining());
-		daysRemaininglbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		daysRemaininglbl.setBounds(212, 494, 338, 29);
+		daysRemaininglbl.setHorizontalAlignment(SwingConstants.LEFT);
+		daysRemaininglbl.setBounds(93, 494, 338, 29);
 		daysRemaininglbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		mainGameWindow.getContentPane().add(daysRemaininglbl);
 		
@@ -111,28 +111,28 @@ public class MainGameWindow {
 		
 		JLabel accBalanceLbl = new JLabel("Account Balance: $" + game.getPlayerFarm().getMoney());
 		accBalanceLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		accBalanceLbl.setBounds(395, 519, 348, 29);
+		accBalanceLbl.setBounds(374, 519, 348, 29);
 		mainGameWindow.getContentPane().add(accBalanceLbl);
 		
 		JLabel daysRemainingLbl = new JLabel("Daily Actions Remaining: " + game.getActions());
-		daysRemainingLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		daysRemainingLbl.setHorizontalAlignment(SwingConstants.LEFT);
 		daysRemainingLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		daysRemainingLbl.setBounds(212, 470, 338, 29);
+		daysRemainingLbl.setBounds(93, 519, 322, 29);
 		mainGameWindow.getContentPane().add(daysRemainingLbl);
 		
 		JLabel dailyActionsLbl = new JLabel("Daily Actions:");
 		dailyActionsLbl.setBorder(null);
 		dailyActionsLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		dailyActionsLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
-		dailyActionsLbl.setBounds(75, 132, 452, 35);
+		dailyActionsLbl.setBounds(449, 132, 452, 35);
 		dailyActionsLbl.setText(game.getPlayer().getName() + "'s Daily Actions:");
 		mainGameWindow.getContentPane().add(dailyActionsLbl);
 		
 		JLabel errorLbl = new JLabel("");
 		errorLbl.setForeground(Color.RED);
-		errorLbl.setHorizontalAlignment(SwingConstants.LEFT);
+		errorLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		errorLbl.setBounds(75, 464, 272, 35);
+		errorLbl.setBounds(629, 464, 272, 35);
 		mainGameWindow.getContentPane().add(errorLbl);
 		
 		JButton tendLandBtn = new JButton("Tend to Farm Land");
@@ -150,7 +150,7 @@ public class MainGameWindow {
 			}
 		});
 		tendLandBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tendLandBtn.setBounds(75, 412, 452, 48);
+		tendLandBtn.setBounds(449, 412, 452, 48);
 		mainGameWindow.getContentPane().add(tendLandBtn);
 		
 		JButton farmStatusBtn = new JButton("View Farm Status");
@@ -161,7 +161,7 @@ public class MainGameWindow {
 			}
 		});
 		farmStatusBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		farmStatusBtn.setBounds(595, 180, 306, 131);
+		farmStatusBtn.setBounds(93, 180, 306, 131);
 		mainGameWindow.getContentPane().add(farmStatusBtn);
 		
 		JButton visitStoreBtn = new JButton("Visit Store");
@@ -172,7 +172,7 @@ public class MainGameWindow {
 			}
 		});
 		visitStoreBtn.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		visitStoreBtn.setBounds(595, 329, 306, 131);
+		visitStoreBtn.setBounds(93, 329, 306, 131);
 		mainGameWindow.getContentPane().add(visitStoreBtn);
 		
 		JButton tendCropBtn = new JButton("Tend to a Crop");
@@ -187,7 +187,7 @@ public class MainGameWindow {
 			}
 		});
 		tendCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tendCropBtn.setBounds(75, 180, 452, 48);
+		tendCropBtn.setBounds(449, 180, 452, 48);
 		mainGameWindow.getContentPane().add(tendCropBtn);
 		
 		JButton harvestCropBtn = new JButton("Harvest a Crop");
@@ -202,7 +202,7 @@ public class MainGameWindow {
 			}
 		});
 		harvestCropBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		harvestCropBtn.setBounds(75, 238, 452, 48);
+		harvestCropBtn.setBounds(449, 238, 452, 48);
 		mainGameWindow.getContentPane().add(harvestCropBtn);
 		
 		JButton feedAnimalsBtn = new JButton("Feed Animals");
@@ -217,7 +217,7 @@ public class MainGameWindow {
 			}
 		});
 		feedAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		feedAnimalsBtn.setBounds(75, 296, 452, 48);
+		feedAnimalsBtn.setBounds(449, 296, 452, 48);
 		mainGameWindow.getContentPane().add(feedAnimalsBtn);
 		
 		JButton playAnimalsBtn = new JButton("Play with Animals");
@@ -238,12 +238,12 @@ public class MainGameWindow {
 			}
 		});
 		playAnimalsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		playAnimalsBtn.setBounds(75, 354, 452, 48);
+		playAnimalsBtn.setBounds(449, 354, 452, 48);
 		mainGameWindow.getContentPane().add(playAnimalsBtn);
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(561, 180, 1, 278);
+		separator.setBounds(423, 182, 1, 278);
 		mainGameWindow.getContentPane().add(separator);
 		
 		JButton instructionsBtn = new JButton("Help");
@@ -254,7 +254,8 @@ public class MainGameWindow {
 				message += "Purchase Crops, Items, and Animals from the Store." + Game.nln;
 				message += "Crops can be grown, tended to with Items, harvested, and sold for a money bonus." + Game.nln;
 				message += "Animals can be fed with Items, played with, and can return a daily money bonus." + Game.nln;
-				message += "Tending to aspects of the farm costs one daily action." + Game.nln;
+				message += "Animals will not survive without regular feeding and play." + Game.nln + Game.nln;
+				message += "Tending to aspects of the farm will cost one daily action." + Game.nln;
 				message += "You have a maximum of 2 daily actions per day. Click Next Day to progress for more actions." + Game.nln;
 				message += "Maximise your final score by farming more Crops and Animals.";
 				JOptionPane frame = new JOptionPane();
@@ -264,6 +265,11 @@ public class MainGameWindow {
 		instructionsBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		instructionsBtn.setBounds(892, 15, 75, 29);
 		mainGameWindow.getContentPane().add(instructionsBtn);
+		
+		JLabel dayLbl = new JLabel("Day: " + game.getDay());
+		dayLbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		dayLbl.setBounds(93, 470, 348, 29);
+		mainGameWindow.getContentPane().add(dayLbl);
 		
 		
 	}
