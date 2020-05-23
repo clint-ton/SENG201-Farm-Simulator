@@ -1,5 +1,7 @@
 package main;
-
+/**
+ * Item Nutrient Boost for use on crops, cost: 80, boost: 1.5
+ */
 public class NutrientBoost extends CropItem {
 	
 	public NutrientBoost() {

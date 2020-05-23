@@ -111,7 +111,7 @@ public class Animal {
 	}
 	/**
 	 * Decreases happiness and health by a set amount for daily decay
-	 * @return The animals condition, "" if animal is not dead
+	 * @return true if dead, otherwise
 	 */
 	public boolean dailyLoss() {
 		// Daily loss of happiness/health - implement at start of day 

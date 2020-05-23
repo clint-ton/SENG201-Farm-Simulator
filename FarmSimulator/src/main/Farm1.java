@@ -1,6 +1,8 @@
 package main;
 
-
+/**
+ * Animal Oriented Farm, Provides 2x bonus to animal income
+ */
 public class Farm1 extends Farm {
 	
 	

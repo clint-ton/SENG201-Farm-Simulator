@@ -45,15 +45,15 @@ class AnimalTest {
 	@Test
 	void dailyLossTest() {
 		Animal testAnimal = new Animal("Cow", 0, 0);
-		assertEquals(testAnimal.dailyLoss(), "");
+		assertEquals(testAnimal.dailyLoss(), false);
 		assertEquals(testAnimal.getHealth(), 65);
 		assertEquals(testAnimal.getHappiness(), 40);
-		assertEquals(testAnimal.dailyLoss(), "");
-		assertEquals(testAnimal.dailyLoss(), "");
-		assertEquals(testAnimal.dailyLoss(), "");
-		assertEquals(testAnimal.dailyLoss(), "Happiness level dropped to 0. Your animal lost the will to live.\n".trim());
+		assertEquals(testAnimal.dailyLoss(), false);
+		assertEquals(testAnimal.dailyLoss(), false);
+		assertEquals(testAnimal.dailyLoss(), false);
+		assertEquals(testAnimal.dailyLoss(), true);
 		testAnimal.play();
-		assertEquals(testAnimal.dailyLoss(), "Health level dropped to 0. Your animal's body could no longer function.\n".trim());
+		assertEquals(testAnimal.dailyLoss(), true);
 		
 	}
 

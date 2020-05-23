@@ -1,5 +1,7 @@
 package main;
-
+/**
+ * Items to be used on Animals
+ */
 public class AnimalItem extends Item {
 	
 	private int healthBoost;
@@ -16,7 +18,9 @@ public class AnimalItem extends Item {
 	public String toString() {
 		return (this.getName() + ": Type = " + this.getType() + " Health Boost = " + healthBoost);
 	}
-	
+	/**
+	 * 	String used by the store
+	 */
 	public String storeString() {
 		return (this.getName() + Game.nln + "Type: " + this.getType() + Game.nln + "Health Boost = " + healthBoost + " days" + Game.nln + "Price/Unit = $" + this.getPrice());
 	}

@@ -1,5 +1,7 @@
 package main;
-
+/**
+ * Items to be used on crops/animals and provide boosts to time to harvest/ happiness
+ */
 public class Item {
 	
 	private String name;

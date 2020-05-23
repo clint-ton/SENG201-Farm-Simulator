@@ -1,5 +1,7 @@
 package main;
-
+/**
+ * Crop Oriented Farm, Provides 2x bonus to crop income
+ */
 public class Farm2 extends Farm {
 	
 	
