@@ -1,4 +1,7 @@
 package main;
+/**
+ * Player character and attributes (Name, age, bonuses etc.)
+ */
 public class Farmer {
 	
 	private String name;
@@ -47,7 +50,9 @@ public class Farmer {
 	public int getAnimalBonus() {
 		return animalBonus;
 	}
-	
+	/**
+	 * String representation of the player
+	 */
 	public String toString() {
 		if (cropBonus == 0) {
 		    return ("Farmer Skill: " + skill + " = +" + animalBonus + " daily points boost");
