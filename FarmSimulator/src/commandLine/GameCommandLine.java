@@ -1,13 +1,16 @@
 package commandLine;
-//import main.*;
-//import java.util.List;
-//import java.util.Scanner;
-//
-//import commandLine.Store;
-//
-//import java.util.ArrayList;
-//
-//
+import main.*;
+import java.util.List;
+import java.util.Scanner;
+
+import commandLine.Store;
+
+import java.util.ArrayList;
+
+/**
+ * @deprecated
+ *
+ */
 public class GameCommandLine {
 //
 //	private Farmer player;

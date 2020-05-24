@@ -5,7 +5,11 @@ import java.util.Scanner;
 import commandLine.Store;
 
 import java.util.ArrayList;
-
+/**
+ * Contains methods for game actions starts the main game.
+ * @author jke9, cjw237
+ *
+ */
 public class Game {
 	private Farmer player;
 	private Farm playerFarm;
@@ -41,19 +45,22 @@ public class Game {
 		return day;
 	}
 	
-	// called from setup window
 	/**
 	 * Creates the player, called from setup window
-	 * @param farmer
-	 * @param name
-	 * @param age
+	 * @param farmer Player character object
+	 * @param name Player name
+	 * @param age Player age
 	 */
 	public void setPlayer(Farmer farmer, String name, int age) {
 		player = farmer;
 		player.setAge(age);
 		player.setName(name);
 	}
-	
+	/**
+	 * Creates the player Farm
+	 * @param farm Player farm object
+	 * @param name Farm name
+	 */
 	public void setPlayerFarm(Farm farm, String name) {
 		playerFarm = farm;
 		playerFarm.setName(name);
@@ -64,13 +71,21 @@ public class Game {
 		daysRemaining = days;
 	}
 	
-	
+	/**
+	 * Waters a crop (using the method from crop) and reduces actions
+	 * @param selectedCrop
+	 */
 	public String waterCrop(Crop selectedCrop) {
 		selectedCrop.water();
 		actions--;
 		return ("You watered your " + selectedCrop.getType() + " crop." + nln + "It is growing fast and healthy.");
 	}
 	
+	/**
+	 * Purchases a quantity of a certain crop, called from purchaseProduct();
+	 * @param crop
+	 * @param quantity
+	 */
 	public String purchaseCrops(Crop crop, int quantity) {
 		String type = "";
 		if (crop instanceof Cabbage) {
@@ -106,7 +121,11 @@ public class Game {
 		}
 		return type;
 	}
-	
+	/**
+	 * Purchases a quantity of a certain Animal, called from purchaseProduct();
+	 * @param animal
+	 * @param quantity
+	 */
 	public String purchaseAnimals(Animal animal, int quantity) {
 		String type = "";
 		if (animal instanceof Cow) {
@@ -127,7 +146,11 @@ public class Game {
 		}
 		return type;
 	}
-	
+	/**
+	 * Purchases a quantity of a certain item, called from purchaseProduct();
+	 * @param item
+	 * @param quantity
+	 */
 	public String purchaseItems(Item item, int quantity) {
 		String type = "";
 		if (item instanceof Fertiliser) {
@@ -163,7 +186,13 @@ public class Game {
 		}
 		return type;
 	}
-	
+	/**
+	 * Purchases a product in a given quantity
+	 * @param product a crop, animal or item
+	 * @param price only used for the return string, will usually be an items price attribute
+	 * @param quantity
+	 * @return A string showing what was purchased
+	 */
 	public String purchaseProduct(Object product, double price, int quantity) {
 		String type;
 		if (product instanceof Crop) {
@@ -177,7 +206,12 @@ public class Game {
 	}
 	
 	
-	
+	/**
+	 * Tends to a crop using the crop method tendCrop, and reduces actions
+	 * @param selectedItem
+	 * @param selectedCrop
+	 * @return A string showing what was done
+	 */
 	public String tendToCrop(CropItem selectedItem, Crop selectedCrop) {
 		selectedCrop.tendCrop(selectedItem);
 		playerFarm.useItem(selectedItem);
@@ -185,6 +219,11 @@ public class Game {
 	    return ("You used " + selectedItem.getName() + " on your " + selectedCrop.getType() + " crop." + nln + "It is growing fast and healthy.");
 	}
 	
+	/**
+	 * Harvests a crop, crediting the player and removing the crop, reducing action
+	 * @param selectedCrop
+	 * @return A string showing what was done
+	 */
 	public String harvestCrop(Crop selectedCrop) {
 		String message = "";
 		double sellPrice = selectedCrop.harvest() * playerFarm.getCropMoneyBonus();
@@ -194,7 +233,10 @@ public class Game {
 		actions--;
 		return message;
 	}
-	
+	/**
+	 * Plays with all animals, and reduces available actions
+	 * @return A string showing what was done
+	 */
 	public String playWithAnimals() {
 		actions--;
 		for (Animal animal : playerFarm.getAnimals()) {
@@ -203,7 +245,12 @@ public class Game {
 		return ("Your animals are filled with joy!" + nln + "Animal Happiness = +20 Points");
 	}
 	
-	
+	/**
+	 * Feeds all animals the given item, then removes it, reducing actions
+	 * @param food
+	 * @param animals
+	 * @return A string saying how many animals were fed what
+	 */
 	public String feedAnimals(AnimalItem food, List<Animal> animals) {
 		String message = "";
 		for (int j = 0; j < animals.size(); j++) { // need to decide if food items feed all owned animals or up to a certain amount
@@ -215,7 +262,10 @@ public class Game {
 		actions--;
 		return message;
 	}	
-	
+	/**
+	 * Tends farmland, using tendLand(); method, reducing actions
+	 * @return a message saying what was done
+	 */
 	public String tendLand() {
 		String message = "";
 		actions--;
@@ -226,20 +276,28 @@ public class Game {
 		message += "Your animals will be healthier and happier, and your crops will grow faster." + nln;
 		return message;
 	}
-	
+	/**
+	 * Grants a money bonus for each animal, intended to be run on day end
+	 */
 	public void moneyBonus() { // daily money bonus for animal happiness/health
 		for (Animal animal : playerFarm.getAnimals()) {
 			double bonus = ((animal.getIncome()) * playerFarm.getAnimalMoneyBonus()); 
 			playerFarm.addMoney(bonus);
 		}
 	}
-	
+	/**
+	 * Grants a bonus to animal health, intended to be used each day
+	 */
 	public void animalHealthBonus() { 
 		for (Animal animal : playerFarm.getAnimals()) {
 			animal.dailyBonus(playerFarm.getAnimalHealthBonus());
 		}
 	}
-	
+	/**
+	 * Deducts daily loss of health/happiness for each animal
+	 * and removes the animal if either hit zero
+	 * @return A string showing how many animals died, and gives advice on how to prevent
+	 */
 	public String animalLoss() {
 		boolean death = false;
 		String message = "";
@@ -263,13 +321,19 @@ public class Game {
 		}	
 		return message;
 	}
-	
+	/**
+	 * Grows each crop according to the farm bonus, intended to be used daily
+	 */
 	public void cropGrowth() {
 		for (Crop crop : playerFarm.getCrops()) {
 			crop.grow(playerFarm.getCropGrowthBonus());
 		}
 	}
-	
+	/**
+	 * End of day change, resets actions, progresses game, and 
+	 * calls end of day functions for animals/crops
+	 * @return The dead animal message from animalLoss();
+	 */
 	public String dailyChange() {
 		daysRemaining -= 1;
 		day += 1;
@@ -283,7 +347,10 @@ public class Game {
 		cropGrowth();		
 		return message;
 	}
-
+	/**
+	 * Calculates end game points for animals
+	 * @return score
+	 */
 	public double endGameAnimals() {
 		double points = 0;
 		for (Animal animal : playerFarm.getAnimals()) {
@@ -291,7 +358,10 @@ public class Game {
 		}
 		return points;
 	}
-	
+	/**
+	 * Calculate end game points for Crops
+	 * @return score
+	 */
 	public double endGameCrops() {
 		double points = 0;
 		for (Crop crop : playerFarm.getCrops()) {
@@ -299,11 +369,17 @@ public class Game {
 		}
 		return points;
 	}
-	
+	/**
+	 * Calculates total end game score
+	 * @return total score
+	 */
 	public double endGameTotal() {
 		return (endGameAnimals() + endGameCrops() + playerFarm.getMoney());
 	}
-	
+	/**
+	 * Generates a message to show the player at the end of the game
+	 * @return An end game message
+	 */
 	public String endGameMessage() {
 		String message = "";
 		double animalPoints = endGameAnimals();
