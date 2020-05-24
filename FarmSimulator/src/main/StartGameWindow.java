@@ -328,7 +328,7 @@ public class StartGameWindow {
 		JLabel errorLbl = new JLabel("");
 		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		errorLbl.setForeground(Color.RED);
-		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		errorLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		errorLbl.setBounds(584, 509, 246, 29);
 		farmSetupWindow.getContentPane().add(errorLbl);
 		
@@ -495,18 +495,20 @@ public class StartGameWindow {
 		JButton startGameBtn = new JButton("Start");
 		startGameBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String noSpaceName = playerNameText.getText().replaceAll("\\s",  "");
+				String noSpaceFarmName = farmNameText.getText().replaceAll("\\s",  "");
 				String ageText = playerAgeText.getText();
 				try {
 					Integer.parseInt(ageText); 
 				}catch(NumberFormatException f) {
 					ageText = null;
 				} 
-				if (playerNameText.getText().isEmpty()) {
-					errorLbl.setText("Please enter name.");
+				if (!(noSpaceName.matches("[a-zA-Z]{3,15}"))) {
+					errorLbl.setText("Please enter valid name.");
 				} else if (ageText == null) {
 					errorLbl.setText("Please enter valid age.");
-				} else if (farmNameText.getText().isEmpty()) {
-					errorLbl.setText("Please enter farm name.");
+				} else if (!(noSpaceFarmName.matches("[a-zA-Z]{3,15}"))) {
+					errorLbl.setText("Please enter valid farm name.");
 				} else if (selectedFarmer == null) {
 					errorLbl.setText("Please select farmer skill.");
 				} else if (selectedFarm == null) {
@@ -539,13 +541,7 @@ public class StartGameWindow {
 		startGameBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		startGameBtn.setBounds(831, 509, 131, 29);
 		farmSetupWindow.getContentPane().add(startGameBtn);
-		
-		
-		
-		
-		
-		
-		
+
 		
 		/**
 		 * Help button displays JOptionPane with instructions for setup
@@ -554,7 +550,8 @@ public class StartGameWindow {
 		instructionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorLbl.setText("");
-				String message = "Enter your name, age and farm name." + Game.nln;
+				String message = "Names must be 3-15 characters long and contain only letters." + Game.nln;
+				message += "Age must be a whole number." + Game.nln;
 				message += "Select the number of in-game days you would like the simulation to last." + Game.nln;
 				message += "Choose your farmer skill. Farmer skills improve your crop growing or animal care ability." + Game.nln;
 				message += "Choose your farm. Each farm has different starter bonuses and starting accounts." + Game.nln;
