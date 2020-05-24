@@ -67,6 +67,16 @@ class FarmTest {
 
 	}
 	
+	@Test
+	void farmBonuses() {
+		Farm playerFarm = new Farm("Type", 1, 1, 100);
+		playerFarm.tendLand();
+		assertEquals(playerFarm.getAnimalHealthBonus(), 2);
+		assertEquals(playerFarm.getCropGrowthBonus(), 0.25);		
+		playerFarm.addAnimalHealthBonus(15);
+		assertEquals(playerFarm.getAnimalHealthBonus(), 14);
+	}
+	
 	
 
 }

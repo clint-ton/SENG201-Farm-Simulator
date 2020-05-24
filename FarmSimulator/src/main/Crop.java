@@ -87,25 +87,5 @@ public class Crop {
 		ageDays += 1 + bonus;
 	}
 	
-//	public static void main(String[] args) {
-//	    Wheat wheat = new Wheat();
-//		wheat.water();
-//		Object j = wheat;
-//		System.out.println(j instanceof Wheat);
-//		Fertiliser item1 = new Fertiliser();
-//		wheat.tendCrop(item1);
-//		Wheat x = (Wheat) j;
-//		
-//		while (wheat.getAgeDays() < wheat.getHarvestPeriod()) {
-//			//wheat.grow();	
-//		}
-//
-//		System.out.println("Number of days to harvest: " + wheat.getAgeDays());
-//		double money = 0;
-//		money += wheat.harvest();
-//		System.out.println("Money returned from harvest: " + money);
-//
-//		
-//	}
 
 }

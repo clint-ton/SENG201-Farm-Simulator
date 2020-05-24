@@ -12,19 +12,12 @@ public class Farm {
 	private List<Crop> crops = new ArrayList<>();
 	private List<Animal> animals = new ArrayList<>();
 	private List<Item> items = new ArrayList<>();
-	private double cropGrowthBonus; // initial bonuses specific to each type of farm
-	private int animalHealthBonus; // change so can be set in constructor by subclass
+	private double cropGrowthBonus = 0; // initial bonuses specific to each type of farm
+	private int animalHealthBonus = 0; // change so can be set in constructor by subclass
 	private double cropMoneyBonus;
 	private double animalMoneyBonus;
 
 	private double money;
-	
-//	public Farm(String farmName, String farmType, Farmer tmpFarmer, List<Crop> crops, List<Animal> animals) {
-//		name = farmName;
-//		type = farmType;
-//		farmer = tmpFarmer;
-//		money = 1000;
-//	}
 	
 	
 	public Farm(String type, double animalMoneyBonus, double cropMoneyBonus, double money) { // new constructor to account for farm types
