@@ -25,7 +25,7 @@ To import the source code into Eclipse,
 1. Create a new project in Eclipse
 2. Right click on the "src" folder for the new project and click "Import"
 3. Select "File System" under "General" 
-4. Browse for the game directory in the downloaded zip archive and select the "src" folder to import
+4. Browse for the game directory in the downloaded zip folder and select the "src" folder to import
 5. Check the box next to the folder and click "Finish"
 6. Running the "Game" class in Eclipse will launch the game
 7. If errors are displayed in the "test" package, you need to add JUnit5 to the build path
@@ -37,4 +37,4 @@ To add JUnit to the buildpath,
 2. Go to "Java Build Path" and then "Libraries"
 3. Select "Classpath" and then "Add Library.."
 4. Select JUnit and then JUnit5 in the dropdown
-5. Click "Finish"
+5. Click "Finish" then "Apply and Close"
