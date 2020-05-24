@@ -1,4 +1,4 @@
-//package commandLine;
+package commandLine;
 //import main.*;
 //import java.util.List;
 //import java.util.Scanner;
@@ -8,7 +8,7 @@
 //import java.util.ArrayList;
 //
 //
-//public class GameCommandLine {
+public class GameCommandLine {
 //
 //	private Farmer player;
 //	private Farm playerFarm;
@@ -138,4 +138,4 @@
 //  System.out.println(String.format("%.0f", endGameTotal()) + " points.");
 //}
 //}
-//}
+}
